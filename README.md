@@ -13,8 +13,8 @@ So, what do we offer to our customers:
 - Search and filter products by categories
 This is necessary to make the shopping process more organized and convenient.
 
-[!NOTE]
-> To ensure that the product selection process is simple and enjoyable, we have made our design very responsive. In other words, no matter what device our customer is using, they will encounter a pleasant and user-friendly interface that adapts to the customer's device.
+> [!NOTE]
+> To ensure that the product selection process is simple and enjoyable, we have made our design very responsive. In other words, no matter what device our customers are using, they will encounter a pleasant and user-friendly interface that adapts to the customer's device.
 
 ## Used stack
 - SCSS
@@ -38,3 +38,21 @@ npm run + ${name}
 `lint`: Manually checks if the configuration code matches ifnt
 `preview`: Is used to preview (preview) an application build using the Vite tool.
 `test`: Runs jest test
+
+## Install
+
+> [!IMPORTANT]
+> Node.js is reauired!
+
+1. Clone this repository
+2. Run the following command:
+```
+npm install
+```
+This command installs dependencies in the root folder.
+3. Run `npm run dev` to run dev server or `npm run build` to build project.
+
+## Authors
+- [**Asubas**(Team-lead)](https://github.com/Asubas)
+- [lipan4836](https://github.com/lipan4836)
+- [DzmitryAlekseev](https://github.com/dzmitryalekseev)
