@@ -30,7 +30,7 @@ You can use the following commands to use scripts:
 npm run + ${name} 
 ```
 
-`prettier-check`: Script that runs a code check by prettier and if it finds changes in the code that do not correspond to prettier, it overwrites them according to the configuration. Runs automatically when a commit is created using Husky.
+`prettier-check`: Script that runs a code check by prettier and if it finds changes in the code that do not correspond to prettier, it overwrites them according to the configuration. Runs automatically when a commit is created using Husky
 
 `pre-push`: Automatically invoked by Husky before fluffing code to a remote repository. Runs a check that all files match Eslint configuration, if so, runs Jest tests, if all tests pass without errors, runs validation of the created branch name according to the pattern. You can also run it manually with npm run pre-push
 
