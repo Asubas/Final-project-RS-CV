@@ -1,8 +1,8 @@
-import styles from './App.module.scss';
+import './App.scss';
 function App() {
   return (
     <>
-      <div className={styles.letsGo}>Lets go!</div>
+      <div className="lestGo">Lets go!</div>
     </>
   );
 }
