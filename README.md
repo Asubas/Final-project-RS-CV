@@ -40,7 +40,7 @@ npm run + ${name}
 
 `dev`: Starts development mode from the Vite builder
 
-`build`: Starts the project build for the extension version
+`build`: Starts the project build for the production version
 
 `lint`: Manually ESLint checks
 
