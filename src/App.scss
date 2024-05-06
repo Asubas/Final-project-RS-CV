@@ -1,5 +1,122 @@
-.letsGo{
-    color: red;
-    font-size: 30px;
-    text-align: center;
+// vars
+
+$primary: #282828;
+$onPrimary: #ffffff;
+$secondary: #c3b212;
+$onSecondary: #000000;
+$background: #fefefe;
+$backgroundVariant: #f4f4f4;
+$outline: #a0a0a0;
+
+$font: $font;
+
+body {
+  font-family: 'Prosto One', sans-serif;
+}
+
+h1 {
+  font-size: 36px;
+  line-height: 122%;
+
+  @media (max-width: 393px) {
+    font-size: 24px;
+    line-height: 150%;
+  }
+}
+
+h2 {
+  font-size: 32px;
+  line-height: 125%;
+
+  @media (max-width: 393px) {
+    font-size: 24px;
+    line-height: 133%;
+  }
+}
+
+h3 {
+  font-size: 22px;
+  line-height: 112%;
+  text-transform: uppercase;
+
+  @media (max-width: 393px) {
+    font-size: 20px;
+    line-height: 143%;
+    letter-spacing: 0.01em;
+  }
+}
+
+// btns
+
+.btn_white {
+  font-family: $font;
+  color: $primary;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 24px;
+  border: 1px solid $primary;
+  background-color: transparent;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba($primary, 0.08);
+  }
+
+  &:focus {
+    background-color: rgba($primary, 0.12);
+  }
+
+  &:active {
+    background-color: rgba($primary, 0.12);
+  }
+}
+
+.btn_black {
+  font-family: $font;
+  color: $onPrimary;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 24px;
+  border: none;
+  background-color: $primary;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow:
+      0 1px 3px 1px rgba(0, 0, 0, 0.15),
+      0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+.btn_blank {
+  font-family: $font;
+  color: $primary;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 10px 12px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+
+  &:hover {
+    color: $secondary;
+  }
+}
+
+.letsGo {
+  color: red;
+  font-size: 30px;
+  text-align: center;
 }
