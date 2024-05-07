@@ -1,0 +1,70 @@
+@import '../../App.scss';
+
+.authorization-field {
+  background-color: $backgroundVariant;
+
+  .authorization-field {
+    &_form {
+      max-width: 552px;
+      max-height: 455px;
+      padding: 35px 50px;
+
+      .login-form_fieldset {
+        border: none;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .login-form_email-input-container,
+        .login-form_password-input-container {
+          position: relative;
+
+          &::after {
+            content: ' ';
+            background: url('../../assets/svg/emailIcon.svg') no-repeat center / contain;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 15px;
+            left: 10px;
+          }
+          .login-form_email-input,
+          .login-form_password-input {
+            padding: 16px 35px;
+            position: relative;
+            width: 100%;
+
+            &::placeholder {
+              color: black;
+            }
+          }
+        }
+        .login-form_password-input-container {
+          &::after {
+            content: ' ';
+            position: absolute;
+            background: url('../../assets/svg/passwordIcon.svg') no-repeat center / contain;
+            width: 20px;
+            height: 20px;
+            top: 15px;
+            left: 10px;
+          }
+        }
+
+        .login-form_remember-Label {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: flex-end;
+
+          .login-form_link {
+            margin-left: auto;
+          }
+        }
+      }
+
+      .login-form_legend {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
