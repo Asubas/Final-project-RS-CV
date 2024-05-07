@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prettier-check": "prettier --list-different \"src/**/*.{ts,tsx,js,jsx}\" && prettier --write \"src/**/*.{ts,tsx,js,jsx}\"",
+    "prettier-check": "prettier --list-different \"src/**/*.{ts,tsx,js,jsx,css,scss}\" && prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "pre-push": "eslint . && jest && validate-branch-name",
     "format": "prettier --write .",
     "ci:format": "prettier --check .",
