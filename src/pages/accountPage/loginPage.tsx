@@ -1,18 +1,22 @@
 import './loginPage.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
+import MyInput from '../../components/input/input';
+
 type Inputs = {
-  example: string;
-  exampleRequired: string;
+  login: string;
+  password: string;
 };
 
 function AccountPage() {
   const {
+    register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({ mode: 'onChange' });
+  // const { onChange, onBlur, name, ref } = register('login');
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
   return (
     <div className="authorization-field">
       <form onSubmit={handleSubmit(onSubmit)} className="authorization-field_form login-form">
@@ -20,28 +24,42 @@ function AccountPage() {
           <legend className="login-form_legend">Already a customer?</legend>
           <label className="login-form_label">Welcome back! Sign in for faster checkout.</label>
           <div className="login-form_email-input-container">
-            <input
+            <MyInput
               className="login-form_email-input"
               type="email"
               placeholder="Email Address"
-            ></input>
+              {...register('login', {
+                required: 'This field must be completed',
+                pattern: {
+                  value: /^\S+@([\w-]+\.)+[\w-]{2,4}$/,
+                  message:
+                    'Invalid email format. Please write an email in the format user@example.com',
+                },
+              })}
+            />
+            {errors.login && <span>{errors.login.message}</span>}
           </div>
           <div className="login-form_password-input-container">
-            <input
+            <MyInput
               className="login-form_password-input"
               type="password"
               placeholder="Enter your password"
-            ></input>
+              {...register('password', {
+                required: 'This field must be completed',
+                min: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters long',
+                },
+              })}
+            />
+            {errors.password && <span>{errors.password.message}</span>}
           </div>
           <label className="login-form_remember-Label" htmlFor="rem">
-            <a href="#" className="login-form_link">
-              {' '}
-              Forget password?
-            </a>{' '}
+            {' '}
             Please remember me
-            <input className="login-form_remember-Input" type="checkbox" id="rem"></input>
+            <MyInput className="login-form_remember-Input" type="checkbox" id="rem" />
           </label>
-          <MyButton text="Sign in" type="submit" />
+          <MyButton className="btn_black " text="Sign in" type="submit" disabled={false} />
         </fieldset>
       </form>
     </div>
