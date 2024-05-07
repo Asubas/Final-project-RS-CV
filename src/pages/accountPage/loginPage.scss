@@ -21,7 +21,7 @@
 
         &::after {
           content: ' ';
-          background: url('../../assets/svg/emailIcon.svg') no-repeat center / contain;
+          background: url('../../assets/svg/icon-mail.svg') no-repeat center / contain;
           position: absolute;
           width: 20px;
           height: 20px;
@@ -38,12 +38,16 @@
             color: black;
           }
         }
+
+        span {
+          color: red;
+        }
       }
       .login-form_password-input-container {
         &::after {
           content: ' ';
           position: absolute;
-          background: url('../../assets/svg/passwordIcon.svg') no-repeat center / contain;
+          background: url('../../assets/svg/icon-redeem.svg') no-repeat center / contain;
           width: 20px;
           height: 20px;
           top: 15px;

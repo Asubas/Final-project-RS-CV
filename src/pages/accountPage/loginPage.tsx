@@ -16,6 +16,10 @@ function AccountPage() {
   } = useForm<Inputs>({ mode: 'onChange' });
   // const { onChange, onBlur, name, ref } = register('login');
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const isUppercase = (value: string) => /[A-Z]/.test(value);
+  const isLowercase = (value: string) => /[a-z]/.test(value);
+  const hasNumber = (value: string) => /\d/.test(value);
+  const isNotWhitespace = (value: string) => /^\S.*\S$/.test(value);
 
   return (
     <div className="authorization-field">
@@ -33,9 +37,12 @@ function AccountPage() {
                 pattern: {
                   value: /^\S+@([\w-]+\.)+[\w-]{2,4}$/,
                   message:
-                    'Invalid email format. Please write an email in the format user@example.com',
+                    'Invalid email format. Please write an email in the format user@example.com/ru',
                 },
               })}
+              style={{
+                border: errors.login ? '1px solid red' : ' 1px solid black',
+              }}
             />
             {errors.login && <span>{errors.login.message}</span>}
           </div>
@@ -46,11 +53,24 @@ function AccountPage() {
               placeholder="Enter your password"
               {...register('password', {
                 required: 'This field must be completed',
-                min: {
-                  value: 8,
-                  message: 'Password must be at least 8 characters long',
+                validate: {
+                  uppercase: (value) =>
+                    isUppercase(value) ||
+                    'Password must contain at least one uppercase character A-Z',
+                  lowercase: (value) =>
+                    isLowercase(value) ||
+                    'Password must contain at least one lowercase character a-z',
+                  number: (value) =>
+                    hasNumber(value) || 'Password must contain at least one number',
+                  notWhitespace: (value) =>
+                    isNotWhitespace(value) || 'Password must not start or end with whitespace',
+                  length: (value) =>
+                    value.length >= 8 || 'Password must be at least 8 characters long',
                 },
               })}
+              style={{
+                border: errors.password ? '1px solid red' : ' 1px solid black',
+              }}
             />
             {errors.password && <span>{errors.password.message}</span>}
           </div>
