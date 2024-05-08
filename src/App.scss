@@ -8,10 +8,43 @@ $background: #fefefe;
 $backgroundVariant: #f4f4f4;
 $outline: #a0a0a0;
 
-$font: $font;
+$fontPrimary: 'Montserrat', sans-serif;
+$fontSecondary: 'Prosto One', sans-serif;
+
+// icons urls
+$iconMail: url('./assets/svg/icon-mail.svg');
+$iconPass: url('./assets/svg/icon-redeem.svg');
+$iconSearch: url('./assets/svg/icon-search.svg');
+$iconCancel: url('./assets/svg/icon-cancel.svg');
+$iconAdd: url('./assets/svg/icon-add.svg');
+$iconAlarm: url('./assets/svg/icon-alarm.svg');
+$iconBack: url('./assets/svg/icon-arrow_back.svg');
+$iconCall: url('./assets/svg/icon-call.svg');
+$iconClose: url('./assets/svg/icon-close.svg');
+$iconDelete: url('./assets/svg/icon-delete.svg');
+$iconEco: url('./assets/svg/icon-eco.svg');
+$iconExpand: url('./assets/svg/icon-expand_more.svg');
+$iconFilter: url('./assets/svg/icon-filter.svg');
+$iconKettle: url('./assets/svg/icon-kettle.svg');
+$iconLanguage: url('./assets/svg/icon-language.svg');
+$iconCup: url('./assets/svg/icon-local_cafe.svg');
+$iconMall: url('./assets/svg/icon-local_mall.svg');
+$iconLocation: url('./assets/svg/icon-location.svg');
+$iconMenu: url('./assets/svg/icon-menu.svg');
+$iconRemove: url('./assets/svg/icon-minus.svg');
+$iconPerson: url('./assets/svg/icon-person.svg');
+$iconSell: url('./assets/svg/icon-sell.svg');
+$iconShip: url('./assets/svg/icon-shipping.svg');
+$iconBoil: url('./assets/svg/icon-water_voc.svg');
+$iconWeight: url('./assets/svg/icon-weight.svg');
+$iconLogo: url('./assets/svg/logo.svg');
+$iconSizeS: url('./assets/svg/size-50.svg');
+$iconSizeM: url('./assets/svg/size-100.svg');
+$iconSizeL: url('./assets/svg/size-170.svg');
+$iconSizeWS: url('./assets/svg/size-sample.svg');
 
 body {
-  font-family: 'Prosto One', sans-serif;
+  font-family: $fontPrimary;
 }
 
 h1 {
@@ -49,7 +82,7 @@ h3 {
 // btns
 
 .btn_white {
-  font-family: $font;
+  font-family: $fontPrimary;
   color: $primary;
   font-size: 14px;
   line-height: 143%;
@@ -73,10 +106,18 @@ h3 {
   &:active {
     background-color: rgba($primary, 0.12);
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
 .btn_black {
-  font-family: $font;
+  font-family: $fontPrimary;
   color: $onPrimary;
   font-size: 14px;
   line-height: 143%;
@@ -94,10 +135,19 @@ h3 {
       0 1px 3px 1px rgba(0, 0, 0, 0.15),
       0 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    border: 1px solid $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
 .btn_blank {
-  font-family: $font;
+  font-family: $fontPrimary;
   color: $primary;
   font-size: 14px;
   line-height: 143%;
@@ -113,10 +163,57 @@ h3 {
   &:hover {
     color: $secondary;
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
-.letsGo {
-  color: red;
-  font-size: 30px;
-  text-align: center;
+.input-wrap {
+  position: relative;
+  max-width: 456px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: $iconSearch no-repeat center / contain;
+    width: 24px;
+    height: 24px;
+    top: 15px;
+    left: 15px;
+  }
+
+  .input {
+    font-family: $fontPrimary;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    border: 1px solid $primary;
+    padding: 16px 12px 16px 52px;
+    transition: all 0.2s ease-in;
+
+    &:active {
+      border: 1px solid $secondary;
+      outline: 1px solid $secondary;
+    }
+
+    &:focus {
+      border: 1px solid $secondary;
+      outline: 1px solid $secondary;
+    }
+
+    &::-webkit-search-cancel-button {
+      top: 0;
+      right: 0;
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      background: $iconCancel no-repeat center / contain;
+      cursor: pointer;
+    }
+  }
 }
