@@ -40,7 +40,7 @@
         }
 
         span {
-          color: red;
+          color: #ff0000;
         }
       }
       .login-form_password-input-container {
@@ -52,6 +52,29 @@
           height: 20px;
           top: 15px;
           left: 10px;
+        }
+      }
+
+      .viewPassword {
+        cursor: pointer;
+      }
+
+      .viewPassword.not-empty {
+        &::before {
+          content: ' ';
+          position: absolute;
+          background: url('../../assets/svg/showPassword.svg') no-repeat center / contain;
+          width: 20px;
+          height: 20px;
+          top: 15px;
+          left: 93%;
+          z-index: 2;
+        }
+      }
+
+      .login-form_password-input[type='text'] + .viewPassword.not-empty {
+        &::before {
+          background: url('../../assets/svg/unShowPassword.svg') no-repeat center / contain;
         }
       }
 
@@ -68,6 +91,16 @@
 
     .login-form_legend {
       font-size: 1.5rem;
+    }
+  }
+
+  .form-valid {
+    input:not([type='checkbox']) {
+      border: 2px solid green;
+      background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4));
+      -webkit-box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
+      -moz-box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
+      box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
     }
   }
 }

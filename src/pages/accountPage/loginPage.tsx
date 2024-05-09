@@ -2,6 +2,8 @@ import './loginPage.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
+import validatePassword from './validatePassword';
+import { useState } from 'react';
 
 type Inputs = {
   login: string;
@@ -10,20 +12,30 @@ type Inputs = {
 
 function AccountPage() {
   const {
+    watch,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  // const { onChange, onBlur, name, ref } = register('login');
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  const isUppercase = (value: string) => /[A-Z]/.test(value);
-  const isLowercase = (value: string) => /[a-z]/.test(value);
-  const hasNumber = (value: string) => /\d/.test(value);
-  const isNotWhitespace = (value: string) => /^\S.*\S$/.test(value);
+  const passwordEmpty = watch('password');
+  const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
 
+  const [type, setType] = useState('password');
+
+  const showPassword = () => {
+    if (type === 'password') {
+      setType('text');
+    } else {
+      setType('password');
+    }
+  };
   return (
     <div className="authorization-field">
-      <form onSubmit={handleSubmit(onSubmit)} className="authorization-field_form login-form">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`authorization-field_form login-form ${isValid ? 'form-valid' : 'form-invalid'}`}
+      >
         <fieldset className="login-form_fieldset">
           <legend className="login-form_legend">Already a customer?</legend>
           <label className="login-form_label">Welcome back! Sign in for faster checkout.</label>
@@ -41,7 +53,7 @@ function AccountPage() {
                 },
               })}
               style={{
-                border: errors.login ? '1px solid red' : ' 1px solid black',
+                border: errors.login ? '1px solid red' : '',
               }}
             />
             {errors.login && <span>{errors.login.message}</span>}
@@ -49,29 +61,17 @@ function AccountPage() {
           <div className="login-form_password-input-container">
             <MyInput
               className="login-form_password-input"
-              type="password"
+              type={type}
               placeholder="Enter your password"
               {...register('password', {
                 required: 'This field must be completed',
-                validate: {
-                  uppercase: (value) =>
-                    isUppercase(value) ||
-                    'Password must contain at least one uppercase character A-Z',
-                  lowercase: (value) =>
-                    isLowercase(value) ||
-                    'Password must contain at least one lowercase character a-z',
-                  number: (value) =>
-                    hasNumber(value) || 'Password must contain at least one number',
-                  notWhitespace: (value) =>
-                    isNotWhitespace(value) || 'Password must not start or end with whitespace',
-                  length: (value) =>
-                    value.length >= 8 || 'Password must be at least 8 characters long',
-                },
+                validate: validatePassword,
               })}
               style={{
-                border: errors.password ? '1px solid red' : ' 1px solid black',
+                border: errors.password ? '1px solid red' : '',
               }}
             />
+            <span className={inputContainerPasswordName} onClick={showPassword}></span>
             {errors.password && <span>{errors.password.message}</span>}
           </div>
           <label className="login-form_remember-Label" htmlFor="rem">
@@ -79,7 +79,7 @@ function AccountPage() {
             Please remember me
             <MyInput className="login-form_remember-Input" type="checkbox" id="rem" />
           </label>
-          <MyButton className="btn_black " text="Sign in" type="submit" disabled={false} />
+          <MyButton className="btn_black " text="Sign in" type="submit" />
         </fieldset>
       </form>
     </div>

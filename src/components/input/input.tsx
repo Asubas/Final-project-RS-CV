@@ -5,8 +5,8 @@ type InputElementProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 const customInput = forwardRef<HTMLInputElement, InputElementProps>(
   (props: InputElementProps, ref?: Ref<HTMLInputElement>) => {
-    const { placeholder, ...restProps } = props;
-    return <input placeholder={placeholder} {...restProps} ref={ref} />;
+    const { ...restProps } = props;
+    return <input {...restProps} ref={ref} />;
   },
 );
 customInput.displayName = 'customInput';

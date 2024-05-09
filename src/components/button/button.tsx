@@ -8,7 +8,7 @@ type buttonElement = DetailedHTMLProps<
   text: string;
 };
 const customButton = (props: buttonElement) => {
-  return <button {...props}>{props.text}</button>;
+  return <button {...props}>text</button>;
 };
 
 export default customButton;
