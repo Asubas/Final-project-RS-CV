@@ -30,6 +30,7 @@ function AccountPage() {
       setType('password');
     }
   };
+
   return (
     <div className="authorization-field">
       <form
@@ -79,7 +80,10 @@ function AccountPage() {
             Please remember me
             <MyInput className="login-form_remember-Input" type="checkbox" id="rem" />
           </label>
-          <MyButton className="btn_black " text="Sign in" type="submit" />
+          <MyButton className="btn_black " type="submit">
+            {' '}
+            Sign in
+          </MyButton>
         </fieldset>
       </form>
     </div>

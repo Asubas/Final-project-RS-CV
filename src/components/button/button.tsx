@@ -1,14 +1,9 @@
 import './button.scss';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
-type buttonElement = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> & {
-  text: string;
-};
+type buttonElement = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 const customButton = (props: buttonElement) => {
-  return <button {...props}>text</button>;
+  return <button {...props}></button>;
 };
 
 export default customButton;
