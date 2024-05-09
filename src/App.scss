@@ -11,6 +11,38 @@ $outline: #a0a0a0;
 $fontPrimary: 'Montserrat', sans-serif;
 $fontSecondary: 'Prosto One', sans-serif;
 
+// icons urls
+$iconMail: url('./assets/svg/icon-mail.svg');
+$iconPass: url('./assets/svg/icon-redeem.svg');
+$iconSearch: url('./assets/svg/icon-search.svg');
+$iconCancel: url('./assets/svg/icon-cancel.svg');
+$iconAdd: url('./assets/svg/icon-add.svg');
+$iconAlarm: url('./assets/svg/icon-alarm.svg');
+$iconBack: url('./assets/svg/icon-arrow_back.svg');
+$iconCall: url('./assets/svg/icon-call.svg');
+$iconClose: url('./assets/svg/icon-close.svg');
+$iconDelete: url('./assets/svg/icon-delete.svg');
+$iconEco: url('./assets/svg/icon-eco.svg');
+$iconExpand: url('./assets/svg/icon-expand_more.svg');
+$iconFilter: url('./assets/svg/icon-filter.svg');
+$iconKettle: url('./assets/svg/icon-kettle.svg');
+$iconLanguage: url('./assets/svg/icon-language.svg');
+$iconCup: url('./assets/svg/icon-local_cafe.svg');
+$iconMall: url('./assets/svg/icon-local_mall.svg');
+$iconLocation: url('./assets/svg/icon-location.svg');
+$iconMenu: url('./assets/svg/icon-menu.svg');
+$iconRemove: url('./assets/svg/icon-minus.svg');
+$iconPerson: url('./assets/svg/icon-person.svg');
+$iconSell: url('./assets/svg/icon-sell.svg');
+$iconShip: url('./assets/svg/icon-shipping.svg');
+$iconBoil: url('./assets/svg/icon-water_voc.svg');
+$iconWeight: url('./assets/svg/icon-weight.svg');
+$iconLogo: url('./assets/svg/logo.svg');
+$iconSizeS: url('./assets/svg/size-50.svg');
+$iconSizeM: url('./assets/svg/size-100.svg');
+$iconSizeL: url('./assets/svg/size-170.svg');
+$iconSizeWS: url('./assets/svg/size-sample.svg');
+
 body {
   font-family: $fontPrimary;
 }
@@ -74,6 +106,14 @@ h3 {
   &:active {
     background-color: rgba($primary, 0.12);
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
 .btn_black {
@@ -95,6 +135,15 @@ h3 {
       0 1px 3px 1px rgba(0, 0, 0, 0.15),
       0 4px 4px 0 rgba(0, 0, 0, 0.25);
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    border: 1px solid $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
 .btn_blank {
@@ -114,5 +163,165 @@ h3 {
   &:hover {
     color: $secondary;
   }
+
+  &:disabled {
+    background-color: inherit;
+    color: $outline;
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
+  }
 }
 
+.input-wrap {
+  position: relative;
+  max-width: 456px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: $iconSearch no-repeat center / contain;
+    width: 24px;
+    height: 24px;
+    top: 15px;
+    left: 15px;
+  }
+
+  .input {
+    font-family: $fontPrimary;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    border: 1px solid $primary;
+    padding: 16px 12px 16px 52px;
+    transition: all 0.2s ease-in;
+
+    &:active {
+      border: 1px solid $secondary;
+      outline: 1px solid $secondary;
+    }
+
+    &:focus {
+      border: 1px solid $secondary;
+      outline: 1px solid $secondary;
+    }
+
+    &::-webkit-search-cancel-button {
+      top: 0;
+      right: 0;
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      background: $iconCancel no-repeat center / contain;
+      cursor: pointer;
+    }
+  }
+}
+
+// checkbox slide
+
+$wSlide: 25px;
+$hSlide: 13px;
+
+.toggler-wrapper {
+	display: block;
+	width: $wSlide;
+	height: $hSlide;
+	cursor: pointer;
+	position: relative;
+}
+
+.toggler-wrapper input[type="checkbox"] {
+	display: none;
+}
+
+.toggler-wrapper .toggler-slider {
+	position: absolute;
+	border-radius: 100px;
+  border: 1px solid $primary;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	-webkit-transition: all 300ms ease;
+	transition: all 300ms ease;
+}
+
+.toggler-wrapper .toggler-knob {
+	position: absolute;
+	-webkit-transition: all 300ms ease;
+	transition: all 300ms ease;
+}
+//----
+.toggler-wrapper.style-1 input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
+	left: calc(100% - 6px - 3px);
+}
+
+.toggler-wrapper input[type="checkbox"]:disabled + .toggler-slider {
+  border: 1px solid $outline;
+}
+
+.toggler-wrapper.style-1 .toggler-knob {
+	width: calc($hSlide - 6px);
+	height: calc($hSlide - 6px);
+	border-radius: 50%;
+	left: 2px;
+	top: 2px;
+	background-color: $primary;
+}
+
+.toggler-wrapper input[type="checkbox"]:disabled + .toggler-slider .toggler-knob {
+  background-color: $outline
+}
+
+// checkbox
+
+.checkbox-label {
+  display: block;
+  position: relative;
+  width: 15px;
+  height: 15px;
+
+  .checkbox-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+
+    &:checked ~ .checkbox-custom::after {
+      width: 4px;
+      height: 7px;
+      opacity: 1;
+    }
+
+    &:disabled ~ .checkbox-custom {
+      border: 1px solid $outline;
+    }
+
+    &:disabled ~ .checkbox-custom::after {
+      border: solid $outline;
+    }
+  }
+
+  .checkbox-custom {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    border: 1px solid $primary;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      bottom: 4px;
+      width: 0px;
+      height: 0px;
+      border: solid $primary;
+      border-width: 0 1px 1px 0;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: width 0.2s, height 0.2s, opacity 0.2s;
+    }
+  }
+}
