@@ -224,54 +224,54 @@ $wSlide: 25px;
 $hSlide: 13px;
 
 .toggler-wrapper {
-	display: block;
-	width: $wSlide;
-	height: $hSlide;
-	cursor: pointer;
-	position: relative;
+  display: block;
+  width: $wSlide;
+  height: $hSlide;
+  cursor: pointer;
+  position: relative;
 }
 
-.toggler-wrapper input[type="checkbox"] {
-	display: none;
+.toggler-wrapper input[type='checkbox'] {
+  display: none;
 }
 
 .toggler-wrapper .toggler-slider {
-	position: absolute;
-	border-radius: 100px;
+  position: absolute;
+  border-radius: 100px;
   border: 1px solid $primary;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	-webkit-transition: all 300ms ease;
-	transition: all 300ms ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
 }
 
 .toggler-wrapper .toggler-knob {
-	position: absolute;
-	-webkit-transition: all 300ms ease;
-	transition: all 300ms ease;
+  position: absolute;
+  -webkit-transition: all 300ms ease;
+  transition: all 300ms ease;
 }
 //----
-.toggler-wrapper.style-1 input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
-	left: calc(100% - 6px - 3px);
+.toggler-wrapper.style-1 input[type='checkbox']:checked + .toggler-slider .toggler-knob {
+  left: calc(100% - 6px - 3px);
 }
 
-.toggler-wrapper input[type="checkbox"]:disabled + .toggler-slider {
+.toggler-wrapper input[type='checkbox']:disabled + .toggler-slider {
   border: 1px solid $outline;
 }
 
 .toggler-wrapper.style-1 .toggler-knob {
-	width: calc($hSlide - 6px);
-	height: calc($hSlide - 6px);
-	border-radius: 50%;
-	left: 2px;
-	top: 2px;
-	background-color: $primary;
+  width: calc($hSlide - 6px);
+  height: calc($hSlide - 6px);
+  border-radius: 50%;
+  left: 2px;
+  top: 2px;
+  background-color: $primary;
 }
 
-.toggler-wrapper input[type="checkbox"]:disabled + .toggler-slider .toggler-knob {
-  background-color: $outline
+.toggler-wrapper input[type='checkbox']:disabled + .toggler-slider .toggler-knob {
+  background-color: $outline;
 }
 
 // checkbox
@@ -321,7 +321,10 @@ $hSlide: 13px;
       border-width: 0 1px 1px 0;
       transform: rotate(45deg);
       opacity: 0;
-      transition: width 0.2s, height 0.2s, opacity 0.2s;
+      transition:
+        width 0.2s,
+        height 0.2s,
+        opacity 0.2s;
     }
   }
 }

@@ -37,7 +37,7 @@
         "format": ["camelCase", "UPPER_CASE"]
       }
     ]
-  },
+    },
   "settings": {
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]

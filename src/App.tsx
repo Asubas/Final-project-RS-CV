@@ -1,8 +1,10 @@
 import './App.scss';
+import LoginPage from './pages/accountPage/loginPage';
+
 function App() {
   return (
     <>
-      <div className="lestGo">Lets go!</div>
+      <LoginPage />
     </>
   );
 }

@@ -1,0 +1,106 @@
+@import '../../App.scss';
+
+.authorization-field {
+  background-color: $backgroundVariant;
+  max-width: 552px;
+  max-height: 455px;
+  padding: 35px 50px;
+  margin-left: 76px;
+
+  &_form {
+    .login-form_fieldset {
+      border: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .login-form_email-input-container,
+      .login-form_password-input-container {
+        position: relative;
+        max-width: 456px;
+
+        &::after {
+          content: ' ';
+          background: url('../../assets/svg/icon-mail.svg') no-repeat center / contain;
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          top: 15px;
+          left: 10px;
+        }
+        .login-form_email-input,
+        .login-form_password-input {
+          padding: 16px 35px;
+          position: relative;
+          width: 100%;
+
+          &::placeholder {
+            color: black;
+          }
+        }
+
+        span {
+          color: #ff0000;
+        }
+      }
+      .login-form_password-input-container {
+        &::after {
+          content: ' ';
+          position: absolute;
+          background: url('../../assets/svg/icon-redeem.svg') no-repeat center / contain;
+          width: 20px;
+          height: 20px;
+          top: 15px;
+          left: 10px;
+        }
+      }
+
+      .viewPassword {
+        cursor: pointer;
+      }
+
+      .viewPassword.not-empty {
+        &::before {
+          content: ' ';
+          position: absolute;
+          background: url('../../assets/svg/showPassword.svg') no-repeat center / contain;
+          width: 20px;
+          height: 20px;
+          top: 15px;
+          left: 93%;
+          z-index: 2;
+        }
+      }
+
+      .login-form_password-input[type='text'] + .viewPassword.not-empty {
+        &::before {
+          background: url('../../assets/svg/unShowPassword.svg') no-repeat center / contain;
+        }
+      }
+
+      .login-form_remember-Label {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+      }
+
+      .login-form_remember-Input {
+        margin-right: 10px;
+      }
+    }
+
+    .login-form_legend {
+      font-size: 1.5rem;
+    }
+  }
+
+  .form-valid {
+    input:not([type='checkbox']) {
+      border: 2px solid green;
+      background-color: light-dark(rgb(232, 240, 254), rgba(70, 90, 126, 0.4));
+      -webkit-box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
+      -moz-box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
+      box-shadow: 1px 2px 27px 1px rgba(75, 224, 49, 1);
+    }
+  }
+}
