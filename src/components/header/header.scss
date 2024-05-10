@@ -1,0 +1,43 @@
+@import '../../App.scss';
+
+.header {
+  max-width: 1280px;
+  padding: 30px 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: block;
+  font-family: $fontSecondary;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0.01em;
+  position: relative;
+
+  &::after {
+    content: '';
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    top: -14px;
+    left: -56px;
+    background: url('../../assets/svg/logo.svg') no-repeat center;
+  }
+}
+
+.user-btns {
+  display: flex;
+  gap: 8px;
+
+  &_btn {
+    width: 44px;
+    height: 48px;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+}
