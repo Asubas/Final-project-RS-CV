@@ -4,7 +4,7 @@ import logoSearch from '../../assets/svg/icon-search.svg';
 import logoUser from '../../assets/svg/icon-person.svg';
 import logoCart from '../../assets/svg/icon-local_mall.svg';
 
-export default function Header() {
+function Header() {
   return (
     <>
       <header className="header">
@@ -12,10 +12,10 @@ export default function Header() {
           Monkey Tea
         </Link>
         <nav className="nav">
-          <Link className="nav_link btn_blank" to="">
+          <Link className="nav_link btn_blank" to="/collection">
             tea collection
           </Link>
-          <Link className="nav_link btn_blank" to="">
+          <Link className="nav_link btn_blank" to="/about">
             about us
           </Link>
         </nav>
@@ -23,10 +23,10 @@ export default function Header() {
           <Link className="user-btns_btn" to="">
             <img className="user-btns_btn__icon" src={logoSearch} />
           </Link>
-          <Link className="user-btns_btn" to="">
+          <Link className="user-btns_btn" to="account">
             <img className="user-btns_btn__icon" src={logoUser} />
           </Link>
-          <Link className="user-btns_btn" to="">
+          <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>
         </div>
@@ -34,3 +34,5 @@ export default function Header() {
     </>
   );
 }
+
+export default Header;
