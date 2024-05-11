@@ -44,7 +44,7 @@ export default function Footer() {
           <p className="footer_block__head btn_blank only-head">Created thanks to</p>
           <ul className="footer_block__tab">
             <li className="footer_block__item">
-              <a className="rs-link" href="https://rs.school/" target="_blank">
+              <a className="rs-link" href="https://rs.school/" target="_blank" rel="noreferrer">
                 <img src={rsLogo} alt="RS Logo" />
               </a>
             </li>
@@ -58,6 +58,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/Asubas"
                 target="_blank"
+                rel="noreferrer"
               >
                 Asubas
               </a>
@@ -67,6 +68,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/lipan4836"
                 target="_blank"
+                rel="noreferrer"
               >
                 lipan48
               </a>
@@ -76,6 +78,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/DzmitryAlekseev"
                 target="_blank"
+                rel="noreferrer"
               >
                 DzmitryAlekseev
               </a>
@@ -92,6 +95,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="https://maps.app.goo.gl/84e34pzSAWTHKvff6"
                 target="_blank"
+                rel="noreferrer"
               >
                 Wagonowa 1, 53-609 Wrocław, Poland
               </a>
@@ -101,6 +105,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="mailto:monkeys.together@power.com"
                 target="_blank"
+                rel="noreferrer"
               >
                 Email: monkeys.together@power.com
               </a>
@@ -110,6 +115,7 @@ export default function Footer() {
                 className="footer_block__link btn_blank git-link"
                 href="tel:+48717215958"
                 target="_blank"
+                rel="noreferrer"
               >
                 Tel: +48 71 721 59 58
               </a>
