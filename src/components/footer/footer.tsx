@@ -6,18 +6,6 @@ export default function Footer() {
   return (
     <>
       <footer className="footer">
-        {/* <div className="footer_block">
-          <Link className="footer_block__head" to="">
-          
-          </Link>
-          <ul className="footer_block__tab">
-            <li className="footer_block__item">
-              <Link className="footer_block__link btn_blank">
-              
-              </Link>
-            </li>
-          </ul>
-        </div> */}
         <div className="footer_block">
           <Link className="footer_block__head btn_blank" to="collection">
             collection
