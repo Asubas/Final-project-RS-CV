@@ -1,0 +1,27 @@
+@import '../../App.scss';
+
+.notFoundWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  justify-content: center;
+}
+
+.notFoundCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  .notFoundHead {
+    font-size: 72px;
+  }
+
+  .notFoundText {
+    font-size: 24px;
+  }
+}
+
+.notFoundImg {
+  width: 150px;
+}

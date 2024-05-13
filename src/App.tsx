@@ -7,6 +7,7 @@ import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
 import AccountPage from './pages/accountPage/loginPage';
+import NotFound from './pages/notFound/notFound';
 import RegistrationPage from './pages/registrationPage/registrationPage';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="account" element={<AccountPage />} />
         <Route path="registration" element={<RegistrationPage />} />
         <Route path="bag" element={<MyBag />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
       <Footer />
     </>
