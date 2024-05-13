@@ -1,0 +1,88 @@
+@import '../../App.scss';
+
+.footer {
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 30px 76px;
+  background-color: $backgroundVariant;
+}
+
+.footer_block {
+  max-width: 262px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 24px;
+
+  .only-head {
+    cursor: default;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  &__head {
+    font-size: 16px;
+  }
+
+  &__tab {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    .member-list {
+      list-style-image: url('../../assets/svg/github.svg');
+      transform: translate(35px);
+
+      .git-link {
+        padding-left: 2px;
+      }
+
+      &::marker {
+        font-size: 1rem;
+        line-height: 1;
+      }
+    }
+
+    .location {
+      list-style-image: url('../../assets/svg/icon-location.svg');
+    }
+
+    .mail-to {
+      list-style-image: url('../../assets/svg/icon-mail.svg');
+    }
+
+    .call-to {
+      list-style-image: url('../../assets/svg/icon-call.svg');
+    }
+  }
+
+  &__item {
+    list-style-type: none;
+
+    .rs-link {
+      display: block;
+      width: 200px;
+      transition: all 0.2s ease-out;
+      padding: 10px 12px;
+
+      &:hover {
+        transform: rotate(5deg) translate(10px);
+      }
+    }
+  }
+
+  &__link {
+    font-family: $fontPrimary;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.02em;
+    color: $primary;
+    text-transform: none;
+  }
+}
