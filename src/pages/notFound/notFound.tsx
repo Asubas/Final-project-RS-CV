@@ -1,5 +1,5 @@
-import './notFound.scss'
-import img404 from '../../assets/svg/404v2.svg'
+import './notFound.scss';
+import img404 from '../../assets/svg/404v2.svg';
 
 function NotFound() {
   return (

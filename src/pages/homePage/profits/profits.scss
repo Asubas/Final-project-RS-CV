@@ -1,0 +1,55 @@
+@import '../../../App.scss';
+
+.profits {
+  padding: 96px 0 44px;
+}
+
+.profitsWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 58px;
+  padding: 30px 76px;
+  background-color: $backgroundVariant;
+
+  .benefits {
+    display: flex;
+    gap: 35px;
+
+    &_benefit {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+      padding: 10px;
+
+      &__icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .benCup {
+        background: url('../../../assets//svg/icon-local_cafe.svg') no-repeat center / contain;
+      }
+
+      .benRedeem {
+        background: url('../../../assets//svg/icon-redeem.svg') no-repeat center / contain;
+      }
+
+      .benShipping {
+        background: url('../../../assets//svg/icon-shipping.svg') no-repeat center / contain;
+      }
+
+      .benSell {
+        background: url('../../../assets//svg/icon-sell.svg') no-repeat center / contain;
+      }
+    }
+  }
+
+  .learnMore {
+    width: 281px;
+  }
+}

@@ -21,7 +21,7 @@ function App() {
         <Route path="account" element={<AccountPage />} />
         <Route path="registration" element={<RegistrationPage />} />
         <Route path="bag" element={<MyBag />} />
-        <Route path='*' element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>
