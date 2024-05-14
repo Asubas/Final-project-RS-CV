@@ -1,6 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { category } from './sliderData';
+import './slider.scss';
 
 function Slider() {
   const responsive = {
@@ -25,6 +26,7 @@ function Slider() {
 
   return (
     <section>
+      <h2 className="collectionSection">Our Collection</h2>
       <Carousel
         responsive={responsive}
         autoPlay={true}

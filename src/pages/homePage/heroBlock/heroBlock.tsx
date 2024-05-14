@@ -1,5 +1,6 @@
 import './heroBlock.scss';
 import heroImg from '../../../assets/img/hero.jpg';
+import { Link } from 'react-router-dom';
 
 function HeroBlock() {
   return (
@@ -13,7 +14,9 @@ function HeroBlock() {
             doloremque, repudiandae harum magni, praesentium veniam dicta officia pariatur sunt iure
             sequi, molestiae enim blanditiis rerum culpa nam!
           </p>
-          <button className="btn_black">browes teas</button>
+          <Link className="btn_black heroDisc_link" to="collection">
+            browes teas
+          </Link>
         </div>
       </section>
     </>

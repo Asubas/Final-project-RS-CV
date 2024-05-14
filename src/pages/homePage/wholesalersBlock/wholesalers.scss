@@ -1,0 +1,42 @@
+@import '../../../App.scss';
+
+.wholesalersSection {
+  padding: 72px 0 72px 76px;
+}
+
+.wsWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &_disc {
+    width: 456px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &__head {
+      font-family: $fontSecondary;
+      text-transform: uppercase;
+    }
+
+    &__text {
+      width: 380px;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      letter-spacing: 0.03em;
+    }
+
+    &__link {
+      width: 310px;
+    }
+  }
+
+  &_img {
+    width: 628px;
+    max-width: 628px;
+    height: 628px;
+    background: url('../../../assets/img/wholesalers.jpg') no-repeat center / contain;
+  }
+}

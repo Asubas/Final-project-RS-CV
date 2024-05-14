@@ -68,7 +68,9 @@ h1 {
 
 h2 {
   font-size: 32px;
+  font-weight: 500;
   line-height: 125%;
+  font-family: $fontSecondary;
 
   @media (max-width: 393px) {
     font-size: 24px;
