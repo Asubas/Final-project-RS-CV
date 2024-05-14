@@ -4,20 +4,30 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
-
+import createAuthorizedClient from '../../lib/authorization/userLoginFetch';
+import UseGetProject from '../../lib/useGetProject';
 type Inputs = {
   login: string;
   password: string;
 };
 
 function AccountPage() {
+  const { getProject } = UseGetProject();
   const {
     watch,
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const { login, password } = data;
+    if (isValid) {
+      const authorizedClient = createAuthorizedClient(login, password);
+      getProject(authorizedClient);
+    }
+  };
+
   const passwordEmpty = watch('password');
   const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
 

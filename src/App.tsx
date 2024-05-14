@@ -7,28 +7,11 @@ import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
 import AccountPage from './pages/accountPage/loginPage';
-import { createAnonym, projectKey } from './lib';
-import { useState, useEffect } from 'react';
+import { createAnonym } from './lib';
+import useGetProject from './lib/useGetProject';
 
 function App() {
-  const [projectDetails, setProjectDetails] = useState({});
-  const getProject = async () => {
-    try {
-      const project = await createAnonym()
-        .withProjectKey({ projectKey })
-        .customers()
-        .get()
-        .execute();
-      setProjectDetails(project.body);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    getProject();
-  }, []);
-
+  const { projectDetails } = useGetProject(createAnonym());
   return (
     <>
       <Header />
