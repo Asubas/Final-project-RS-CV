@@ -28,17 +28,50 @@
   }
 }
 
-.user-btns {
+.nav {
+  width: 60%;
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
 
-  &_btn {
-    width: 44px;
-    height: 48px;
-    padding: 12px 10px;
+  .page-links {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  }
+
+  .user-btns {
+    display: flex;
+    gap: 8px;
+
+    &_btn {
+      width: 44px;
+      height: 48px;
+      padding: 12px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .btn_header {
+      height: 40px;
+      transform: translateY(5px);
+    }
+  }
+}
+
+.burger {
+  width: 24px;
+  height: 24px;
+  padding: 6px 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  &_line {
+    width: 100%;
+    height: 2px;
+    background-color: $primary;
   }
 }
