@@ -7,10 +7,8 @@ import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
 import AccountPage from './pages/accountPage/loginPage';
-import fetchCustomers from './lib/anonymFlow';
 
 function App() {
-  fetchCustomers();
   return (
     <>
       <Header />
@@ -22,7 +20,6 @@ function App() {
         <Route path="bag" element={<MyBag />} />
       </Routes>
       <Footer />
-      {/* {JSON.stringify(projectDetails, undefined, 2)} */}
     </>
   );
 }

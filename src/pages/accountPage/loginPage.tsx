@@ -19,18 +19,23 @@ function AccountPage() {
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
 
+  const [catchError, setCatchError] = useState('');
+  const [hasCatchError, setHasCatchError] = useState(false);
+
+  const messageErrorResponse = 'Invalid email or password or such user does not exist';
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const { login, password } = data;
     if (isValid) {
-      loginUser(login, password);
+      loginUser(login, password).catch(() => {
+        setCatchError(`${messageErrorResponse}`);
+        setHasCatchError(true);
+      });
     }
   };
 
   const passwordEmpty = watch('password');
   const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
-
   const [type, setType] = useState('password');
-
   const showPassword = () => {
     if (type === 'password') {
       setType('text');
@@ -43,7 +48,7 @@ function AccountPage() {
     <div className="authorization-field">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`authorization-field_form login-form ${isValid ? 'form-valid' : 'form-invalid'}`}
+        className={`authorization-field_form login-form ${isValid && !hasCatchError ? 'form-valid' : 'form-invalid'}`}
       >
         <fieldset className="login-form_fieldset">
           <legend className="login-form_legend">Already a customer?</legend>
@@ -51,7 +56,7 @@ function AccountPage() {
           <div className="login-form_email-input-container">
             <MyInput
               className="login-form_email-input"
-              type="email"
+              type="text"
               placeholder="Email Address"
               {...register('login', {
                 required: 'This field must be completed',
@@ -62,10 +67,10 @@ function AccountPage() {
                 },
               })}
               style={{
-                border: errors.login ? '1px solid red' : '',
+                border: errors.login || catchError ? '1px solid red' : '',
               }}
             />
-            {errors.login && <span>{errors.login.message}</span>}
+            {(errors.login || catchError) && <span>{errors.login?.message || catchError}</span>}
           </div>
           <div className="login-form_password-input-container">
             <MyInput
@@ -77,17 +82,14 @@ function AccountPage() {
                 validate: validatePassword,
               })}
               style={{
-                border: errors.password ? '1px solid red' : '',
+                border: errors.password || catchError ? '1px solid red' : '',
               }}
             />
             <span className={inputContainerPasswordName} onClick={showPassword}></span>
-            {errors.password && <span>{errors.password.message}</span>}
+            {(errors.password || catchError) && (
+              <span>{errors.password?.message || catchError}</span>
+            )}
           </div>
-          <label className="login-form_remember-Label" htmlFor="rem">
-            {' '}
-            Please remember me
-            <MyInput className="login-form_remember-Input" type="checkbox" id="rem" />
-          </label>
           <MyButton className="btn_black " type="submit">
             {' '}
             Sign in
