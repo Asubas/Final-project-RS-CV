@@ -1,7 +1,6 @@
 import { PasswordAuthMiddlewareOptions, ClientBuilder } from '@commercetools/sdk-client-v2';
-import { projectKey } from '..';
 import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-sdk';
-
+const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY || '';
 const createAuthorizedClient = (email: string, password: string): ApiRoot => {
   const options: PasswordAuthMiddlewareOptions = {
     host: 'https://auth.europe-west1.gcp.commercetools.com',
@@ -22,4 +21,14 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
   return createApiBuilderFromCtpClient(userAuthorized);
 };
 
-export default createAuthorizedClient;
+async function loginUser(inputEmail: string, inputPassword: string) {
+  try {
+    const apiRoot = createAuthorizedClient(inputEmail, inputPassword);
+    const response = await apiRoot.withProjectKey({ projectKey }).customers().get().execute();
+    console.log(response, 'Api Root');
+  } catch (e: unknown) {
+    throw new Error(`Ошибка при выполнении запроса: ${(e as Error).message}`);
+  }
+}
+
+export default loginUser;

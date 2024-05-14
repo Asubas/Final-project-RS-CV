@@ -23,10 +23,18 @@ const anonymClient: Client = new ClientBuilder()
   .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
   .build();
 
-// export const getApiRoot: () => ApiRoot = () => {
-//   return createApiBuilderFromCtpClient(client);
-// };
-
-export const createAnonym: () => ApiRoot = () => {
+const createAnonym: () => ApiRoot = () => {
   return createApiBuilderFromCtpClient(anonymClient);
 };
+
+async function fetchCustomers() {
+  try {
+    const apiRoot = createAnonym();
+    const response = await apiRoot.withProjectKey({ projectKey }).customers().get().execute();
+    console.log(response, 'Api Root');
+  } catch (e: unknown) {
+    throw new Error(`Ошибка при выполнении запроса: ${(e as Error).message}`);
+  }
+}
+
+export default fetchCustomers;

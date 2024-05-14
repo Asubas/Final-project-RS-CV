@@ -4,15 +4,14 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
-import createAuthorizedClient from '../../lib/authorization/userLoginFetch';
-import UseGetProject from '../../lib/useGetProject';
+import loginUser from '../../lib/userLoginFlow';
+
 type Inputs = {
   login: string;
   password: string;
 };
 
 function AccountPage() {
-  const { getProject } = UseGetProject();
   const {
     watch,
     register,
@@ -23,8 +22,7 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const { login, password } = data;
     if (isValid) {
-      const authorizedClient = createAuthorizedClient(login, password);
-      getProject(authorizedClient);
+      loginUser(login, password);
     }
   };
 
