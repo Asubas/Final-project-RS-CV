@@ -62,14 +62,12 @@ function RegistrationPage() {
                   type="text"
                   placeholder="First name: "
                   {...register('firstName', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     pattern: {
                       value: /^[a-zA-Z]+$/,
-                      message: '',
+                      message:
+                        'Invalid format. First name must contain at least one character and no special characters or numbers',
                     },
-                    // message:
-                    //     'Invalid format. First name must contain at least one character and no special characters or numbers',
-                    // },
                   })}
                   style={{
                     border: errors.firstName ? '1px solid red' : '',
@@ -83,14 +81,12 @@ function RegistrationPage() {
                   type="text"
                   placeholder="Last name: "
                   {...register('lastName', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     pattern: {
                       value: /^[a-zA-Z]+$/,
-                      message: '',
+                      message:
+                        'Invalid format. Last name must contain at least one character and no special characters or numbers',
                     },
-                    // message:
-                    //     'Invalid format. Last name must contain at least one character and no special characters or numbers',
-                    // },
                   })}
                   style={{
                     border: errors.lastName ? '1px solid red' : '',
@@ -104,14 +100,12 @@ function RegistrationPage() {
                   type="email"
                   placeholder="Email Address"
                   {...register('email', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     pattern: {
                       value: /^\S+@([\w-]+\.)+[\w-]{2,4}$/,
-                      message: '',
+                      message:
+                        'Invalid email format. Please write an email in the format user@example.com/ru',
                     },
-                    // message:
-                    //     'Invalid email format. Please write an email in the format user@example.com/ru',
-                    // },
                   })}
                   style={{
                     border: errors.email ? '1px solid red' : '',
@@ -125,7 +119,7 @@ function RegistrationPage() {
                   type={type}
                   placeholder="Enter your password"
                   {...register('password', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     validate: validatePassword,
                   })}
                   style={{
@@ -143,11 +137,11 @@ function RegistrationPage() {
                   type={'text'}
                   placeholder="City: "
                   {...register('city', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     pattern: {
-                      value: /[A-Za-z\s-]+/,
-                      // message: "The field must be completed "
-                      message: '',
+                      value: /^[a-zA-Z]+$/,
+                      message:
+                        'Must contain at least one character and no special characters or numbers',
                     },
                   })}
                   style={{
@@ -163,18 +157,16 @@ function RegistrationPage() {
                   type={'text'}
                   placeholder="Street: "
                   {...register('street', {
-                    // required: 'This field must be completed',
+                    required: 'This field must be completed',
                     pattern: {
                       value: /.*[A-Za-z]+.*/,
-                      message: '',
-                      // message: "The field must be completed "
+                      message: 'Must contain at least one character',
                     },
                   })}
                   style={{
                     border: errors.street ? '1px solid red' : '',
                   }}
                 />
-                {/* <span className={inputContainerPasswordName} onClick={showPassword}></span> */}
                 {errors.street && <span>{errors.street.message}</span>}
               </div>
 
@@ -185,7 +177,7 @@ function RegistrationPage() {
                     type={'text'}
                     placeholder="Postal code: "
                     {...register('postalCode', {
-                      // required: 'This field must be completed',
+                      required: 'This field must be completed',
                       validate: { AccordanceCountryToPostalCode },
                     })}
                     style={{
@@ -200,7 +192,7 @@ function RegistrationPage() {
                     className="registration__input registration-form_date-of-birth-input"
                     type={'date'}
                     {...register('dateOfBirth', {
-                      // required: 'This field must be completed',
+                      required: 'This field must be completed',
                     })}
                     required={true}
                     onChange={dateCalculation}
