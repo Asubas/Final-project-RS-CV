@@ -32,6 +32,7 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
     .withProjectKey(projectKey)
     .withPasswordFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
     .build();
   return createApiBuilderFromCtpClient(userAuthorized);
 };

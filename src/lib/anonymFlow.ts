@@ -29,6 +29,7 @@ const anonymClient: Client = new ClientBuilder()
   .withProjectKey(projectKey)
   .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
+  .withLoggerMiddleware()
   .build();
 
 const createAnonym: () => ApiRoot = () => {
