@@ -38,22 +38,22 @@ function dateCalculation() {
   if (dateValue < minDate || dateValue > maxDate) {
     inputDateValue.setAttribute('style', 'border: 1px solid red');
     if (errorSpan) {
-      //   errorSpan.style.display = 'inline';
-      //   errorSpan.innerText = `Avaliable date from ${minDate.getDate()}. ${minDate.getMonth()}. ${minDate.getFullYear()} to ${maxDate.getDate()}.${maxDate.getMonth()}.${maxDate.getFullYear()} `
+      errorSpan.style.display = 'inline';
+      errorSpan.innerText = `Avaliable date from ${minDate.getDate()}. ${minDate.getMonth()}. ${minDate.getFullYear()} to ${maxDate.getDate()}.${maxDate.getMonth()}.${maxDate.getFullYear()} `;
     }
   } else {
     const ultimateDateMilliseconds = ultimateDate.getTime();
     if (inputDateMilliseconds > ultimateDateMilliseconds) {
       inputDateValue.setAttribute('style', 'border: 1px solid red');
-      //   if(errorSpan){
-      //       errorSpan.innerText = "Registration age - 16";
-      //   }
+      if (errorSpan) {
+        errorSpan.innerText = 'Registration age - 16';
+      }
       console.log(inputDateValue);
     } else {
       inputDateValue.removeAttribute('style');
-      //   if(errorSpan){
-      //       errorSpan.innerText = "";
-      //   }
+      if (errorSpan) {
+        errorSpan.innerText = '';
+      }
     }
   }
 }
