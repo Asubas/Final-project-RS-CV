@@ -27,10 +27,10 @@ function AccordanceCountryToPostalCode() {
       return '';
     case 'Poland':
       currentElement.pattern = '^\\d{2}-\\d{3}$';
-      // const matchesPoland = /^\d{2}-\d{3}$/.test(currentElement.value)
-      // if(matchesPoland === false){
-      //     return 'Must be have format **-***'
-      // }
+      //   const matchesPoland = /^\d{2}-\d{3}$/.test(currentElement.value)
+      //   if(matchesPoland === false){
+      //       return 'Must be have format **-***'
+      //   }
       currentElement.removeAttribute('style');
       return '';
     case 'Serbia':

@@ -1,9 +1,15 @@
 import './selectCountry.scss';
-import React, { useState } from 'react';
-import Select from 'react-select';
+import { useState } from 'react';
+import Select, { OnChangeValue, PropsValue } from 'react-select';
 
 function SelectCountry() {
-  const options = [
+  type InewValue = {
+    value: string;
+    label: string;
+    className: string;
+    pattern: string;
+  };
+  const options: InewValue[] = [
     { value: 'Austria', label: 'Austria', className: 'austria', pattern: '^\\d{4}$' },
     { value: 'Belarus', label: 'Belarus', className: 'belarus', pattern: '^\\d{6}$' },
     { value: 'Poland', label: 'Poland', className: 'poland', pattern: '^\\d{2}-\\d{3}$' },
@@ -12,14 +18,17 @@ function SelectCountry() {
     { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$' },
   ];
   const [currentCountry, setCurrentCountry] = useState('');
-  const getValueCountry = () => {
-    console.log(currentCountry ? options.find((country) => country.value === currentCountry) : '');
-    return currentCountry ? options.find((country) => country.value === currentCountry) : '';
+
+  const getValueCountry = (): PropsValue<InewValue> | undefined => {
+    return currentCountry ? options.find((country) => country.value === currentCountry) : undefined;
   };
-  const onChange = (newValue: any) => {
-    setCurrentCountry(newValue.value);
-    localStorage.setItem('country', newValue.value);
-    localStorage.setItem('pattern', newValue.pattern);
+
+  const onChange = (newValue: OnChangeValue<InewValue, boolean>) => {
+    if (newValue) {
+      setCurrentCountry((newValue as InewValue).value);
+      localStorage.setItem('country', (newValue as InewValue).value);
+      localStorage.setItem('pattern', (newValue as InewValue).pattern);
+    }
   };
 
   return (
@@ -34,14 +43,6 @@ function SelectCountry() {
       components={{
         IndicatorSeparator: () => null,
       }}
-      //   styles={{
-      //     container: (base) => ({
-      //         ...base,
-      //         maxWidth: '456px',
-      //         minWidth: '230px',
-      //         width: '100%'
-      //     }),
-      // }}
     />
   );
 }
