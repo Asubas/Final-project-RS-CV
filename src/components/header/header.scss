@@ -8,14 +8,20 @@
   justify-content: space-between;
   position: relative;
 
-  @media (max-width: 800px) {
+  @media (max-width: 980px) {
     padding: 8px 16px;
+  }
 
+  @media (max-width: 870px) {
     .hidden {
+      opacity: 0;
+      visibility: hidden;
       transform: translate(100%);
     }
 
     .visible {
+      opacity: 1;
+      visibility: visible;
       transform: translate(0);
     }
   }
@@ -30,7 +36,7 @@
   position: relative;
   transform: translate(56px);
 
-  @media (max-width: 800px) {
+  @media (max-width: 870px) {
     font-size: 14px;
     transform: translate(32px);
   }
@@ -44,10 +50,10 @@
     left: -56px;
     background: url('../../assets/svg/logo.svg') no-repeat center;
 
-    @media (max-width: 800px) {
+    @media (max-width: 870px) {
       width: 24px;
       height: 24px;
-      top: -7px;
+      top: -5px;
       left: -32px;
       background: url('../../assets/svg/logo.svg') no-repeat center / contain;
     }
@@ -95,9 +101,9 @@
     }
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 870px) {
     width: 267px;
-    position: absolute;
+    position: fixed;
     padding: 0px 16px 33px;
     top: 39px;
     right: 0;
@@ -109,6 +115,10 @@
       flex-direction: column;
       justify-content: start;
       padding: 32px 0;
+
+      .nav_link {
+        text-align: left;
+      }
 
       &::after {
         content: '';
@@ -167,7 +177,7 @@
     transform: translate(0em, -0.15em) rotate(135deg);
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 870px) {
     display: flex;
   }
 }
