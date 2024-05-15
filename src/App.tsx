@@ -6,7 +6,8 @@ import Footer from './components/footer/footer';
 import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
-import AccountPage from './pages/accountPage/loginPage';
+import LoginPage from './pages/accountPage/loginPage';
+import ProtectedRoute from './pages/protectedRouter';
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="collection" element={<Collection />} />
-        <Route path="account" element={<AccountPage />} />
+        <Route
+          path="login"
+          element={
+            <ProtectedRoute redirectTo="/">
+              <LoginPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="bag" element={<MyBag />} />
       </Routes>
       <Footer />

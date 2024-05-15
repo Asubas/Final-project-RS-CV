@@ -5,6 +5,7 @@ import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState, useEffect } from 'react';
 import loginUser from '../../lib/userLoginFlow';
+import { useNavigate } from 'react-router-dom';
 
 type Inputs = {
   login: string;
@@ -22,15 +23,21 @@ function AccountPage() {
 
   const [catchError, setCatchError] = useState('');
   const [hasCatchError, setHasCatchError] = useState(false);
+  const navigate = useNavigate();
 
   const messageErrorResponse = 'Invalid email or password or such user does not exist';
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     const { login, password } = data;
     if (isValid) {
-      loginUser(login, password).catch(() => {
-        setCatchError(`${messageErrorResponse}`);
-        setHasCatchError(true);
-      });
+      loginUser(login, password)
+        .then((loginResponse) => {
+          localStorage.setItem('userId', `${loginResponse.response?.customer.id}`);
+          navigate('/');
+        })
+        .catch(() => {
+          setCatchError(`${messageErrorResponse}`);
+          setHasCatchError(true);
+        });
     }
   };
 
@@ -101,6 +108,10 @@ function AccountPage() {
           <MyButton className="btn_black " type="submit">
             {' '}
             Sign in
+          </MyButton>
+          <MyButton className="btn_black " type="button">
+            {' '}
+            Sign up
           </MyButton>
         </fieldset>
       </form>

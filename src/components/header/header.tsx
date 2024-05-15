@@ -23,7 +23,7 @@ function Header() {
           <Link className="user-btns_btn" to="">
             <img className="user-btns_btn__icon" src={logoSearch} />
           </Link>
-          <Link className="user-btns_btn" to="account">
+          <Link className="user-btns_btn" to="login">
             <img className="user-btns_btn__icon" src={logoUser} />
           </Link>
           <Link className="user-btns_btn" to="bag">

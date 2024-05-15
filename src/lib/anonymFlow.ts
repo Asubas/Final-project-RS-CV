@@ -29,7 +29,7 @@ const anonymClient: Client = new ClientBuilder()
   .withProjectKey(projectKey)
   .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
-  .withLoggerMiddleware()
+  // .withLoggerMiddleware()
   .build();
 
 const createAnonym: () => ApiRoot = () => {
@@ -38,13 +38,15 @@ const createAnonym: () => ApiRoot = () => {
 
 const fetchCustomers = async () => {
   const apiRoot = createAnonym();
-  return apiRoot
+  const response = await apiRoot
     .withProjectKey({ projectKey })
     .customers()
     .get()
     .execute()
     .then((res) => res.body)
     .catch(() => null);
+
+  return { response, apiRoot };
 };
 
 export default fetchCustomers;

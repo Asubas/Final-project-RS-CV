@@ -32,7 +32,7 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
     .withProjectKey(projectKey)
     .withPasswordFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
+    // .withLoggerMiddleware()
     .build();
   return createApiBuilderFromCtpClient(userAuthorized);
 };
@@ -40,9 +40,9 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
 const loginUser = async (
   inputEmail: string,
   inputPassword: string,
-): Promise<CustomerSignInResult | null> => {
+): Promise<{ response: CustomerSignInResult | null; apiRoot: ApiRoot }> => {
   const apiRoot = createAuthorizedClient(inputEmail, inputPassword);
-  return apiRoot
+  const response = await apiRoot
     .withProjectKey({ projectKey })
     .login()
     .post({
@@ -52,7 +52,8 @@ const loginUser = async (
       },
     })
     .execute()
-    .then((response) => response.body);
+    .then((res: { body: CustomerSignInResult }) => res.body);
+  return { response, apiRoot };
 };
 
 export default loginUser;
