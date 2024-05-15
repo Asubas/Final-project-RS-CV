@@ -12,7 +12,6 @@ import RegistrationPage from './pages/registrationPage/registrationPage';
 function App() {
   return (
     <>
-      {/* <RegistrationPage /> */}
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

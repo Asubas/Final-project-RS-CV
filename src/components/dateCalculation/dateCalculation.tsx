@@ -48,7 +48,6 @@ function dateCalculation() {
       if (errorSpan) {
         errorSpan.innerText = 'Registration age - 16';
       }
-      console.log(inputDateValue);
     } else {
       inputDateValue.removeAttribute('style');
       if (errorSpan) {

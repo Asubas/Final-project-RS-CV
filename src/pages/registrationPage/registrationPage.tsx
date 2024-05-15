@@ -66,7 +66,7 @@ function RegistrationPage() {
                     pattern: {
                       value: /^[a-zA-Z]+$/,
                       message:
-                        'Invalid format. First name must contain at least one character and no special characters or numbers',
+                        'Invalid format. First name must contain at least one latin character and no special characters or numbers',
                     },
                   })}
                   style={{
@@ -85,7 +85,7 @@ function RegistrationPage() {
                     pattern: {
                       value: /^[a-zA-Z]+$/,
                       message:
-                        'Invalid format. Last name must contain at least one character and no special characters or numbers',
+                        'Invalid format. Last name must contain at least one latin character and no special characters or numbers',
                     },
                   })}
                   style={{
@@ -141,7 +141,7 @@ function RegistrationPage() {
                     pattern: {
                       value: /^[a-zA-Z]+$/,
                       message:
-                        'Must contain at least one character and no special characters or numbers',
+                        'Must contain at least one latin character and no special characters or numbers',
                     },
                   })}
                   style={{
@@ -160,7 +160,7 @@ function RegistrationPage() {
                     required: 'This field must be completed',
                     pattern: {
                       value: /.*[A-Za-z]+.*/,
-                      message: 'Must contain at least one character',
+                      message: 'Must contain at least one latin character',
                     },
                   })}
                   style={{
