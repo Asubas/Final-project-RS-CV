@@ -1,0 +1,201 @@
+@import '../../App.scss';
+.registration-field {
+  background-color: $backgroundVariant;
+  max-width: 800px;
+  padding: 35px 50px;
+  margin: 0 auto;
+
+  &_form {
+    .registration-form_fieldset {
+      border: none;
+      max-width: 550px;
+      width: 100%;
+      margin: 0 auto;
+      .registration-form_block {
+        width: 100%;
+        display: grid;
+        grid-template-rows: repeat(4, auto);
+        gap: 20px;
+        .registration-form_legend {
+          grid-row: 1;
+          font-size: 1.5rem;
+        }
+        .registration-form_inputs-block {
+          grid-row: 2;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          width: 100%;
+          gap: 20px;
+          justify-content: space-between;
+          align-items: flex-start;
+          width: fit-content;
+
+          .registration-form_email-input-container,
+          .registration-form_password-input-container,
+          .registration-form_first-name-input-container,
+          .registration-form_last-name-input-container,
+          .registration-form_country-input-container,
+          .registration-form_city-input-container,
+          .registration-form_street-input-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            &::after {
+              content: ' ';
+              background: url('../../assets/svg/icon-mail.svg') no-repeat center / contain;
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 15px;
+              left: 10px;
+            }
+          }
+          .registration-form_country-input-container,
+          .registration-form_city-input-container,
+          .registration-form_street-input-container {
+            &::after {
+              content: ' ';
+              background: url('../../assets/svg/icon-location.svg') no-repeat center / contain;
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 15px;
+              left: 10px;
+            }
+          }
+          .registration-form_first-name-input-container,
+          .registration-form_last-name-input-container {
+            &::after {
+              content: ' ';
+              background: url('../../assets/svg/icon-person.svg') no-repeat center / contain;
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 15px;
+              left: 10px;
+            }
+          }
+          .registration-form_password-input-container {
+            &::after {
+              content: ' ';
+              background: url('../../assets/svg/icon-redeem.svg') no-repeat center / contain;
+              position: absolute;
+              width: 20px;
+              height: 20px;
+              top: 15px;
+              left: 10px;
+            }
+          }
+          .registration__input {
+            padding: 16px 35px;
+            position: relative;
+            width: 230px;
+            font-size: 14px;
+            // font-size:calc(10px + 8 * (100vw - 320px) / 960);
+            margin-bottom: 10px;
+          }
+          span {
+            width: 230px;
+          }
+          .registration-form__input_date-of-birth-postal-code {
+            display: flex;
+            flex-direction: row;
+            width: 230px;
+            gap: 10px;
+
+            .registration-form_postal-code-input-container,
+            .registration-form_date-of-birth-input-container {
+              display: flex;
+              flex-direction: column;
+              .registration-form_postal-code-input,
+              .registration-form_date-of-birth-input {
+                width: 110px;
+
+                padding-right: 0;
+                padding-left: 5px;
+                font-size: 12px;
+              }
+              span {
+                width: inherit;
+              }
+            }
+          }
+        }
+        .registration-form_remember-Label {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: center;
+        }
+
+        .registration-form_remember-Input {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 603px) {
+  .registration-field {
+    &_form {
+      .registration-form_fieldset {
+        grid-template-columns: auto;
+        // max-width: 550px;
+        width: 100%;
+
+        .registration-form_block {
+          width: inherit;
+          .registration-form_inputs-block {
+            flex-direction: column;
+            // max-width: 456px;
+            width: 100%;
+            .registration-form_first-name-input-container,
+            .registration-form_last-name-input-container,
+            .registration-form_email-input-container,
+            .registration-form_password-input-container,
+            .registration-form_country-input-container,
+            .registration-form_city-input-container,
+            .registration-form_street-input-container,
+            .registration-form__input_date-of-birth-postal-code {
+              width: 100%;
+
+              .registration-form_postal-code-input-container,
+              .registration-form_date-of-birth-input-container {
+                width: 100%;
+                .registration__input {
+                  font-size: 100%;
+                  // max-width: 456px;
+                  width: 100%;
+                }
+              }
+            }
+            .registration__input {
+              font-size: 100%;
+              width: 100%;
+            }
+            span {
+              width: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 423px) {
+  .registration-field {
+    &_form {
+      .registration-form_fieldset {
+        .registration-form_block {
+          .registration-form_inputs-block {
+            .registration-form__input_date-of-birth-postal-code {
+              flex-direction: column;
+            }
+          }
+        }
+      }
+    }
+  }
+}
