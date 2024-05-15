@@ -12,9 +12,27 @@
   padding: 30px 76px;
   background-color: $backgroundVariant;
 
+  @media (max-width: 980px) {
+    padding: 32px 16px;
+  }
+
   .benefits {
     display: flex;
+    flex-wrap: wrap;
     gap: 35px;
+
+    @media (max-width: 1280px) {
+      justify-content: center;
+    }
+
+    @media (max-width: 540px) {
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 470px) {
+      gap: 0;
+    }
 
     &_benefit {
       display: flex;
@@ -29,6 +47,22 @@
       &__icon {
         width: 24px;
         height: 24px;
+
+        @media (max-width: 540px) {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      &__text {
+        @media (max-width: 1280px) {
+          width: 255px;
+        }
+
+        @media (max-width: 540px) {
+          width: 128px;
+          font-size: 14px;
+        }
       }
 
       .benCup {
