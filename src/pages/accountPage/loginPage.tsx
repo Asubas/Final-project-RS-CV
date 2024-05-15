@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import loginUser from '../../lib/userLoginFlow';
 
 type Inputs = {
@@ -16,7 +16,8 @@ function AccountPage() {
     watch,
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    clearErrors,
+    formState: { errors, isValid, isDirty },
   } = useForm<Inputs>({ mode: 'onChange' });
 
   const [catchError, setCatchError] = useState('');
@@ -44,6 +45,13 @@ function AccountPage() {
     }
   };
 
+  useEffect(() => {
+    if (isDirty && !isValid) {
+      setCatchError('');
+      setHasCatchError(false);
+      clearErrors();
+    }
+  }, [isDirty, isValid, clearErrors]);
   return (
     <div className="authorization-field">
       <form
