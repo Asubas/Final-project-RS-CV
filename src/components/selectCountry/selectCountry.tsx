@@ -28,6 +28,18 @@ function SelectCountry() {
       setCurrentCountry((newValue as InewValue).value);
       localStorage.setItem('country', (newValue as InewValue).value);
       localStorage.setItem('pattern', (newValue as InewValue).pattern);
+      const postalCodeInput = document.querySelector(
+        '.registration-form_postal-code-input',
+      ) as HTMLInputElement;
+      const postalCodeContainer = document.querySelector(
+        '.registration-form_postal-code-input-container',
+      ) as HTMLDivElement;
+      if (postalCodeInput) {
+        postalCodeInput.value = '';
+        postalCodeInput.removeAttribute('style');
+        (postalCodeContainer.children[1] as HTMLSpanElement).innerText = '';
+        postalCodeInput.pattern = String(localStorage.getItem('pattern'));
+      }
     }
   };
 

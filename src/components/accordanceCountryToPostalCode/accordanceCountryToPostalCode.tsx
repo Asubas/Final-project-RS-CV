@@ -12,6 +12,7 @@ function AccordanceCountryToPostalCode() {
       currentElement.pattern = '^\\d{4}$';
       const matchesAustria = /^\d{4}$/.test(currentElement.value);
       if (matchesAustria === false) {
+        currentElement.setAttribute('style', 'border: 1px solid red');
         return 'Must be contain 4 numbers';
       }
       currentElement.removeAttribute('style');
@@ -22,6 +23,7 @@ function AccordanceCountryToPostalCode() {
       currentElement.pattern = '^\\d{6}$';
       const matchesBelRus = /^\d{6}$/.test(currentElement.value);
       if (matchesBelRus === false) {
+        currentElement.setAttribute('style', 'border: 1px solid red');
         return 'Must be contain 6 numbers';
       }
       currentElement.removeAttribute('style');
@@ -32,6 +34,7 @@ function AccordanceCountryToPostalCode() {
       currentElement.pattern = '^\\d{2}-\\d{3}$';
       const matchesPoland = /^\d{2}-\d{3}$/.test(currentElement.value);
       if (matchesPoland === false) {
+        currentElement.setAttribute('style', 'border: 1px solid red');
         return 'Must be have format 00-000';
       }
       currentElement.removeAttribute('style');
@@ -43,6 +46,7 @@ function AccordanceCountryToPostalCode() {
       currentElement.pattern = '^^\\d{5}$';
       const matchesSerbFrance = /^\d{5}$/.test(currentElement.value);
       if (matchesSerbFrance === false) {
+        currentElement.setAttribute('style', 'border: 1px solid red');
         return 'Must be contain 5 numbers';
       }
       currentElement.removeAttribute('style');
@@ -50,6 +54,8 @@ function AccordanceCountryToPostalCode() {
     }
 
     default:
+      currentElement.removeAttribute('style');
+      currentElement.value = '';
       return ' ';
   }
 }
