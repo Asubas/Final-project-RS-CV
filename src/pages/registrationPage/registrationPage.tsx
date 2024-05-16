@@ -8,22 +8,9 @@ import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-
-type Inputs = {
-  firstName: string;
-  lastName: string;
-  login: string;
-  email: string;
-  password: string;
-  country: string;
-  city: string;
-  street: string;
-  postalCode: string;
-  dateOfBirth: string;
-};
+import { Inputs } from '../../types/typeRegistrationPage';
 
 function RegistrationPage() {
-  // localStorage.clear();
   const {
     watch,
     register,

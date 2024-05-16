@@ -1,3 +1,5 @@
+import { InewValue } from '../types/typeRegistrationPage';
+
 export const currentElementPostalCodeInput = (
   document.getElementsByClassName(
     'registration__input registration-form_postal-code-input',
@@ -16,3 +18,12 @@ export const ultimateDate = new Date(
   maxDate.getDate(),
 );
 export const ultimateDateMilliseconds = ultimateDate.getTime();
+
+export const countries: InewValue[] = [
+  { value: 'Austria', label: 'Austria', className: 'austria', pattern: '^\\d{4}$' },
+  { value: 'Belarus', label: 'Belarus', className: 'belarus', pattern: '^\\d{6}$' },
+  { value: 'Poland', label: 'Poland', className: 'poland', pattern: '^\\d{2}-\\d{3}$' },
+  { value: 'Russia', label: 'Russia', className: 'russia', pattern: '^\\d{6}$' },
+  { value: 'Serbia', label: 'Serbia', className: 'serbia', pattern: '^\\d{5}$' },
+  { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$' },
+];

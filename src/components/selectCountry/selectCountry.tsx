@@ -1,26 +1,16 @@
 import './selectCountry.scss';
 import { useState } from 'react';
 import Select, { OnChangeValue, PropsValue } from 'react-select';
+import { InewValue } from '../../types/typeRegistrationPage';
+import { countries } from '../../constants/constantsRegistrationPage';
 
 function SelectCountry() {
-  type InewValue = {
-    value: string;
-    label: string;
-    className: string;
-    pattern: string;
-  };
-  const options: InewValue[] = [
-    { value: 'Austria', label: 'Austria', className: 'austria', pattern: '^\\d{4}$' },
-    { value: 'Belarus', label: 'Belarus', className: 'belarus', pattern: '^\\d{6}$' },
-    { value: 'Poland', label: 'Poland', className: 'poland', pattern: '^\\d{2}-\\d{3}$' },
-    { value: 'Russia', label: 'Russia', className: 'russia', pattern: '^\\d{6}$' },
-    { value: 'Serbia', label: 'Serbia', className: 'serbia', pattern: '^\\d{5}$' },
-    { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$' },
-  ];
   const [currentCountry, setCurrentCountry] = useState('');
 
   const getValueCountry = (): PropsValue<InewValue> | undefined => {
-    return currentCountry ? options.find((country) => country.value === currentCountry) : undefined;
+    return currentCountry
+      ? countries.find((country) => country.value === currentCountry)
+      : undefined;
   };
 
   const onChange = (newValue: OnChangeValue<InewValue, boolean>) => {
@@ -47,7 +37,7 @@ function SelectCountry() {
 
   return (
     <Select
-      options={options}
+      options={countries}
       onChange={onChange}
       value={getValueCountry()}
       isSearchable={true}
