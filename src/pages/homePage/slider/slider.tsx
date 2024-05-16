@@ -25,7 +25,7 @@ function Slider() {
   };
 
   return (
-    <section>
+    <section className="sliderSection">
       <h2 className="collectionSection">Our Collection</h2>
       <Carousel
         responsive={responsive}
