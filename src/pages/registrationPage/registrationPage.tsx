@@ -46,7 +46,7 @@ function RegistrationPage() {
   };
 
   const initialRefPostalCode = useRef('');
-  console.log(initialRefPostalCode.current)
+  console.log(initialRefPostalCode.current);
 
   return (
     <div className="registration-field">
@@ -181,7 +181,7 @@ function RegistrationPage() {
                     placeholder="Postal code: "
                     {...register('postalCode', {
                       required: 'This field must be completed',
-                      validate: {AccordanceCountryToPostalCode},
+                      validate: { AccordanceCountryToPostalCode },
                     })}
                     style={{
                       border: errors.postalCode ? '1px solid red' : '',

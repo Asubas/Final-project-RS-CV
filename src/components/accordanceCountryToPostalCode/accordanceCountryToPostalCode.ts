@@ -1,10 +1,10 @@
-function AccordanceCountryToPostalCode() { 
+function AccordanceCountryToPostalCode() {
   const currentElement = (
     document.getElementsByClassName(
       'registration__input registration-form_postal-code-input',
     ) as HTMLCollection
   )[0] as HTMLInputElement;
-  
+
   const currentCountry = localStorage.getItem('country');
 
   switch (currentCountry) {
