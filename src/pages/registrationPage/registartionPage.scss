@@ -92,7 +92,6 @@
             position: relative;
             width: 230px;
             font-size: 14px;
-            // font-size:calc(10px + 8 * (100vw - 320px) / 960);
             margin-bottom: 10px;
           }
           span {
@@ -142,7 +141,6 @@
     &_form {
       .registration-form_fieldset {
         grid-template-columns: auto;
-        // max-width: 550px;
         width: 100%;
 
         .registration-form_block {
@@ -166,7 +164,6 @@
                 width: 100%;
                 .registration__input {
                   font-size: 100%;
-                  // max-width: 456px;
                   width: 100%;
                 }
               }

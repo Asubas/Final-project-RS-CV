@@ -185,7 +185,6 @@ function RegistrationPage() {
                     maxLength={10}
                   />
                   <span id="error"></span>
-
                   {errors.dateOfBirth && <span>{errors.dateOfBirth.message}</span>}
                 </div>
               </div>
