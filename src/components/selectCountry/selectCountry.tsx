@@ -1,8 +1,7 @@
-import './selectCountry.scss';
 import { useState } from 'react';
 import Select, { OnChangeValue, PropsValue } from 'react-select';
 import { InewValue } from '../../types/typeRegistrationPage';
-import { countries } from '../../constants/constantsRegistrationPage';
+import { countries, customStyles } from '../../constants/constantsRegistrationPage';
 
 function SelectCountry() {
   const [currentCountry, setCurrentCountry] = useState('');
@@ -42,8 +41,7 @@ function SelectCountry() {
       value={getValueCountry()}
       isSearchable={true}
       placeholder="Select country"
-      className={'select'}
-      classNamePrefix={'custom-select'}
+      styles={customStyles}
       components={{
         IndicatorSeparator: () => null,
       }}

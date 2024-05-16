@@ -1,3 +1,4 @@
+import { StylesConfig } from 'react-select';
 import { InewValue } from '../types/typeRegistrationPage';
 
 export const currentElementPostalCodeInput = (
@@ -27,3 +28,70 @@ export const countries: InewValue[] = [
   { value: 'Serbia', label: 'Serbia', className: 'serbia', pattern: '^\\d{5}$' },
   { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$' },
 ];
+
+export const customStyles: StylesConfig<InewValue> = {
+  container: (provided) => ({
+    ...provided,
+    width: 230,
+    '@media (max-width: 603px)': {
+      ...provided,
+      width: '100%',
+    },
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    backgroundColor: state.isSelected ? 'black' : state.isFocused ? '#282828d1' : 'white',
+    color: state.isFocused ? 'white' : state.isSelected ? 'white' : 'black',
+    padding: 20,
+    cursor: 'pointer',
+    '&:active': {
+      backgroundColor: 'black',
+    },
+  }),
+  control: (provided, state) => ({
+    ...provided,
+    width: 230,
+    height: 56,
+    borderRadius: 0,
+    boxShadow: state.isFocused ? 'none' : 'none',
+    border: '1px solid black',
+    cursor: 'text',
+    '&:hover': {
+      border: '1px solid black',
+      boxShadow: 'none',
+    },
+    '&:active': {
+      border: '1px solid black',
+    },
+    '@media (max-width: 603px)': {
+      ...provided,
+      width: '100%',
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    paddingLeft: 35,
+  }),
+  placeholder: (provided) => ({
+    ...provided,
+    paddingLeft: 35,
+  }),
+  valueContainer: (provided) => ({
+    ...provided,
+    paddingLeft: 0,
+  }),
+  menu: (provided) => ({
+    ...provided,
+  }),
+  menuList: (provided) => ({
+    ...provided,
+    overflow: 'hidden',
+  }),
+
+  singleValue: (provided) => ({
+    ...provided,
+    color: 'black',
+    cursor: 'text',
+    paddingLeft: 35,
+  }),
+};
