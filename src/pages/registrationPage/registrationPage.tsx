@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
@@ -44,6 +44,9 @@ function RegistrationPage() {
       setType('password');
     }
   };
+
+  const initialRefPostalCode = useRef('');
+  console.log(initialRefPostalCode.current)
 
   return (
     <div className="registration-field">
@@ -178,7 +181,7 @@ function RegistrationPage() {
                     placeholder="Postal code: "
                     {...register('postalCode', {
                       required: 'This field must be completed',
-                      validate: { AccordanceCountryToPostalCode },
+                      validate: {AccordanceCountryToPostalCode},
                     })}
                     style={{
                       border: errors.postalCode ? '1px solid red' : '',

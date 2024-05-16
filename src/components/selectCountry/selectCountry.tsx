@@ -37,7 +37,9 @@ function SelectCountry() {
       if (postalCodeInput) {
         postalCodeInput.value = '';
         postalCodeInput.removeAttribute('style');
-        (postalCodeContainer.children[1] as HTMLSpanElement).innerText = '';
+        if( (postalCodeContainer.children[1] as HTMLSpanElement)){
+          (postalCodeContainer.children[1] as HTMLSpanElement).innerText = '';
+        }
         postalCodeInput.pattern = String(localStorage.getItem('pattern'));
       }
     }
