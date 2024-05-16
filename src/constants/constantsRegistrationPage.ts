@@ -54,18 +54,28 @@ export const customStyles: StylesConfig<InewValue> = {
     height: 56,
     borderRadius: 0,
     boxShadow: state.isFocused ? 'none' : 'none',
-    border: '1px solid black',
+    border: '1px solid rgb(118, 118, 118)',
     cursor: 'text',
+    boxSizing: 'border-box',
     '&:hover': {
-      border: '1px solid black',
+      border: '1px solid rgb(118, 118, 118)',
       boxShadow: 'none',
     },
     '&:active': {
-      border: '1px solid black',
+      border: '1px solid rgb(118, 118, 118)',
     },
     '@media (max-width: 603px)': {
       ...provided,
       width: '100%',
+      height: 56,
+      borderRadius: 0,
+      boxShadow: state.isFocused ? 'none' : 'none',
+      border: '1px solid rgb(118, 118, 118)',
+      cursor: 'text',
+      '&:hover': {
+        border: '1px solid rgb(118, 118, 118)',
+        boxShadow: 'none',
+      },
     },
   }),
   input: (provided) => ({
@@ -79,9 +89,6 @@ export const customStyles: StylesConfig<InewValue> = {
   valueContainer: (provided) => ({
     ...provided,
     paddingLeft: 0,
-  }),
-  menu: (provided) => ({
-    ...provided,
   }),
   menuList: (provided) => ({
     ...provided,
