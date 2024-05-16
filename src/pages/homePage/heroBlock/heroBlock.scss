@@ -1,20 +1,40 @@
 @import '../../../App.scss';
 
 .heroWrap {
-  width: 80%;
   margin-right: auto;
   display: flex;
 
-  .heroImg {
+  @media (max-width: 870px) {
+    flex-direction: column;
+  }
+
+  .heroImgDiv {
+    width: 628px;
     max-width: 628px;
+    height: 628px;
+    background: url('../../../assets/img/hero.jpg') no-repeat center / cover;
+
+    @media (max-width: 870px) {
+      width: 100%;
+      max-width: none;
+      height: 392px;
+    }
   }
 
   .heroDisc {
-    width: 576px;
+    max-width: 576px;
     padding: 136px 0 136px 120px;
     display: flex;
     flex-direction: column;
     gap: 30px;
+
+    @media (max-width: 870px) {
+      padding: 16px;
+    }
+
+    @media (max-width: 500px) {
+      gap: 16px;
+    }
 
     &_h1 {
       font-family: $fontSecondary;
@@ -23,7 +43,7 @@
     }
 
     &_text {
-      width: 456px;
+      max-width: 456px;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
