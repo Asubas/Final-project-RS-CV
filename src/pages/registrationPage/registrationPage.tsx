@@ -1,11 +1,10 @@
 import './registartionPage.scss';
 import '../accountPage/loginPage.scss';
-// import '../../components/input/input'
 import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
@@ -44,9 +43,6 @@ function RegistrationPage() {
       setType('password');
     }
   };
-
-  const initialRefPostalCode = useRef('');
-  console.log(initialRefPostalCode.current);
 
   return (
     <div className="registration-field">
