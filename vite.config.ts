@@ -1,13 +1,13 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-
+import EnvironmentPlugin from 'vite-plugin-environment';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [react(), nodePolyfills(), EnvironmentPlugin('all')],
   css: {
     modules: {
       scopeBehaviour: 'local',
