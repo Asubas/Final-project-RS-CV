@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoSearch from '../../../assets/svg/icon-search.svg';
-// import logoUser from '../../../assets/svg/icon-person.svg';
 import logoCart from '../../../assets/svg/icon-local_mall.svg';
 
 function NavBar() {
@@ -42,13 +41,10 @@ function NavBar() {
           <Link className="user-btns_btn" to="">
             <img className="user-btns_btn__icon" src={logoSearch} />
           </Link>
-          {/* <Link className="user-btns_btn" to="account">
-              <img className="user-btns_btn__icon" src={logoUser} />
-            </Link> */}
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>
-          <Link className="btn_white btn_header" to="account">
+          <Link className="btn_white btn_header" to="login">
             Log In
           </Link>
           <Link className="btn_black btn_header" to="registrtion">

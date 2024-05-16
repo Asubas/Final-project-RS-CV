@@ -18,7 +18,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<AboutUs />} />
         <Route path="collection" element={<Collection />} />
-        <Route path="account" element={<AccountPage />} />
+        <Route path="login" element={<AccountPage />} />
         <Route path="registration" element={<RegistrationPage />} />
         <Route path="bag" element={<MyBag />} />
         <Route path="*" element={<NotFound />} />
