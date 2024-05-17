@@ -9,12 +9,8 @@ import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-import getUserObjectRegistrationPage from '../../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
 import getAccesTokenRegistrationPage from '../../api/getAccesTokenRegistartionPage/getAccesTokenRegistrationPage';
-import fetchCustomers, { ctpClient } from '../../api/BuildClient';
-
-
-
+import fetchCustomers from '../../api/BuildClient';
 
 type Inputs = {
   firstName: string;
@@ -30,7 +26,6 @@ type Inputs = {
 };
 
 function RegistrationPage() {
- 
   const {
     watch,
     register,
@@ -50,7 +45,7 @@ function RegistrationPage() {
       setType('password');
     }
   };
-  fetchCustomers()
+  fetchCustomers();
   return (
     <div className="registration-field">
       <form
