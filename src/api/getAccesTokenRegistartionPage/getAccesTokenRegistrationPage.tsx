@@ -12,10 +12,7 @@
 
 //     let result = await response.json();
 //     // console.log(result)
-   
 
 // }
-
-
 
 // export default getAccesTokenRegistrationPage;
