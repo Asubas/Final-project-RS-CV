@@ -1,4 +1,4 @@
-import { CountryField } from "../../interfaces/interfaces";
+import { CountryField } from '../../interfaces/interfaces';
 
 export default function CountryFieldF(props: CountryField) {
   return (

@@ -31,7 +31,7 @@ function RegistrationPage() {
       setType('password');
     }
   };
-  fetchCustomers()
+  fetchCustomers();
   return (
     <div className="registration-field">
       <form
