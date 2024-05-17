@@ -4,8 +4,9 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState, useEffect } from 'react';
-import loginUser from '../../lib/userLoginFlow';
 import { useNavigate } from 'react-router-dom';
+import createAuthorizedClient from '../../lib/userLoginFlow';
+import apiRoot, { projectKey } from '../../lib/anonymFlow';
 
 type Inputs = {
   login: string;
@@ -26,18 +27,32 @@ function AccountPage() {
   const navigate = useNavigate();
 
   const messageErrorResponse = 'Invalid email or password or such user does not exist';
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      loginUser(login, password)
-        .then((loginResponse) => {
-          localStorage.setItem('userId', `${loginResponse.response?.customer.id}`);
-          navigate('/');
+      const loggedUser = await apiRoot
+        .withProjectKey({ projectKey })
+        .login()
+        .post({
+          body: {
+            email: login,
+            password: password,
+          },
+        })
+        .execute()
+        .then((res) => {
+          if (res.statusCode === 200) {
+            localStorage.setItem('userId', `${res.body.customer.id}`);
+            navigate('/');
+            createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
+            return res.body.customer;
+          }
         })
         .catch(() => {
           setCatchError(`${messageErrorResponse}`);
           setHasCatchError(true);
         });
+      return loggedUser;
     }
   };
 
@@ -96,6 +111,7 @@ function AccountPage() {
                 required: 'This field must be completed',
                 validate: validatePassword,
               })}
+              autoComplete="current-password"
               style={{
                 border: errors.password || catchError ? '1px solid red' : '',
               }}

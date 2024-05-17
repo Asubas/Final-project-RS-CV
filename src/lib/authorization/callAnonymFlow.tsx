@@ -1,3 +1,3 @@
-import fetchCustomers from '../anonymFlow';
+import apiRoot, { projectKey } from '../anonymFlow';
 
-fetchCustomers();
+apiRoot.withProjectKey({ projectKey }).get().execute();

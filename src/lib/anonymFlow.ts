@@ -36,17 +36,5 @@ const createAnonym: () => ApiRoot = () => {
   return createApiBuilderFromCtpClient(anonymClient);
 };
 
-const fetchCustomers = async () => {
-  const apiRoot = createAnonym();
-  const response = await apiRoot
-    .withProjectKey({ projectKey })
-    .customers()
-    .get()
-    .execute()
-    .then((res) => res.body)
-    .catch(() => null);
-
-  return { response, apiRoot };
-};
-
-export default fetchCustomers;
+const apiRoot = createAnonym();
+export default apiRoot;

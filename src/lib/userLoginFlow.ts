@@ -4,9 +4,11 @@ import {
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-sdk';
-import { CustomerSignInResult } from '@commercetools/platform-sdk';
+// import { CustomerSignInResult } from '@commercetools/platform-sdk';
+// import apiRoot from './anonymFlow';
+// import { DefaultDeserializer } from 'v8';
+import { projectKey } from './anonymFlow';
 
-const projectKey = process.env.VITE_CTP_PROJECT_KEY || '';
 const createAuthorizedClient = (email: string, password: string): ApiRoot => {
   const options: PasswordAuthMiddlewareOptions = {
     host: 'https://auth.europe-west1.gcp.commercetools.com',
@@ -37,23 +39,4 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
   return createApiBuilderFromCtpClient(userAuthorized);
 };
 
-const loginUser = async (
-  inputEmail: string,
-  inputPassword: string,
-): Promise<{ response: CustomerSignInResult | null; apiRoot: ApiRoot }> => {
-  const apiRoot = createAuthorizedClient(inputEmail, inputPassword);
-  const response = await apiRoot
-    .withProjectKey({ projectKey })
-    .login()
-    .post({
-      body: {
-        email: inputEmail,
-        password: inputPassword,
-      },
-    })
-    .execute()
-    .then((res: { body: CustomerSignInResult }) => res.body);
-  return { response, apiRoot };
-};
-
-export default loginUser;
+export default createAuthorizedClient;
