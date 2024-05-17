@@ -9,6 +9,7 @@ import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
+import fetchCustomers from '../../api/BuildClient';
 
 function RegistrationPage() {
   const {
@@ -30,7 +31,7 @@ function RegistrationPage() {
       setType('password');
     }
   };
-
+  fetchCustomers()
   return (
     <div className="registration-field">
       <form
