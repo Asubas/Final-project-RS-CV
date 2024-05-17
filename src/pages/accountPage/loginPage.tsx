@@ -32,7 +32,7 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      const loggedUser = await apiRoot
+      const loggedUser = await apiRoot()
         .withProjectKey({ projectKey })
         .login()
         .post({

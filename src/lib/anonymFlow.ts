@@ -8,33 +8,32 @@ import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-
 
 export const projectKey = process.env.VITE_CTP_PROJECT_KEY || '';
 
-const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
-  host: 'https://auth.europe-west1.gcp.commercetools.com',
-  projectKey: process.env.VITE_CTP_PROJECT_KEY || '',
-  credentials: {
-    clientId: process.env.VITE_CTP_CLIENT_ID || '',
-    clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
-    anonymousId: crypto.randomUUID(),
-  },
-  scopes: [`manage_project:${projectKey}`],
-  fetch,
-};
+const anonymousAuthMiddlewareOptions = (): ApiRoot => {
+  const options: AnonymousAuthMiddlewareOptions = {
+    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    projectKey: process.env.VITE_CTP_PROJECT_KEY || '',
+    credentials: {
+      clientId: process.env.VITE_CTP_CLIENT_ID || '',
+      clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
+      anonymousId: crypto.randomUUID(),
+    },
+    scopes: [`manage_project:${projectKey}`],
+    fetch,
+  };
 
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: 'https://api.europe-west1.gcp.commercetools.com',
-  fetch,
-};
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: 'https://api.europe-west1.gcp.commercetools.com',
+    fetch,
+  };
 
-const anonymClient: Client = new ClientBuilder()
-  .withProjectKey(projectKey)
-  .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  // .withLoggerMiddleware()
-  .build();
+  const anonymClient: Client = new ClientBuilder()
+    .withProjectKey(projectKey)
+    .withAnonymousSessionFlow(options)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    // .withLoggerMiddleware()
+    .build();
 
-const createAnonym: () => ApiRoot = () => {
   return createApiBuilderFromCtpClient(anonymClient);
 };
 
-const apiRoot = createAnonym();
-export default apiRoot;
+export default anonymousAuthMiddlewareOptions;
