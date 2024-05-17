@@ -11,6 +11,7 @@ import AccordanceCountryToPostalCode from '../../components/accordanceCountryToP
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import getUserObjectRegistrationPage from '../../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
 import getAccesTokenRegistrationPage from '../../api/getAccesTokenRegistartionPage/getAccesTokenRegistrationPage';
+import fetchCustomers, { ctpClient } from '../../api/BuildClient';
 
 
 
@@ -29,7 +30,7 @@ type Inputs = {
 };
 
 function RegistrationPage() {
-  // localStorage.clear();
+ 
   const {
     watch,
     register,
@@ -49,7 +50,7 @@ function RegistrationPage() {
       setType('password');
     }
   };
-
+  fetchCustomers()
   return (
     <div className="registration-field">
       <form
