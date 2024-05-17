@@ -211,7 +211,7 @@ function RegistrationPage() {
               Please remember me
               <MyInput className="registration-form_remember-Input" type="checkbox" id="rem" />
             </label>
-            <MyButton className="btn_black " type="submit" onClick={getAccesTokenRegistrationPage}>
+            <MyButton className="btn_black " type="submit">
               {' '}
               Sign in
             </MyButton>
