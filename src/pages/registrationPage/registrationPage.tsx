@@ -9,7 +9,7 @@ import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-import getAccesTokenRegistrationPage from '../../api/getAccesTokenRegistartionPage/getAccesTokenRegistrationPage';
+// import getAccesTokenRegistrationPage from '../../api/getAccesTokenRegistartionPage/getAccesTokenRegistrationPage';
 import fetchCustomers from '../../api/BuildClient';
 
 type Inputs = {
