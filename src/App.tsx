@@ -7,6 +7,7 @@ import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
 import AccountPage from './pages/accountPage/loginPage';
+import RegistrationPage from './pages/registrationPage/registrationPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="about" element={<AboutUs />} />
         <Route path="collection" element={<Collection />} />
         <Route path="account" element={<AccountPage />} />
+        <Route path="registration" element={<RegistrationPage />} />
         <Route path="bag" element={<MyBag />} />
       </Routes>
       <Footer />
