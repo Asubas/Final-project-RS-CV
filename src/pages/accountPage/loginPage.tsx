@@ -7,6 +7,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
+import { Bounce, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Inputs = {
   login: string;
@@ -44,6 +46,17 @@ function AccountPage() {
           if (res.statusCode === 200) {
             localStorage.setItem('userId', `${res.body.customer.id}`);
             navigate('/');
+            toast.success('🦄 You have successfully logged in', {
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+              transition: Bounce,
+            });
             createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
             return res.body.customer;
           }
@@ -96,6 +109,7 @@ function AccountPage() {
                     'Invalid email format. Please write an email in the format user@example.com/ru',
                 },
               })}
+              autoComplete="username"
               style={{
                 border: errors.login || catchError ? '1px solid red' : '',
               }}

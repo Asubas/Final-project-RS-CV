@@ -4,9 +4,6 @@ import {
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-sdk';
-// import { CustomerSignInResult } from '@commercetools/platform-sdk';
-// import apiRoot from './anonymFlow';
-// import { DefaultDeserializer } from 'v8';
 import { projectKey } from './anonymFlow';
 
 const createAuthorizedClient = (email: string, password: string): ApiRoot => {
