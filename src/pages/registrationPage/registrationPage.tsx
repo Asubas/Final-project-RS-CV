@@ -9,7 +9,10 @@ import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
-import fetchCustomers from '../../api/BuildClient';
+import { registerCustomer } from '../../lib/userRegistartionFlow';
+
+// import regUser from '../../api/userRegistartionFlow';
+// import loginUser from '../../api/userRegistartionFlow';
 
 function RegistrationPage() {
   const {
@@ -31,7 +34,7 @@ function RegistrationPage() {
       setType('password');
     }
   };
-  fetchCustomers();
+
   return (
     <div className="registration-field">
       <form
@@ -196,7 +199,7 @@ function RegistrationPage() {
               Please remember me
               <MyInput className="registration-form_remember-Input" type="checkbox" id="rem" />
             </label>
-            <MyButton className="btn_black " type="submit">
+            <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
               {' '}
               Sign in
             </MyButton>

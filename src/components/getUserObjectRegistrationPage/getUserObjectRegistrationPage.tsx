@@ -1,4 +1,4 @@
-async function getUserObjectRegistrationPage() {
+export function getUserObjectRegistrationPage() {
   const firstNameInput = document.querySelector(
     '.registration-form_first-name-input',
   ) as HTMLInputElement;
@@ -29,27 +29,17 @@ async function getUserObjectRegistrationPage() {
   console.log(postalCodeInput.value);
   console.log(dateOfBirthInput.value);
 
-  const userRegistrationData = {
-    firstName: firstNameInput.value,
-    lastName: lastNameInput.value,
-    email: emailInput.value,
-    password: passwordInput.value,
-  };
+  // const userRegistrationData = {
+  //   firstName: firstNameInput.value,
+  //   lastName: lastNameInput.value,
+  //   email: emailInput.value,
+  //   password: passwordInput.value,
+  // };
 
-  const response = await fetch(
-    'https://api.europe-west1.gcp.commercetools.com/coffee-tea-shop/custemers/',
-    {
-      method: 'POST',
-      headers: {
-        Aithorization: 'Bearer ${BEARER_TOKEN}',
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify(userRegistrationData),
-    },
-  );
-
-  const result = await response.json();
-  alert(result.message);
+  localStorage.setItem('email', emailInput.value);
+  localStorage.setItem('firstName', firstNameInput.value);
+  localStorage.setItem('lastName', lastNameInput.value);
+  localStorage.setItem('password', passwordInput.value);
 }
 
 export default getUserObjectRegistrationPage;

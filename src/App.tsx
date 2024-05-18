@@ -7,8 +7,11 @@ import AboutUs from './pages/aboutUs/aboutUs';
 import Collection from './pages/collections/collection';
 import MyBag from './pages/myBag/myBag';
 import AccountPage from './pages/accountPage/loginPage';
+import RegistrationPage from './pages/registrationPage/registrationPage';
+import apiRoot, { projectKey } from './lib/BuildClient';
 
 function App() {
+  apiRoot.withProjectKey({ projectKey }).get().execute();
   return (
     <>
       <Header />
