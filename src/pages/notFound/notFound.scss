@@ -1,5 +1,13 @@
 @import '../../App.scss';
 
+.notFoundSection {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
 .notFoundWrap {
   display: flex;
   flex-direction: row;
