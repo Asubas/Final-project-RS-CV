@@ -3,12 +3,12 @@ import apiRoot, { projectKey } from './BuildClient';
 // import setDefaultShippingAddress from './setShippingAddress';
 
 interface AddressCust {
-  firstName: string,
-  lastName: string,
-  streetName: string,
-  postalCode: string,
-  city: string,
-  country: string
+  firstName: string;
+  lastName: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
 }
 
 interface CustomerDrafts {
@@ -16,7 +16,7 @@ interface CustomerDrafts {
   firstName: string;
   lastName: string;
   password: string;
-  addresses: AddressCust[],
+  addresses: AddressCust[];
   // defaultShippingAddress: number
 }
 
@@ -29,14 +29,14 @@ export async function registerCustomer() {
   }
 
   getUserObjectRegistrationPage();
-  const addresses: AddressCust =  {
+  const addresses: AddressCust = {
     firstName: localStorage.getItem('firstName') || '',
     lastName: localStorage.getItem('lastName') || '',
     streetName: localStorage.getItem('street') || '',
     postalCode: localStorage.getItem('postalCode') || '',
     city: localStorage.getItem('country') || '',
-    country: localStorage.getItem('countryCode') || ''
-  }
+    country: localStorage.getItem('countryCode') || '',
+  };
   const regCustomerInformation: CustomerDrafts = {
     email: localStorage.getItem('email') || '',
     firstName: localStorage.getItem('firstName') || '',
@@ -46,16 +46,16 @@ export async function registerCustomer() {
     // defaultShippingAddress: 0
   };
 
-  console.log(regCustomerInformation.email)
-  console.log(regCustomerInformation.firstName)
-  console.log( regCustomerInformation.lastName)
-  console.log(regCustomerInformation.password)
-  console.log(addresses.firstName)
-  console.log(addresses.lastName)
-  console.log(addresses.streetName)
-  console.log(addresses.postalCode)
-  console.log( addresses.city)
-  console.log(addresses.country)
+  console.log(regCustomerInformation.email);
+  console.log(regCustomerInformation.firstName);
+  console.log(regCustomerInformation.lastName);
+  console.log(regCustomerInformation.password);
+  console.log(addresses.firstName);
+  console.log(addresses.lastName);
+  console.log(addresses.streetName);
+  console.log(addresses.postalCode);
+  console.log(addresses.city);
+  console.log(addresses.country);
 
   if (
     regCustomerInformation.email &&

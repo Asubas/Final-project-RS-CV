@@ -1,4 +1,4 @@
-import { countries } from "../../constants/constantsRegistrationPage";
+import { countries } from '../../constants/constantsRegistrationPage';
 
 export function getUserObjectRegistrationPage() {
   const firstNameInput = document.querySelector(
@@ -26,12 +26,13 @@ export function getUserObjectRegistrationPage() {
   localStorage.setItem('lastName', lastNameInput.value);
   localStorage.setItem('password', passwordInput.value);
 
-  const currentCountryCode = countries.filter((country) => country.value === localStorage.getItem('country'));
+  const currentCountryCode = countries.filter(
+    (country) => country.value === localStorage.getItem('country'),
+  );
   localStorage.setItem('countryCode', currentCountryCode[0].countryCode);
- 
+
   localStorage.setItem('street', streetInput.value);
   localStorage.setItem('postalCode', postalCodeInput.value);
-
 }
 
 export default getUserObjectRegistrationPage;

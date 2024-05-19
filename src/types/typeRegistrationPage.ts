@@ -16,5 +16,5 @@ export type InewValue = {
   label: string;
   className: string;
   pattern: string;
-  countryCode: string
+  countryCode: string;
 };

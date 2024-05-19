@@ -37,7 +37,7 @@ function SelectCountry() {
       setCurrentCountry((newValue as InewValue).value);
       localStorage.setItem('country', (newValue as InewValue).value);
       localStorage.setItem('pattern', (newValue as InewValue).pattern);
-      localStorage.setItem('countryCode', (newValue as InewValue).countryCode)
+      localStorage.setItem('countryCode', (newValue as InewValue).countryCode);
       const postalCodeInput = document.querySelector(
         '.registration-form_postal-code-input',
       ) as HTMLInputElement;
