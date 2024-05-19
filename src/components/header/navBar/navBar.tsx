@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import logoSearch from '../../../assets/svg/icon-search.svg';
 import logoCart from '../../../assets/svg/icon-local_mall.svg';
+import SearchBtn from '../searchBtn/SearchBtn';
 
 function NavBar() {
   // change classes
@@ -38,9 +38,7 @@ function NavBar() {
           </Link>
         </div>
         <div className="user-btns">
-          <Link className="user-btns_btn" to="">
-            <img className="user-btns_btn__icon" src={logoSearch} />
-          </Link>
+          <SearchBtn />
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>
