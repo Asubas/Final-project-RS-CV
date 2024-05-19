@@ -10,38 +10,39 @@ export default function Footer() {
           <Link className="footer_block__head btn_blank" to="collection">
             collection
           </Link>
-          <ul className="footer_block__tab">
-            <li className="footer_block__item">
+          <div className="footer_block__tab">
+            <div className="footer_block__item">
               <Link className="footer_block__link btn_blank" to="">
                 Black Tea
               </Link>
-            </li>
-            <li className="footer_block__item">
+            </div>
+            <div className="footer_block__item">
               <Link className="footer_block__link btn_blank" to="">
                 Green Tea
               </Link>
-            </li>
-            <li className="footer_block__item">
+            </div>
+            <div className="footer_block__item">
               <Link className="footer_block__link btn_blank" to="">
                 Coffee
               </Link>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
         <div className="footer_block">
           <p className="footer_block__head btn_blank only-head">Created thanks to</p>
-          <ul className="footer_block__tab">
-            <li className="footer_block__item">
+          <div className="footer_block__tab">
+            <div className="footer_block__item">
               <a className="rs-link" href="https://rs.school/" target="_blank" rel="noreferrer">
                 <img src={rsLogo} alt="RS Logo" />
               </a>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
         <div className="footer_block">
           <p className="footer_block__head btn_blank only-head">our team</p>
-          <ul className="footer_block__tab">
-            <li className="footer_block__item member-list">
+          <div className="footer_block__tab">
+            <div className="footer_block__item member-list">
+              <div className="git-logo"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/Asubas"
@@ -50,8 +51,9 @@ export default function Footer() {
               >
                 Asubas
               </a>
-            </li>
-            <li className="footer_block__item member-list">
+            </div>
+            <div className="footer_block__item member-list">
+              <div className="git-logo"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/lipan4836"
@@ -60,8 +62,9 @@ export default function Footer() {
               >
                 lipan48
               </a>
-            </li>
-            <li className="footer_block__item member-list">
+            </div>
+            <div className="footer_block__item member-list">
+              <div className="git-logo"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="https://github.com/DzmitryAlekseev"
@@ -70,35 +73,39 @@ export default function Footer() {
               >
                 DzmitryAlekseev
               </a>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
-        <div className="footer_block">
+        <div className="footer_block contact">
           <Link className="footer_block__head btn_blank" to="about">
             contact us
           </Link>
-          <ul className="footer_block__tab">
-            <li className="footer_block__item member-list location">
+          <div className="footer_block__tab">
+            <div className="footer_block__item member-list">
+              <div className="location"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="https://maps.app.goo.gl/84e34pzSAWTHKvff6"
                 target="_blank"
                 rel="noreferrer"
               >
-                Wagonowa 1, 53-609 Wrocław, Poland
+                Wagonowa 1,
+                <br /> 53-609 Wrocław, Poland
               </a>
-            </li>
-            <li className="footer_block__item member-list mail-to">
+            </div>
+            <div className="footer_block__item member-list">
+              <div className="mail-to"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="mailto:monkeys.together@power.com"
                 target="_blank"
                 rel="noreferrer"
               >
-                Email: monkeys.together@power.com
+                Email: monkeys@team.com
               </a>
-            </li>
-            <li className="footer_block__item member-list call-to">
+            </div>
+            <div className="footer_block__item member-list">
+              <div className="call-to"></div>
               <a
                 className="footer_block__link btn_blank git-link"
                 href="tel:+48717215958"
@@ -107,8 +114,8 @@ export default function Footer() {
               >
                 Tel: +48 71 721 59 58
               </a>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
       </footer>
     </>

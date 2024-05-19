@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
 
 test('demo', () => {
@@ -9,9 +9,11 @@ test('demo', () => {
 
 test('Renders the main page', () => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
+      {' '}
+      {/* оборачиваем App в MemoryRouter */}
       <App />
-    </BrowserRouter>,
+    </MemoryRouter>,
   );
   expect(true).toBeTruthy();
 });

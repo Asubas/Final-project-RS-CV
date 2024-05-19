@@ -1,0 +1,101 @@
+@import '../../../App.scss';
+
+.profits {
+  padding: 96px 0 44px;
+
+  @media (max-width: 870px) {
+    padding: 6px 0 16px;
+  }
+}
+
+.profitsWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 58px;
+  padding: 30px 76px;
+  background-color: $backgroundVariant;
+
+  @media (max-width: 980px) {
+    padding: 32px 16px;
+  }
+
+  @media (max-width: 450px) {
+    padding: 32px 0;
+  }
+
+  .benefits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 35px;
+
+    @media (max-width: 1280px) {
+      justify-content: center;
+    }
+
+    @media (max-width: 540px) {
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 470px) {
+      gap: 0;
+    }
+
+    &_benefit {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+      padding: 10px;
+
+      @media (max-width: 450px) {
+        padding: 5px;
+      }
+
+      &__icon {
+        width: 24px;
+        height: 24px;
+
+        @media (max-width: 540px) {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      &__text {
+        @media (max-width: 1280px) {
+          width: 255px;
+        }
+
+        @media (max-width: 540px) {
+          width: 128px;
+          font-size: 14px;
+        }
+      }
+
+      .benCup {
+        background: url('../../../assets//svg/icon-local_cafe.svg') no-repeat center / contain;
+      }
+
+      .benRedeem {
+        background: url('../../../assets//svg/icon-redeem.svg') no-repeat center / contain;
+      }
+
+      .benShipping {
+        background: url('../../../assets//svg/icon-shipping.svg') no-repeat center / contain;
+      }
+
+      .benSell {
+        background: url('../../../assets//svg/icon-sell.svg') no-repeat center / contain;
+      }
+    }
+  }
+
+  .learnMore {
+    width: 281px;
+  }
+}
