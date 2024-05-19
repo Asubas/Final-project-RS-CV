@@ -22,6 +22,7 @@ export default defineConfig({
       scopeBehaviour: 'local',
     },
   },
+
   resolve: {
     alias: {
       stream: 'stream-browserify',

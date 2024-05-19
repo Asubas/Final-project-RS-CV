@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
@@ -20,15 +20,15 @@ function AccountPage() {
     watch,
     register,
     handleSubmit,
-    clearErrors,
-    formState: { errors, isValid, isDirty },
+    // clearErrors,
+    formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
 
-  const [catchError, setCatchError] = useState('');
-  const [hasCatchError, setHasCatchError] = useState(false);
+  // const [catchError, setCatchError] = useState('');
+  // const [hasCatchError, setHasCatchError] = useState(false);
   const navigate = useNavigate();
 
-  const messageErrorResponse = 'Invalid email or password or such user does not exist';
+  // const messageErrorResponse = 'Invalid email or password or such user does not exist';
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
@@ -62,8 +62,19 @@ function AccountPage() {
           }
         })
         .catch(() => {
-          setCatchError(`${messageErrorResponse}`);
-          setHasCatchError(true);
+          // setCatchError(`${messageErrorResponse}`);
+          // setHasCatchError(true);
+          toast.error('Invalid email or password or such user does not exist!', {
+            position: 'bottom-center',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
         });
       return loggedUser;
     }
@@ -80,18 +91,18 @@ function AccountPage() {
     }
   };
 
-  useEffect(() => {
-    if (isDirty && !isValid) {
-      setCatchError('');
-      setHasCatchError(false);
-      clearErrors();
-    }
-  }, [isDirty, isValid, clearErrors]);
+  // useEffect(() => {
+  // if (isDirty && !isValid) {
+  // setCatchError('');
+  // setHasCatchError(false);
+  // clearErrors();
+  // }
+  // }, [isDirty, isValid, clearErrors]);
   return (
     <div className="authorization-field">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={`authorization-field_form login-form ${isValid && !hasCatchError ? 'form-valid' : 'form-invalid'}`}
+        className={`authorization-field_form login-form ${isValid ? 'form-valid' : 'form-invalid'}`}
       >
         <fieldset className="login-form_fieldset">
           <legend className="login-form_legend">Already a customer?</legend>
@@ -111,10 +122,10 @@ function AccountPage() {
               })}
               autoComplete="username"
               style={{
-                border: errors.login || catchError ? '1px solid red' : '',
+                border: errors.login ? '1px solid red' : '',
               }}
             />
-            {(errors.login || catchError) && <span>{errors.login?.message || catchError}</span>}
+            {errors.login && <span>{errors.login?.message}</span>}
           </div>
           <div className="login-form_password-input-container">
             <MyInput
@@ -127,13 +138,11 @@ function AccountPage() {
               })}
               autoComplete="current-password"
               style={{
-                border: errors.password || catchError ? '1px solid red' : '',
+                border: errors.password ? '1px solid red' : '',
               }}
             />
             <span className={inputContainerPasswordName} onClick={showPassword}></span>
-            {(errors.password || catchError) && (
-              <span>{errors.password?.message || catchError}</span>
-            )}
+            {errors.password && <span>{errors.password?.message}</span>}
           </div>
           <MyButton className="btn_black " type="submit">
             {' '}
