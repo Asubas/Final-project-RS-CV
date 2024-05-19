@@ -33,7 +33,7 @@ export const customStyles: StylesConfig<InewValue> = {
   container: (provided) => ({
     ...provided,
     width: 230,
-    '@media (max-width: 603px)': {
+    '@media (max-width: 620px)': {
       ...provided,
       width: '100%',
     },
@@ -64,7 +64,7 @@ export const customStyles: StylesConfig<InewValue> = {
     '&:active': {
       border: '1px solid rgb(118, 118, 118)',
     },
-    '@media (max-width: 603px)': {
+    '@media (max-width: 620px)': {
       ...provided,
       width: '100%',
       height: 56,

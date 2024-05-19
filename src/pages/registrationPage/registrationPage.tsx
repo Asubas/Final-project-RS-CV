@@ -12,6 +12,7 @@ import { Inputs } from '../../types/typeRegistrationPage';
 import { registerCustomer } from '../../lib/userRegistartionFlow';
 
 function RegistrationPage() {
+  // localStorage.clear()
   const {
     watch,
     register,
@@ -255,15 +256,103 @@ function RegistrationPage() {
               </div>
             </div>
 
-            <label className="registration-form_defaultAddress-Label" htmlFor="rem">
+            <label className="registration-form_defaultAddress-Label" htmlFor="remAddress">
               {' '}
               Set as default address
               <MyInput
                 className="registration-form_defaultAddress-Input"
                 type="checkbox"
-                id="rem"
+                id="remAddress"
               />
             </label>
+
+            <h3>Shipping address:</h3>
+
+            <div className="registration-form_shipping-and-billing-addresses">
+            <div className="registration-form_city-input-ship-and-bill-container">
+                <MyInput
+                  className="registration__input registration-form_city-input-ship-and-bill-input"
+                  type={'text'}
+                  placeholder="City: "
+                  {...register('cityShip', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message:
+                        'Must contain at least one latin character and no special characters or numbers',
+                    },
+                  })}
+                  style={{
+                    border: errors.cityShip ? '1px solid red' : '',
+                  }}
+                />
+
+                {errors.cityShip && <span>{errors.cityShip.message}</span>}
+              </div>
+              <div className="registration-form_street-input-ship-and-bill-container">
+                <MyInput
+                  className="registration__input registration-form_street-input"
+                  type={'text'}
+                  placeholder="Street: "
+                  {...register('streetShip', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /.*[A-Za-z]+.*/,
+                      message: 'Must contain at least one latin character',
+                    },
+                  })}
+                  style={{
+                    border: errors.streetShip ? '1px solid red' : '',
+                  }}
+                />
+                {errors.streetShip && <span>{errors.streetShip.message}</span>}
+              </div>
+            </div>
+
+            <h3>Billing Address</h3>
+            <div className="registration-form_shipping-and-billing-addresses">
+            <div className="registration-form_city-input-ship-and-bill-container">
+                <MyInput
+                  className="registration__input registration-form_city-input"
+                  type={'text'}
+                  placeholder="City: "
+                  {...register('cityBill', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message:
+                        'Must contain at least one latin character and no special characters or numbers',
+                    },
+                  })}
+                  style={{
+                    border: errors.cityBill ? '1px solid red' : '',
+                  }}
+                />
+
+                {errors.cityBill && <span>{errors.cityBill.message}</span>}
+              </div>
+              <div className="registration-form_street-input-ship-and-bill-container">
+                <MyInput
+                  className="registration__input registration-form_street-input"
+                  type={'text'}
+                  placeholder="Street: "
+                  {...register('streetBill', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /.*[A-Za-z]+.*/,
+                      message: 'Must contain at least one latin character',
+                    },
+                  })}
+                  style={{
+                    border: errors.streetBill ? '1px solid red' : '',
+                  }}
+                />
+                {errors.streetBill && <span>{errors.streetBill.message}</span>}
+              </div>
+            </div>
+            
+
+            
 
             <label className="registration-form_remember-Label" htmlFor="rem">
               {' '}

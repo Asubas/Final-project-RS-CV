@@ -1,5 +1,6 @@
 import getUserObjectRegistrationPage from '../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
-import apiRoot, { projectKey } from './anonymFlow';
+import apiRoot, { projectKey } from './BuildClient';
+import setDefaultShippingAddress from './setShippingAddress';
 
 interface CustomerDrafts {
   email: string;
@@ -55,6 +56,7 @@ export async function registerCustomer() {
           .then((res) => {
             if (res.statusCode === 200) {
               localStorage.setItem('userId', `${res.body.customer.id}`);
+              // setDefaultShippingAddress()
               // navigate('/');
               // createAuthorizedClient(regCustomerInformation.email, regCustomerInformation.password).withProjectKey({ projectKey }).get().execute();
               return res.body.customer;
