@@ -6,7 +6,6 @@ interface CustomerDrafts {
   firstName: string;
   lastName: string;
   password: string;
- 
 }
 
 // const navigate = useNavigate();
@@ -23,7 +22,6 @@ export async function registerCustomer() {
     firstName: localStorage.getItem('firstName'),
     lastName: localStorage.getItem('lastName'),
     password: localStorage.getItem('password'),
-    
   };
 
   let existingAddressId: string | undefined;
@@ -42,7 +40,6 @@ export async function registerCustomer() {
           body: regCustomerInformation as CustomerDrafts,
         })
         .execute();
-      
 
       if (newCustomerResponse.statusCode === 201) {
         apiRoot
@@ -63,10 +60,12 @@ export async function registerCustomer() {
               return res.body.customer;
             }
           });
-          console.log(newCustomerResponse)
+        console.log(newCustomerResponse);
         return newCustomerResponse.body.customer;
       } else {
-        console.error(`Failed to register customer, status code: ${newCustomerResponse.statusCode}`);
+        console.error(
+          `Failed to register customer, status code: ${newCustomerResponse.statusCode}`,
+        );
         return null;
       }
     } catch (error) {
