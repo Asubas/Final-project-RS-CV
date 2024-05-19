@@ -1,4 +1,6 @@
-function getUserObjectRegistrationPage() {
+import { countries } from "../../constants/constantsRegistrationPage";
+
+export function getUserObjectRegistrationPage() {
   const firstNameInput = document.querySelector(
     '.registration-form_first-name-input',
   ) as HTMLInputElement;
@@ -24,15 +26,12 @@ function getUserObjectRegistrationPage() {
   localStorage.setItem('lastName', lastNameInput.value);
   localStorage.setItem('password', passwordInput.value);
 
-  localStorage.setItem('countryShipping', emailInput.value);
-  localStorage.setItem('cityShipping', firstNameInput.value);
-  localStorage.setItem('streetShipping', lastNameInput.value);
-  localStorage.setItem('postalCodeShipping', passwordInput.value);
+  const currentCountryCode = countries.filter((country) => country.value === localStorage.getItem('country'));
+  localStorage.setItem('countryCode', currentCountryCode[0].countryCode);
+ 
+  localStorage.setItem('street', streetInput.value);
+  localStorage.setItem('postalCode', postalCodeInput.value);
 
-  localStorage.setItem('countryBilling', emailInput.value);
-  localStorage.setItem('cityBilling', firstNameInput.value);
-  localStorage.setItem('streetBilling', lastNameInput.value);
-  localStorage.setItem('postalCodeBilling', passwordInput.value);
 }
 
 export default getUserObjectRegistrationPage;

@@ -21,12 +21,12 @@ export const ultimateDate = new Date(
 export const ultimateDateMilliseconds = ultimateDate.getTime();
 
 export const countries: InewValue[] = [
-  { value: 'Austria', label: 'Austria', className: 'austria', pattern: '^\\d{4}$' },
-  { value: 'Belarus', label: 'Belarus', className: 'belarus', pattern: '^\\d{6}$' },
-  { value: 'Poland', label: 'Poland', className: 'poland', pattern: '^\\d{2}-\\d{3}$' },
-  { value: 'Russia', label: 'Russia', className: 'russia', pattern: '^\\d{6}$' },
-  { value: 'Serbia', label: 'Serbia', className: 'serbia', pattern: '^\\d{5}$' },
-  { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$' },
+  { value: 'Austria', label: 'Austria', className: 'austria', pattern: '^\\d{4}$', countryCode: "AT" },
+  { value: 'Belarus', label: 'Belarus', className: 'belarus', pattern: '^\\d{6}$', countryCode: "BY" },
+  { value: 'Poland', label: 'Poland', className: 'poland', pattern: '^\\d{2}-\\d{3}$', countryCode: "PL" },
+  { value: 'Russia', label: 'Russia', className: 'russia', pattern: '^\\d{6}$', countryCode: "RU" },
+  { value: 'Serbia', label: 'Serbia', className: 'serbia', pattern: '^\\d{5}$', countryCode: "RS" },
+  { value: 'France', label: 'France', className: 'france', pattern: '^\\d{5}$', countryCode: "FR" },
 ];
 
 export const customStyles: StylesConfig<InewValue> = {

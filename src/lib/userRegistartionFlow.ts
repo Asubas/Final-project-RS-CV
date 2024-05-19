@@ -2,11 +2,22 @@ import getUserObjectRegistrationPage from '../components/getUserObjectRegistrati
 import apiRoot, { projectKey } from './BuildClient';
 // import setDefaultShippingAddress from './setShippingAddress';
 
+interface AddressCust {
+  firstName: string,
+  lastName: string,
+  streetName: string,
+  postalCode: string,
+  city: string,
+  country: string
+}
+
 interface CustomerDrafts {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
+  addresses: AddressCust[],
+  // defaultShippingAddress: number
 }
 
 // const navigate = useNavigate();
@@ -18,27 +29,52 @@ export async function registerCustomer() {
   }
 
   getUserObjectRegistrationPage();
-  const regCustomerInformation = {
-    email: localStorage.getItem('email'),
-    firstName: localStorage.getItem('firstName'),
-    lastName: localStorage.getItem('lastName'),
-    password: localStorage.getItem('password'),
+  const addresses: AddressCust =  {
+    firstName: localStorage.getItem('firstName') || '',
+    lastName: localStorage.getItem('lastName') || '',
+    streetName: localStorage.getItem('street') || '',
+    postalCode: localStorage.getItem('postalCode') || '',
+    city: localStorage.getItem('country') || '',
+    country: localStorage.getItem('countryCode') || ''
+  }
+  const regCustomerInformation: CustomerDrafts = {
+    email: localStorage.getItem('email') || '',
+    firstName: localStorage.getItem('firstName') || '',
+    lastName: localStorage.getItem('lastName') || '',
+    password: localStorage.getItem('password') || '',
+    addresses: [addresses],
+    // defaultShippingAddress: 0
   };
 
-  // let existingAddressId: string | undefined;
+  console.log(regCustomerInformation.email)
+  console.log(regCustomerInformation.firstName)
+  console.log( regCustomerInformation.lastName)
+  console.log(regCustomerInformation.password)
+  console.log(addresses.firstName)
+  console.log(addresses.lastName)
+  console.log(addresses.streetName)
+  console.log(addresses.postalCode)
+  console.log( addresses.city)
+  console.log(addresses.country)
 
   if (
-    regCustomerInformation.email !== null &&
-    regCustomerInformation.firstName !== null &&
-    regCustomerInformation.lastName !== null &&
-    regCustomerInformation.password !== null
+    regCustomerInformation.email &&
+    regCustomerInformation.firstName &&
+    regCustomerInformation.lastName &&
+    regCustomerInformation.password &&
+    addresses.firstName &&
+    addresses.lastName &&
+    addresses.streetName &&
+    addresses.postalCode &&
+    addresses.city &&
+    addresses.country
   ) {
     try {
       const newCustomerResponse = await apiRoot
         .withProjectKey({ projectKey })
         .customers()
         .post({
-          body: regCustomerInformation as CustomerDrafts,
+          body: regCustomerInformation,
         })
         .execute();
 
