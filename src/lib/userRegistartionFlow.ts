@@ -1,3 +1,4 @@
+import { BadRequest } from '@commercetools/sdk-client-v2/dist/declarations/src/sdk-client/errors';
 import getUserObjectRegistrationPage from '../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
 import apiRoot, { projectKey } from './BuildClient';
 
@@ -11,6 +12,11 @@ interface CustomerDrafts {
 // const navigate = useNavigate();
 
 export async function registerCustomer() {
+  const span = document.querySelector('.error-message') as HTMLSpanElement;
+  if(span.textContent !== ""){
+    span.innerText = "";
+  }
+  
   getUserObjectRegistrationPage();
   const regCustomerInformation = {
     email: localStorage.getItem('email'),
@@ -55,11 +61,13 @@ export async function registerCustomer() {
           });
         return response.body.customer;
       } else {
-        //   console.error(`Failed to register customer, status code: ${response.statusCode}`);
+          console.error(`Failed to register customer, status code: ${response.statusCode}`);
         return null;
       }
     } catch (error) {
-      // console.error('Error during customer registration:', error);
+      const span = document.querySelector('.error-message') as HTMLSpanElement;
+      span.innerText = (error as Error).message;
+      console.error('Error during customer registration:', error);
       return null;
     }
   }

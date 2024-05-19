@@ -199,6 +199,7 @@ function RegistrationPage() {
               Please remember me
               <MyInput className="registration-form_remember-Input" type="checkbox" id="rem" />
             </label>
+            <span className='error-message'></span>
             <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
               {' '}
               Sign in
