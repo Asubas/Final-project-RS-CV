@@ -13,10 +13,10 @@ interface CustomerDrafts {
 
 export async function registerCustomer() {
   const span = document.querySelector('.error-message') as HTMLSpanElement;
-  if(span.textContent !== ""){
-    span.innerText = "";
+  if (span.textContent !== '') {
+    span.innerText = '';
   }
-  
+
   getUserObjectRegistrationPage();
   const regCustomerInformation = {
     email: localStorage.getItem('email'),
@@ -61,7 +61,7 @@ export async function registerCustomer() {
           });
         return response.body.customer;
       } else {
-          console.error(`Failed to register customer, status code: ${response.statusCode}`);
+        console.error(`Failed to register customer, status code: ${response.statusCode}`);
         return null;
       }
     } catch (error) {
