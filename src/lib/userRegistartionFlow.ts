@@ -1,6 +1,6 @@
 import getUserObjectRegistrationPage from '../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
 import apiRoot, { projectKey } from './BuildClient';
-import setDefaultShippingAddress from './setShippingAddress';
+// import setDefaultShippingAddress from './setShippingAddress';
 
 interface CustomerDrafts {
   email: string;
