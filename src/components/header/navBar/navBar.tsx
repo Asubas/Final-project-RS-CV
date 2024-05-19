@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
@@ -8,6 +8,7 @@ function NavBar() {
   const [burgerClass, setBurgerClass] = useState('burger-bar unclicked');
   const [menuClass, setMenuClass] = useState('menu hidden');
   const [isMenuClicked, setIsMenuClicked] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   // toggle menu burger menu change
   const updateMenu = () => {
@@ -21,9 +22,30 @@ function NavBar() {
     setIsMenuClicked(!isMenuClicked);
   };
 
+  // check outside click
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setBurgerClass('burger-bar unclicked');
+      setMenuClass('menu hidden');
+      setIsMenuClicked(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuClicked) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isMenuClicked]);
+
   return (
     <>
-      <div className="burger-menu" onClick={updateMenu}>
+      <div className="burger-menu" onClick={updateMenu} ref={menuRef}>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
