@@ -269,7 +269,7 @@ function RegistrationPage() {
             <h3>Shipping address:</h3>
 
             <div className="registration-form_shipping-and-billing-addresses">
-            <div className="registration-form_city-input-ship-and-bill-container">
+              <div className="registration-form_city-input-ship-and-bill-container">
                 <MyInput
                   className="registration__input registration-form_city-input-ship-and-bill-input"
                   type={'text'}
@@ -311,7 +311,7 @@ function RegistrationPage() {
 
             <h3>Billing Address</h3>
             <div className="registration-form_shipping-and-billing-addresses">
-            <div className="registration-form_city-input-ship-and-bill-container">
+              <div className="registration-form_city-input-ship-and-bill-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
                   type={'text'}
@@ -350,9 +350,6 @@ function RegistrationPage() {
                 {errors.streetBill && <span>{errors.streetBill.message}</span>}
               </div>
             </div>
-            
-
-            
 
             <label className="registration-form_remember-Label" htmlFor="rem">
               {' '}
