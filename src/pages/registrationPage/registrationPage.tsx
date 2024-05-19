@@ -11,9 +11,6 @@ import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
 import { registerCustomer } from '../../lib/userRegistartionFlow';
 
-// import regUser from '../../api/userRegistartionFlow';
-// import loginUser from '../../api/userRegistartionFlow';
-
 function RegistrationPage() {
   const {
     watch,

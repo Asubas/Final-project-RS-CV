@@ -8,9 +8,6 @@ import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-
 // import fetch from 'node-fetch';
 
 export const projectKey = import.meta.env.VITE_CTP_PROJECT_KEY || '';
-// if (!projectKey) {
-//   throw new Error(`Missing required option (${projectKey})`);
-// }
 
 const anonymousAuthMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',

@@ -1,4 +1,4 @@
-export function getUserObjectRegistrationPage() {
+function getUserObjectRegistrationPage() {
   const firstNameInput = document.querySelector(
     '.registration-form_first-name-input',
   ) as HTMLInputElement;
@@ -28,13 +28,6 @@ export function getUserObjectRegistrationPage() {
   console.log(streetInput.value);
   console.log(postalCodeInput.value);
   console.log(dateOfBirthInput.value);
-
-  // const userRegistrationData = {
-  //   firstName: firstNameInput.value,
-  //   lastName: lastNameInput.value,
-  //   email: emailInput.value,
-  //   password: passwordInput.value,
-  // };
 
   localStorage.setItem('email', emailInput.value);
   localStorage.setItem('firstName', firstNameInput.value);
