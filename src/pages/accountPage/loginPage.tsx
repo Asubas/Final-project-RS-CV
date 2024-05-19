@@ -4,7 +4,7 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
 import { Bounce, toast } from 'react-toastify';
@@ -135,10 +135,9 @@ function AccountPage() {
             {' '}
             Sign in
           </MyButton>
-          <MyButton className="btn_black " type="button">
-            {' '}
-            Sign up
-          </MyButton>
+          <Link to="/" className="btn_black">
+            SIGN UP
+          </Link>
         </fieldset>
       </form>
     </div>
