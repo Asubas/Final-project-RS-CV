@@ -50,7 +50,7 @@
 //                 },
 //               })
 //               .execute();
-      
+
 //             addressId = addAddressResponse.body.addresses?.find(
 //               (addr) =>
 //                 addr.streetName === address.streetName &&
@@ -59,11 +59,11 @@
 //                 addr.country === address.country
 //             )?.id;
 //           }
-      
+
 //           if (!addressId) {
 //             throw new Error('Failed to add or find address');
 //           }
-      
+
 //           // Установить адрес по умолчанию для доставки
 //           await apiRoot
 //             .withProjectKey({ projectKey })
@@ -81,13 +81,13 @@
 //               },
 //             })
 //             .execute();
-      
+
 //           console.log('Default shipping address set successfully');
-        
+
 //     }
-  
+
 // } catch (error) {
 //     console.error('Error setting default shipping address:', error);
 //   }
-   
+
 // }

@@ -24,7 +24,7 @@ export async function registerCustomer() {
     password: localStorage.getItem('password'),
   };
 
-  let existingAddressId: string | undefined;
+  // let existingAddressId: string | undefined;
 
   if (
     regCustomerInformation.email !== null &&
