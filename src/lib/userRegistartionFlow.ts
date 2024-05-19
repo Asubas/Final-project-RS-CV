@@ -6,6 +6,7 @@ interface CustomerDrafts {
   firstName: string;
   lastName: string;
   password: string;
+ 
 }
 
 // const navigate = useNavigate();
@@ -22,7 +23,10 @@ export async function registerCustomer() {
     firstName: localStorage.getItem('firstName'),
     lastName: localStorage.getItem('lastName'),
     password: localStorage.getItem('password'),
+    
   };
+
+  let existingAddressId: string | undefined;
 
   if (
     regCustomerInformation.email !== null &&
@@ -31,16 +35,17 @@ export async function registerCustomer() {
     regCustomerInformation.password !== null
   ) {
     try {
-      const response = await apiRoot()
+      const newCustomerResponse = await apiRoot
         .withProjectKey({ projectKey })
         .customers()
         .post({
           body: regCustomerInformation as CustomerDrafts,
         })
         .execute();
+      
 
-      if (response.statusCode === 201) {
-        apiRoot()
+      if (newCustomerResponse.statusCode === 201) {
+        apiRoot
           .withProjectKey({ projectKey })
           .login()
           .post({
@@ -58,9 +63,10 @@ export async function registerCustomer() {
               return res.body.customer;
             }
           });
-        return response.body.customer;
+          console.log(newCustomerResponse)
+        return newCustomerResponse.body.customer;
       } else {
-        console.error(`Failed to register customer, status code: ${response.statusCode}`);
+        console.error(`Failed to register customer, status code: ${newCustomerResponse.statusCode}`);
         return null;
       }
     } catch (error) {

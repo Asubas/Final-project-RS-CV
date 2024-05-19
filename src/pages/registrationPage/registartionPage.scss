@@ -130,18 +130,16 @@
           }
         }
 
-        // .registration-form_shipping-address-block{
-
-        //   display: flex;
-        //   flex-direction: row;
-        //   flex-wrap: wrap;
-        //   width: 100%;
-        //   gap: 20px;
-        //   justify-content: space-between;
-        //   align-items: flex-start;
-        //   width: fit-content;
-        // }
         .registration-form_remember-Label {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: center;
+        }
+
+        .registration-form_defaultAddress-Input {
+          margin-right: 10px;
+        }
+        .registration-form_defaultAddress-Label {
           display: flex;
           flex-direction: row-reverse;
           justify-content: center;

@@ -255,6 +255,12 @@ function RegistrationPage() {
               </div>
             </div>
 
+            <label className="registration-form_defaultAddress-Label" htmlFor="rem">
+              {' '}
+              Set as default address
+              <MyInput className="registration-form_defaultAddress-Input" type="checkbox" id="rem" />
+            </label>
+
             <label className="registration-form_remember-Label" htmlFor="rem">
               {' '}
               Please remember me
