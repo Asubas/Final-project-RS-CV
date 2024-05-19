@@ -1,4 +1,3 @@
-import { BadRequest } from '@commercetools/sdk-client-v2/dist/declarations/src/sdk-client/errors';
 import getUserObjectRegistrationPage from '../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
 import apiRoot, { projectKey } from './BuildClient';
 
@@ -65,8 +64,8 @@ export async function registerCustomer() {
         return null;
       }
     } catch (error) {
-      const span = document.querySelector('.error-message') as HTMLSpanElement;
-      span.innerText = (error as Error).message;
+      const spanError = document.querySelector('.error-message') as HTMLSpanElement;
+      spanError.innerText = (error as Error).message;
       console.error('Error during customer registration:', error);
       return null;
     }
