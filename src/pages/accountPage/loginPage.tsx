@@ -20,15 +20,11 @@ function AccountPage() {
     watch,
     register,
     handleSubmit,
-    // clearErrors,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
 
-  // const [catchError, setCatchError] = useState('');
-  // const [hasCatchError, setHasCatchError] = useState(false);
   const navigate = useNavigate();
 
-  // const messageErrorResponse = 'Invalid email or password or such user does not exist';
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
@@ -62,8 +58,6 @@ function AccountPage() {
           }
         })
         .catch(() => {
-          // setCatchError(`${messageErrorResponse}`);
-          // setHasCatchError(true);
           toast.error('Invalid email or password or such user does not exist!', {
             position: 'bottom-center',
             autoClose: 3000,
@@ -91,13 +85,6 @@ function AccountPage() {
     }
   };
 
-  // useEffect(() => {
-  // if (isDirty && !isValid) {
-  // setCatchError('');
-  // setHasCatchError(false);
-  // clearErrors();
-  // }
-  // }, [isDirty, isValid, clearErrors]);
   return (
     <div className="authorization-field">
       <form
