@@ -1,4 +1,3 @@
-import './button.scss';
 import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
 
 type buttonElement = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;

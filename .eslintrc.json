@@ -14,7 +14,7 @@
     "airbnb/hooks",
     "plugin:prettier/recommended"
   ],
-  "ignorePatterns": ["dist", ".eslintrc.json", "vite.config.ts", "jest.config.ts"],
+  "ignorePatterns": ["dist", ".eslintrc.json", "vite.config.ts", "jest.config.ts", "coverage/**/*"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -34,7 +34,7 @@
       "error",
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"]
+        "format": ["camelCase", "PascalCase"]
       }
     ]
   },
