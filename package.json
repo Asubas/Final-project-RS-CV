@@ -6,7 +6,6 @@
   "scripts": {
     "prettier-check": "prettier --write \"src/**/*.{ts,tsx,js,jsx,css,scss}\" && prettier --list-different \"src/**/*.{ts,tsx,js,jsx,css,scss}\"",
     "pre-push": "eslint . && validate-branch-name",
-    "pre-push": "eslint . && validate-branch-name",
     "format": "prettier --write .",
     "ci:format": "prettier --check .",
     "dev": "vite",
@@ -20,24 +19,19 @@
     "@commercetools/importapi-sdk": "^5.4.0",
     "@commercetools/platform-sdk": "^7.8.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
-    "dotenv": "^16.4.5",
-    "@testing-library/jest-dom": "^6.4.5",
     "jest-environment-jsdom": "^29.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0"
-    "react-router-dom": "^6.23.0",
-    "react-select": "^5.8.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
- 
+    "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.6",
     "@types/jest": "^29.5.12",
-    "@types/node-fetch": "^2.6.11",
     "@types/node-fetch": "^2.6.11",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
@@ -60,7 +54,6 @@
     "jest": "^29.7.0",
     "jest-css-modules": "^2.1.0",
     "prettier": "3.2.5",
-    "rollup-plugin-polyfill-node": "^0.13.0",
     "rollup-plugin-polyfill-node": "^0.13.0",
     "sass": "^1.76.0",
     "sass-loader": "^14.2.1",

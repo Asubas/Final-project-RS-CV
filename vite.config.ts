@@ -25,49 +25,11 @@ export default defineConfig({
         }),
         NodeModulesPolyfillPlugin(),
       ],
-  plugins: [
-    react(),
-    EnvironmentPlugin([
-      'VITE_CTP_CLIENT_ID',
-      'VITE_CTP_CLIENT_SECRET',
-      'VITE_CTP_PROJECT_SCOPE',
-      'VITE_CTP_PROJECT_KEY',
-      'VITE_CTP_API_URL',
-      'VITE_CTP_API_AUTH',
-    ]),
-  ],
-  css: {
-    modules: {
-      scopeBehaviour: 'local',
     },
   },
   build: {
     // rollupOptions: {
     //   plugins: [rollupNodePolyFill()],
     // },
-  },
-  resolve: {
-    alias: {
-      stream: 'stream-browserify',
-    },
-  },
-  define: {
-    // By default, Vite doesn't include shims for NodeJS/
-    // necessary for segment analytics lib to work
-    global: {},
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: 'window',
-      },
-      plugins: [
-        NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true,
-        }),
-        NodeModulesPolyfillPlugin(),
-      ],
-    },
   },
 });
