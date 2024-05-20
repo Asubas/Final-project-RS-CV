@@ -8,15 +8,48 @@ import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginRef } from '../../components/header/navBar/navBar';
+import { Bounce, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import registerCustomer from '../../lib/userRegistartionFlow';
-
 function RegistrationPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = () => registerCustomer();
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    registerCustomer().then((res) => {
+      localStorage.setItem('userId', `${res}`);
+      navigate('/');
+      if (loginRef.current) loginRef.current.textContent = 'log out';
+      toast.success('🦄 You have successfully logged in', {
+        position: 'top-right',
+        autoClose: 3000,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+    });
+  };
+
+  const [isCheckedShipping, setIsCheckedShipping] = useState(false);
+  const [isCheckedBilling, setIsCheckedBilling] = useState(false);
+  const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedShipping(event.target.checked);
+    localStorage.setItem('setDefaultShippingAddress', String(event.target.checked));
+  };
+
+  const handleCheckboxBillingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedBilling(event.target.checked);
+    localStorage.setItem('setDefaultBillingAddress', String(event.target.checked));
+  };
   return (
     <div className="registration-field">
       <form
@@ -31,6 +64,7 @@ function RegistrationPage() {
               <div className="registration-form_first-name-input-container">
                 <MyInput
                   className="registration__input registration-form_first-name-input"
+                  autoComplete="current-password"
                   type="text"
                   placeholder="First name: "
                   {...register('firstName', {
@@ -50,6 +84,7 @@ function RegistrationPage() {
               <div className="registration-form_last-name-input-container">
                 <MyInput
                   className="registration__input registration-form_last-name-input"
+                  autoComplete="current-password"
                   type="text"
                   placeholder="Last name: "
                   {...register('lastName', {
@@ -69,6 +104,7 @@ function RegistrationPage() {
               <div className="registration-form_email-input-container">
                 <MyInput
                   className="registration__input registration-form_email-input"
+                  autoComplete="current-password"
                   type="email"
                   placeholder="Email Address"
                   {...register('email', {
@@ -88,6 +124,7 @@ function RegistrationPage() {
               <div className="registration-form_password-input-container">
                 <MyInput
                   className="registration__input registration-form_password-input"
+                  autoComplete="current-password"
                   placeholder="Enter your password"
                   {...register('password', {
                     required: 'This field must be completed',
@@ -103,6 +140,7 @@ function RegistrationPage() {
               <div className="registration-form_date-of-birth-input-container">
                 <MyInput
                   className="registration__input registration-form_date-of-birth-input"
+                  autoComplete="current-password"
                   type={'date'}
                   {...register('dateOfBirth', {
                     required: 'This field must be completed',
@@ -122,6 +160,7 @@ function RegistrationPage() {
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
                   {...register('cityShipping', {
@@ -141,6 +180,7 @@ function RegistrationPage() {
               <div className="registration-form_street-input-container">
                 <MyInput
                   className="registration__input registration-form_street-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Street: "
                   {...register('streetShipping', {
@@ -159,6 +199,7 @@ function RegistrationPage() {
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Postal code: "
                   {...register('postalCodeShipping', {
@@ -173,12 +214,28 @@ function RegistrationPage() {
                 {errors.postalCodeShipping && <span>{errors.postalCodeShipping.message}</span>}
               </div>
             </div>
+
+            <label className="registration-form_defaultAddress-Label" htmlFor="remShippingAddress">
+              {' '}
+              Set as default shipping address
+              <MyInput
+                className="registration-form_defaultAddress-Input"
+                autoComplete="current-password"
+                name="shipping"
+                type="checkbox"
+                id="remShippingAddress"
+                checked={isCheckedShipping}
+                onChange={handleCheckboxShippingChange}
+              />
+            </label>
+
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
               <SelectCountry />
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
                   {...register('cityBilling', {
@@ -198,6 +255,7 @@ function RegistrationPage() {
               <div className="registration-form_street-input-container">
                 <MyInput
                   className="registration__input registration-form_street-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Street: "
                   {...register('streetBilling', {
@@ -216,6 +274,7 @@ function RegistrationPage() {
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Postal code: "
                   {...register('postalCodeBilling', {
@@ -230,7 +289,22 @@ function RegistrationPage() {
                 {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
               </div>
             </div>
-            <MyButton className="btn_black " type="submit">
+
+            <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
+              {' '}
+              Set as default billing address
+              <MyInput
+                className="registration-form_defaultAddress-Input"
+                autoComplete="current-password"
+                type="checkbox"
+                name="billing"
+                id="remBillingAddress"
+                checked={isCheckedBilling}
+                onChange={handleCheckboxBillingChange}
+              />
+            </label>
+            <span className="error-message"></span>
+            <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
               {' '}
               Sign in
             </MyButton>

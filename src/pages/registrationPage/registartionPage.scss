@@ -92,9 +92,6 @@
               left: 10px;
             }
           }
-          // .registration-form_postal-code-input-container{
-
-          // }
           .registration__input {
             padding: 16px 35px;
             position: relative;
@@ -111,36 +108,17 @@
             flex-direction: row;
             width: 230px;
             gap: 10px;
-
-            // .registration-form_postal-code-input-container {
-            //   display: flex;
-            //   flex-direction: column;
-            //   .registration-form_postal-code-input,
-            //   .registration-form_date-of-birth-input {
-            //     width: 110px;
-
-            //     padding-right: 0;
-            //     padding-left: 5px;
-            //     font-size: 12px;
-            //   }
-            //   span {
-            //     width: inherit;
-            //   }
-            // }
           }
         }
+        .registration-form_defaultAddress-Label {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: center;
+        }
 
-        // .registration-form_shipping-address-block{
-
-        //   display: flex;
-        //   flex-direction: row;
-        //   flex-wrap: wrap;
-        //   width: 100%;
-        //   gap: 20px;
-        //   justify-content: space-between;
-        //   align-items: flex-start;
-        //   width: fit-content;
-        // }
+        .registration-form_defaultAddress-Input {
+          margin-right: 10px;
+        }
         .registration-form_remember-Label {
           display: flex;
           flex-direction: row-reverse;
