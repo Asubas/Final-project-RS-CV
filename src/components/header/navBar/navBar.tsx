@@ -48,11 +48,7 @@ function NavBar() {
       <Link className="brand" to="/">
         Monkey Tea
       </Link>
-      <div className="burger-menu" onClick={updateMenu} ref={menuRef}>
-        <div className={burgerClass}></div>
-        <div className={burgerClass}></div>
-        <div className={burgerClass}></div>
-      </div>
+      <SearchBtn />
       <nav className={menuClass}>
         <div className="page-links">
           <Link className="nav_link btn_blank" to="/collection">
@@ -62,19 +58,24 @@ function NavBar() {
             about us
           </Link>
         </div>
-        <SearchBtn />
+        {/* <SearchBtn /> */}
         <div className="user-btns">
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>
           <Link className="btn_white btn_header" to="login">
-            Log In
+            Sing In
           </Link>
           <Link className="btn_black btn_header" to="registrtion">
-            Sing In
+            Sing up
           </Link>
         </div>
       </nav>
+      <div className="burger-menu" onClick={updateMenu} ref={menuRef}>
+        <div className={burgerClass}></div>
+        <div className={burgerClass}></div>
+        <div className={burgerClass}></div>
+      </div>
     </>
   );
 }

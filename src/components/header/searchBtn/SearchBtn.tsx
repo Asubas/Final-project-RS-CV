@@ -30,16 +30,18 @@ function SearchBtn() {
 
   return (
     <>
-      <MyInput
-        className={`searchField ${isSearchVisible ? 'searchVis' : ''}`}
-        type="search"
-        placeholder="Search..."
-        ref={searchInputRef}
-      />
-      <div className="searchBlock" style={{ position: 'relative' }} ref={searchRef}>
-        <button className="user-btns_btn searchBtn" onClick={toggleSearchVisibility}>
-          <img className="user-btns_btn__icon" src={logoSearch} alt="Search" />
-        </button>
+      <div className="search">
+        <MyInput
+          className={`searchField ${isSearchVisible ? 'searchVis' : ''}`}
+          type="search"
+          placeholder="Search..."
+          ref={searchInputRef}
+        />
+        <div className="searchBlock" style={{ position: 'relative' }} ref={searchRef}>
+          <button className="user-btns_btn searchBtn" onClick={toggleSearchVisibility}>
+            <img className="user-btns_btn__icon" src={logoSearch} alt="Search" />
+          </button>
+        </div>
       </div>
     </>
   );
