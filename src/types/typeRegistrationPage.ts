@@ -5,10 +5,14 @@ export type Inputs = {
   email: string;
   password: string;
   dateOfBirth: string;
-  cityShip: string;
-  streetShip: string;
-  cityBill: string;
-  streetBill: string;
+  countryShipping: string;
+  cityShipping: string;
+  streetShipping: string;
+  postalCodeShipping: string;
+  countryBilling: string;
+  cityBilling: string;
+  streetBilling: string;
+  postalCodeBilling: string;
 };
 
 export type InewValue = {
