@@ -5,7 +5,9 @@ function Header() {
   return (
     <>
       <header className="header">
-        <NavBar />
+        <div className="headerWrap">
+          <NavBar />
+        </div>
       </header>
     </>
   );

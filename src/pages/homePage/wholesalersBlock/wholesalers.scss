@@ -10,12 +10,21 @@
   @media (max-width: 870px) {
     padding: 32px 0 0 0;
   }
+
+  .wholesalersCont {
+    max-width: 1280px;
+  }
 }
 
 .wsWrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 76px;
+
+  @media (max-width: 1280px) {
+    margin-left: 0;
+  }
 
   @media (max-width: 870px) {
     flex-direction: column-reverse;

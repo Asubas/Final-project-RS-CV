@@ -1,9 +1,10 @@
 @import '../../App.scss';
 
-.header {
+.headerWrap {
   width: 100%;
   max-width: 1280px;
   max-height: 64px;
+  margin: 0 auto;
   padding: 30px 72px;
   display: flex;
   align-items: center;
