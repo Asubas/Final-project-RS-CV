@@ -64,10 +64,10 @@ function NavBar() {
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>
           <Link className="btn_white btn_header" to="login">
-            Sing In
+            Sign In
           </Link>
-          <Link className="btn_black btn_header" to="registrtion">
-            Sing up
+          <Link className="btn_black btn_header" to="registration">
+            Sing Up
           </Link>
         </div>
       </nav>

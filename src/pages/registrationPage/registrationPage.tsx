@@ -4,7 +4,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
-import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
@@ -13,25 +12,11 @@ import { registerCustomer } from '../../lib/userRegistartionFlow';
 
 function RegistrationPage() {
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  const passwordEmpty = watch('password');
-  const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
-
-  const [type, setType] = useState('');
-
-  const showPassword = () => {
-    if (type === 'password') {
-      setType('text');
-    } else {
-      setType('password');
-    }
-  };
-
+  const onSubmit: SubmitHandler<Inputs> = () => registerCustomer();
   return (
     <div className="registration-field">
       <form
@@ -103,7 +88,6 @@ function RegistrationPage() {
               <div className="registration-form_password-input-container">
                 <MyInput
                   className="registration__input registration-form_password-input"
-                  type={type}
                   placeholder="Enter your password"
                   {...register('password', {
                     required: 'This field must be completed',
@@ -113,7 +97,6 @@ function RegistrationPage() {
                     border: errors.password ? '1px solid red' : '',
                   }}
                 />
-                <span className={inputContainerPasswordName} onClick={showPassword}></span>
                 {errors.password && <span>{errors.password.message}</span>}
               </div>
 
@@ -136,7 +119,6 @@ function RegistrationPage() {
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
               <SelectCountry />
-
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -154,7 +136,6 @@ function RegistrationPage() {
                     border: errors.cityShipping ? '1px solid red' : '',
                   }}
                 />
-
                 {errors.cityShipping && <span>{errors.cityShipping.message}</span>}
               </div>
               <div className="registration-form_street-input-container">
@@ -175,7 +156,6 @@ function RegistrationPage() {
                 />
                 {errors.streetShipping && <span>{errors.streetShipping.message}</span>}
               </div>
-
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
@@ -193,11 +173,9 @@ function RegistrationPage() {
                 {errors.postalCodeShipping && <span>{errors.postalCodeShipping.message}</span>}
               </div>
             </div>
-
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
               <SelectCountry />
-
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -215,7 +193,6 @@ function RegistrationPage() {
                     border: errors.cityBilling ? '1px solid red' : '',
                   }}
                 />
-
                 {errors.cityBilling && <span>{errors.cityBilling.message}</span>}
               </div>
               <div className="registration-form_street-input-container">
@@ -236,7 +213,6 @@ function RegistrationPage() {
                 />
                 {errors.streetBilling && <span>{errors.streetBilling.message}</span>}
               </div>
-
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
@@ -254,18 +230,11 @@ function RegistrationPage() {
                 {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
               </div>
             </div>
-
-            <label className="registration-form_remember-Label" htmlFor="rem">
-              {' '}
-              Please remember me
-              <MyInput className="registration-form_remember-Input" type="checkbox" id="rem" />
-            </label>
-            <span className="error-message"></span>
-            <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
+            <MyButton className="btn_black " type="submit">
               {' '}
               Sign in
             </MyButton>
-            <MyButton className="btn_black " type="submit">
+            <MyButton className="btn_black " type="button">
               {' '}
               Back to Login page
             </MyButton>

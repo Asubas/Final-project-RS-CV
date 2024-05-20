@@ -31,7 +31,7 @@ function App() {
             }
           />
           <Route path="bag" element={<MyBag />} />
-          <Route path="registrtion" element={<RegistrationForm />} />
+          <Route path="registration" element={<RegistrationForm />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

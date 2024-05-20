@@ -131,7 +131,7 @@ function AccountPage() {
             <span className={inputContainerPasswordName} onClick={showPassword}></span>
             {errors.password && <span>{errors.password?.message}</span>}
           </div>
-          <MyButton className="btn_black " type="submit">
+          <MyButton className="btn_white " type="submit">
             {' '}
             Sign in
           </MyButton>
