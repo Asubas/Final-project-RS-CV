@@ -33,6 +33,16 @@ function getUserObjectRegistrationPage() {
   localStorage.setItem('firstName', firstNameInput.value);
   localStorage.setItem('lastName', lastNameInput.value);
   localStorage.setItem('password', passwordInput.value);
+
+  localStorage.setItem('countryShipping', emailInput.value);
+  localStorage.setItem('cityShipping', firstNameInput.value);
+  localStorage.setItem('streetShipping', lastNameInput.value);
+  localStorage.setItem('postalCodeShipping', passwordInput.value);
+
+  localStorage.setItem('countryBilling', emailInput.value);
+  localStorage.setItem('cityBilling', firstNameInput.value);
+  localStorage.setItem('streetBilling', lastNameInput.value);
+  localStorage.setItem('postalCodeBilling', passwordInput.value);
 }
 
 export default getUserObjectRegistrationPage;

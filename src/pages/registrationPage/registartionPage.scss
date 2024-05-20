@@ -20,8 +20,9 @@
           grid-row: 1;
           font-size: 1.5rem;
         }
-        .registration-form_inputs-block {
-          grid-row: 2;
+        .registration-form_user-data-block,
+        .registration-form_shipping-address-block,
+        .registration-form_billing-address-block {
           display: flex;
           flex-direction: row;
           flex-wrap: wrap;
@@ -37,7 +38,8 @@
           .registration-form_last-name-input-container,
           .registration-form_country-input-container,
           .registration-form_city-input-container,
-          .registration-form_street-input-container {
+          .registration-form_street-input-container,
+          .registration-form_postal-code-input-container {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -50,6 +52,9 @@
               top: 15px;
               left: 10px;
             }
+          }
+          .registration-form_date-of-birth-input-container{
+            // margin: 0 auto;
           }
           .registration-form_country-input-container,
           .registration-form_city-input-container,
@@ -87,6 +92,9 @@
               left: 10px;
             }
           }
+          // .registration-form_postal-code-input-container{
+
+          // }
           .registration__input {
             padding: 16px 35px;
             position: relative;
@@ -104,24 +112,35 @@
             width: 230px;
             gap: 10px;
 
-            .registration-form_postal-code-input-container,
-            .registration-form_date-of-birth-input-container {
-              display: flex;
-              flex-direction: column;
-              .registration-form_postal-code-input,
-              .registration-form_date-of-birth-input {
-                width: 110px;
+            // .registration-form_postal-code-input-container {
+            //   display: flex;
+            //   flex-direction: column;
+            //   .registration-form_postal-code-input,
+            //   .registration-form_date-of-birth-input {
+            //     width: 110px;
 
-                padding-right: 0;
-                padding-left: 5px;
-                font-size: 12px;
-              }
-              span {
-                width: inherit;
-              }
-            }
+            //     padding-right: 0;
+            //     padding-left: 5px;
+            //     font-size: 12px;
+            //   }
+            //   span {
+            //     width: inherit;
+            //   }
+            // }
           }
         }
+
+        // .registration-form_shipping-address-block{
+        
+        //   display: flex;
+        //   flex-direction: row;
+        //   flex-wrap: wrap;
+        //   width: 100%;
+        //   gap: 20px;
+        //   justify-content: space-between;
+        //   align-items: flex-start;
+        //   width: fit-content;
+        // }
         .registration-form_remember-Label {
           display: flex;
           flex-direction: row-reverse;

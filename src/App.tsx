@@ -14,7 +14,8 @@ function App() {
   apiRoot.withProjectKey({ projectKey }).get().execute();
   return (
     <>
-      <Header />
+    <RegistrationPage/>
+      {/* <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="about" element={<AboutUs />} />
@@ -23,7 +24,7 @@ function App() {
         <Route path="registration" element={<RegistrationPage />} />
         <Route path="bag" element={<MyBag />} />
       </Routes>
-      <Footer />
+      <Footer /> */}
     </>
   );
 }
