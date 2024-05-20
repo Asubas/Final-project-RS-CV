@@ -8,7 +8,7 @@ import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
-import { registerCustomer } from '../../lib/userRegistartionFlow';
+import registerCustomer from '../../lib/userRegistartionFlow';
 
 function RegistrationPage() {
   const {

@@ -10,7 +10,7 @@ interface CustomerDrafts {
 
 // const navigate = useNavigate();
 
-export async function registerCustomer() {
+export default async function registerCustomer() {
   const span = document.querySelector('.error-message') as HTMLSpanElement;
   if (span.textContent !== '') {
     span.innerText = '';
