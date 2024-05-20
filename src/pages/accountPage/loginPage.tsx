@@ -4,6 +4,11 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import createAuthorizedClient from '../../lib/userLoginFlow';
+import apiRoot, { projectKey } from '../../lib/anonymFlow';
+import { Bounce, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Inputs = {
   login: string;
@@ -17,12 +22,61 @@ function AccountPage() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const navigate = useNavigate();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { login, password } = data;
+    if (isValid) {
+      const loggedUser = await apiRoot()
+        .withProjectKey({ projectKey })
+        .login()
+        .post({
+          body: {
+            email: login,
+            password: password,
+          },
+        })
+        .execute()
+        .then((res) => {
+          if (res.statusCode === 200) {
+            localStorage.setItem('userId', `${res.body.customer.id}`);
+            navigate('/');
+            toast.success('🦄 You have successfully logged in', {
+              position: 'top-right',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'light',
+              transition: Bounce,
+            });
+            createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
+            return res.body.customer;
+          }
+        })
+        .catch(() => {
+          toast.error('Invalid email or password or such user does not exist!', {
+            position: 'bottom-center',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+            transition: Bounce,
+          });
+        });
+      return loggedUser;
+    }
+  };
+
   const passwordEmpty = watch('password');
   const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
-
   const [type, setType] = useState('password');
-
   const showPassword = () => {
     if (type === 'password') {
       setType('text');
@@ -43,7 +97,7 @@ function AccountPage() {
           <div className="login-form_email-input-container">
             <MyInput
               className="login-form_email-input"
-              type="email"
+              type="text"
               placeholder="Email Address"
               {...register('login', {
                 required: 'This field must be completed',
@@ -53,11 +107,12 @@ function AccountPage() {
                     'Invalid email format. Please write an email in the format user@example.com/ru',
                 },
               })}
+              autoComplete="username"
               style={{
                 border: errors.login ? '1px solid red' : '',
               }}
             />
-            {errors.login && <span>{errors.login.message}</span>}
+            {errors.login && <span>{errors.login?.message}</span>}
           </div>
           <div className="login-form_password-input-container">
             <MyInput
@@ -68,22 +123,21 @@ function AccountPage() {
                 required: 'This field must be completed',
                 validate: validatePassword,
               })}
+              autoComplete="current-password"
               style={{
                 border: errors.password ? '1px solid red' : '',
               }}
             />
             <span className={inputContainerPasswordName} onClick={showPassword}></span>
-            {errors.password && <span>{errors.password.message}</span>}
+            {errors.password && <span>{errors.password?.message}</span>}
           </div>
-          <label className="login-form_remember-Label" htmlFor="rem">
-            {' '}
-            Please remember me
-            <MyInput className="login-form_remember-Input" type="checkbox" id="rem" />
-          </label>
           <MyButton className="btn_black " type="submit">
             {' '}
             Sign in
           </MyButton>
+          <Link to="/" className="btn_black">
+            SIGN UP
+          </Link>
         </fieldset>
       </form>
     </div>

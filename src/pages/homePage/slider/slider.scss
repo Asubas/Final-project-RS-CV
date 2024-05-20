@@ -1,0 +1,24 @@
+@import '../../../App.scss';
+
+.collectionSection {
+  padding: 10px 0 40px;
+  text-align: center;
+}
+
+.slideWrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.slideText {
+  color: $primary;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  padding: 18px 0 10px 0;
+}

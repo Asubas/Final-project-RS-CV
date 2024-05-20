@@ -7,6 +7,16 @@
   justify-content: space-between;
   padding: 30px 76px;
   background-color: $backgroundVariant;
+
+  @media (max-width: 980px) {
+    flex-wrap: wrap;
+    padding: 8px 16px;
+  }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .footer_block {
@@ -16,6 +26,12 @@
   align-items: start;
   justify-content: start;
   gap: 24px;
+
+  @media (max-width: 540px) {
+    justify-content: center;
+    width: 100vw;
+    margin-bottom: 15px;
+  }
 
   .only-head {
     cursor: default;
@@ -30,40 +46,49 @@
   }
 
   &__tab {
+    max-width: 272px;
     display: flex;
     flex-direction: column;
     gap: 9px;
 
     .member-list {
-      list-style-image: url('../../assets/svg/github.svg');
-      transform: translate(35px);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 0 12px;
 
       .git-link {
-        padding-left: 2px;
+        padding: 0;
+        text-align: left;
       }
 
-      &::marker {
-        font-size: 1rem;
-        line-height: 1;
+      .git-logo {
+        width: 16px;
+        height: 16px;
+        background: url('../../assets/svg/github.svg');
       }
-    }
 
-    .location {
-      list-style-image: url('../../assets/svg/icon-location.svg');
-    }
+      .location {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-location.svg') no-repeat center / contain;
+      }
 
-    .mail-to {
-      list-style-image: url('../../assets/svg/icon-mail.svg');
-    }
+      .mail-to {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-mail.svg') no-repeat center / contain;
+      }
 
-    .call-to {
-      list-style-image: url('../../assets/svg/icon-call.svg');
+      .call-to {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-call.svg') no-repeat center / contain;
+      }
     }
   }
 
   &__item {
-    list-style-type: none;
-
     .rs-link {
       display: block;
       width: 200px;
@@ -84,5 +109,22 @@
     letter-spacing: 0.02em;
     color: $primary;
     text-transform: none;
+    text-align-last: left;
+  }
+}
+
+.contact {
+  width: 320px;
+
+  .member-list {
+    padding: 0 0 0 12px;
+  }
+
+  @media (max-width: 870px) {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 540px) {
+    margin: 0;
   }
 }

@@ -1,3 +1,15 @@
+import HeroBlock from './heroBlock/heroBlock';
+import Profits from './profits/profits';
+import Slider from './slider/slider';
+import Wholesalers from './wholesalersBlock/wholesalersBlock';
+
 export default function MainPage() {
-  return <h1>Home Page</h1>;
+  return (
+    <>
+      <HeroBlock />
+      <Profits />
+      <Slider />
+      <Wholesalers />
+    </>
+  );
 }
