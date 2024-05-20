@@ -59,8 +59,8 @@ function NavBar() {
             about us
           </Link>
         </div>
+        <SearchBtn />
         <div className="user-btns">
-          <SearchBtn />
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} />
           </Link>

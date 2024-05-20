@@ -2,6 +2,7 @@
 
 .header {
   max-width: 1280px;
+  max-height: 64px;
   padding: 30px 72px;
   display: flex;
   align-items: center;
@@ -63,16 +64,20 @@
 .menu {
   width: 60%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   transition: all 0.3s ease-in;
+  position: relative;
 
   .page-links {
     display: flex;
 
     .nav_link {
+      text-wrap: nowrap;
+
       @media (max-width: 1120px) {
         padding: 10px 6px;
+        text-wrap: wrap;
       }
     }
   }
@@ -100,29 +105,39 @@
       }
     }
 
-    .searchBlock {
-      position: relative;
+    a {
+      text-wrap: nowrap;
+    }
 
-      .searchField {
-        position: absolute;
-        bottom: -40px;
-        right: 10px;
-        padding: 10px 16px;
-        width: 246px;
-        transform: scaleY(0);
-        transition: all 0.3s ease-in;
-        height: 0;
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .searchField.searchVis {
-        transform: scaleY(1);
-        opacity: 1;
-        height: 36px;
-        visibility: visible;
+    a {
+      @media (max-width: 1120px) {
+        text-wrap: wrap;
+        display: flex;
+        font-size: 1.2vw;
+        align-items: center;
       }
     }
+  }
+
+  .searchBlock {
+    position: relative;
+  }
+  .searchField {
+    padding: 10px 16px;
+    transform: scaleY(0);
+    transition: all 0.3s ease-in;
+    height: 0;
+    opacity: 0;
+    visibility: hidden;
+    width: 0px;
+  }
+
+  .searchField.searchVis {
+    width: 246px;
+    transform: scaleY(1);
+    opacity: 1;
+    height: 36px;
+    visibility: visible;
   }
 
   @media (max-width: 870px) {
