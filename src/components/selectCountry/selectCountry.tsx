@@ -5,7 +5,6 @@ import { countries, customStyles } from '../../constants/constantsRegistrationPa
 import getShippingOrBillingContainer from '../accordanceCountryToPostalCode/getShippingOrBillingContainer';
 export let cont: string;
 function SelectCountry() {
-  
   const [currentCountry, setCurrentCountry] = useState('');
 
   const getValueCountry = (): PropsValue<InewValue> | undefined => {
@@ -14,65 +13,68 @@ function SelectCountry() {
       : undefined;
   };
 
-let currentContainer: HTMLElement;
+  let currentContainer: HTMLElement;
   const handleClick = (event: Event) => {
     let element = event.target || null;
-    while ((element as HTMLElement).className !=='registration-form_shipping-address-block' || (element as HTMLElement).className !== 'registration-form_billing-address-block') {
+    while (
+      (element as HTMLElement).className !== 'registration-form_shipping-address-block' ||
+      (element as HTMLElement).className !== 'registration-form_billing-address-block'
+    ) {
       element = (element as HTMLElement).parentElement;
-      if ((element as HTMLElement).className ==='registration-form_shipping-address-block' || (element as HTMLElement).className === 'registration-form_billing-address-block') {
-        const className = (element as HTMLElement).className
-       cont = getShippingOrBillingContainer(className);
-        return currentContainer = element as HTMLElement  
-      } 
+      if (
+        (element as HTMLElement).className === 'registration-form_shipping-address-block' ||
+        (element as HTMLElement).className === 'registration-form_billing-address-block'
+      ) {
+        const className = (element as HTMLElement).className;
+        cont = getShippingOrBillingContainer(className);
+        return (currentContainer = element as HTMLElement);
+      }
     }
   };
- 
- 
 
-  const onChange = (newValue: OnChangeValue<InewValue, boolean> ) => {
+  const onChange = (newValue: OnChangeValue<InewValue, boolean>) => {
+    const postalCodeContainer = currentContainer as HTMLElement;
+    const postalCodeInput = ((currentContainer as HTMLElement).childNodes[3] as HTMLElement)
+      .children[0] as HTMLInputElement;
 
-    const postalCodeContainer = (currentContainer as HTMLElement);
-    const postalCodeInput = (((currentContainer as HTMLElement).childNodes[3] as HTMLElement).children[0] as HTMLInputElement);
+    if (currentContainer.className === 'registration-form_shipping-address-block') {
+      if (newValue) {
+        setCurrentCountry((newValue as InewValue).value);
+        localStorage.setItem('countryShipping', (newValue as InewValue).value);
+        localStorage.setItem('patternShipping', (newValue as InewValue).pattern);
 
-      if(currentContainer.className === 'registration-form_shipping-address-block'){
-        if (newValue) {
-          setCurrentCountry((newValue as InewValue).value);
-          localStorage.setItem('countryShipping', (newValue as InewValue).value);
-          localStorage.setItem('patternShipping', (newValue as InewValue).pattern);
-
-          if (postalCodeInput) {
-            postalCodeInput.value = '';
-            postalCodeInput.removeAttribute('style');
-            if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
-              (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
-            }
-            postalCodeInput.pattern = String((newValue as InewValue).pattern);
+        if (postalCodeInput) {
+          postalCodeInput.value = '';
+          postalCodeInput.removeAttribute('style');
+          if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
+            (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
           }
+          postalCodeInput.pattern = String((newValue as InewValue).pattern);
         }
-       
       }
+    }
 
-      if(currentContainer.className === 'registration-form_billing-address-block'){
-        if (newValue) {
-          setCurrentCountry((newValue as InewValue).value);
-          localStorage.setItem('countryBilling', (newValue as InewValue).value);
-          localStorage.setItem('patternBilling', (newValue as InewValue).pattern);
+    if (currentContainer.className === 'registration-form_billing-address-block') {
+      if (newValue) {
+        setCurrentCountry((newValue as InewValue).value);
+        localStorage.setItem('countryBilling', (newValue as InewValue).value);
+        localStorage.setItem('patternBilling', (newValue as InewValue).pattern);
 
-          if (postalCodeInput) {
-            postalCodeInput.value = '';
-            postalCodeInput.removeAttribute('style');
-            if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
-              (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
-            }
-            postalCodeInput.pattern = String((newValue as InewValue).pattern);
+        if (postalCodeInput) {
+          postalCodeInput.value = '';
+          postalCodeInput.removeAttribute('style');
+          if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
+            (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
           }
+          postalCodeInput.pattern = String((newValue as InewValue).pattern);
+        }
       }
     }
   };
 
   return (
     <Select
-      className='test'
+      className="test"
       options={countries}
       onChange={onChange}
       value={getValueCountry()}

@@ -14,7 +14,7 @@ function App() {
   apiRoot.withProjectKey({ projectKey }).get().execute();
   return (
     <>
-    <RegistrationPage/>
+      <RegistrationPage />
       {/* <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
