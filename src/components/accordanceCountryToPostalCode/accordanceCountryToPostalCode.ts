@@ -12,12 +12,9 @@ function AccordanceCountryToPostalCode() {
 
     if (currentElementContainer.className === 'registration-form_shipping-address-block') {
       currentCountry = localStorage.getItem('countryShipping') || '';
-      console.log(currentCountry);
       switch (currentCountry) {
         case 'Austria': {
-          console.log(currentCountry);
           currentElementPostalCodeInput.pattern = '^\\d{4}$';
-          console.log(currentElementPostalCodeInput.pattern);
 
           const matchesAustria = /^\d{4}$/.test(currentElementPostalCodeInput.value);
           if (matchesAustria === false) {

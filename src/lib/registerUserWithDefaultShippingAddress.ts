@@ -88,14 +88,9 @@ async function registerUserWithDefaultShippingAddress() {
           .then((res) => {
             if (res.statusCode === 200) {
               localStorage.setItem('userId', `${res.body.customer.id}`);
-              // setDefaultShippingAddress()
-              // navigate('/');
-              // createAuthorizedClient(regCustomerInformation.email, regCustomerInformation.password).withProjectKey({ projectKey }).get().execute();
-              console.log(res.body.customer);
               return res.body.customer;
             }
           });
-        console.log(newCustomerResponse);
         return newCustomerResponse.body.customer;
       } else {
         console.error(
