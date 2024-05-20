@@ -103,4 +103,3 @@ export const customStyles: StylesConfig<InewValue> = {
     paddingLeft: 35,
   }),
 };
-
