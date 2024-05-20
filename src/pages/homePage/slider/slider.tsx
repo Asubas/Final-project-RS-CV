@@ -26,16 +26,18 @@ function Slider() {
 
   return (
     <section className="sliderSection">
-      <h2 className="collectionSection">Our Collection</h2>
-      <Carousel
-        responsive={responsive}
-        autoPlay={true}
-        autoPlaySpeed={3000}
-        infinite={true}
-        removeArrowOnDeviceType={['tablet', 'mobile']}
-      >
-        {category}
-      </Carousel>
+      <div className="sliderCont">
+        <h2 className="collectionSection">Our Collection</h2>
+        <Carousel
+          responsive={responsive}
+          autoPlay={true}
+          autoPlaySpeed={3000}
+          infinite={true}
+          removeArrowOnDeviceType={['tablet', 'mobile']}
+        >
+          {category}
+        </Carousel>
+      </div>
     </section>
   );
 }

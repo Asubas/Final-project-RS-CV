@@ -1,7 +1,10 @@
 @import '../../App.scss';
 
-.header {
+.headerWrap {
+  width: 100%;
   max-width: 1280px;
+  max-height: 64px;
+  margin: 0 auto;
   padding: 30px 72px;
   display: flex;
   align-items: center;
@@ -23,6 +26,55 @@
       opacity: 1;
       visibility: visible;
       transform: translate(0);
+    }
+  }
+
+  .search {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    .searchBlock {
+      position: relative;
+
+      .searchBtn {
+        width: 44px;
+        height: 48px;
+        padding: 12px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        @media (max-width: 870px) {
+          padding: 6px;
+          height: 18px;
+        }
+      }
+    }
+    .searchField {
+      padding: 10px 16px;
+      transform: scaleY(0);
+      transition: all 0.3s ease-in;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      width: 0px;
+    }
+
+    .searchField.searchVis {
+      width: 186px;
+      transform: scaleY(1);
+      opacity: 1;
+      height: 36px;
+      visibility: visible;
+
+      @media (max-width: 1030px) {
+        width: 135px;
+      }
+
+      @media (max-width: 870px) {
+        height: 24px;
+      }
     }
   }
 }
@@ -61,18 +113,22 @@
 }
 
 .menu {
-  width: 60%;
+  // width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   transition: all 0.3s ease-in;
+  position: relative;
 
   .page-links {
     display: flex;
 
     .nav_link {
+      text-wrap: nowrap;
+
       @media (max-width: 1120px) {
         padding: 10px 6px;
+        text-wrap: wrap;
       }
     }
   }
@@ -100,27 +156,16 @@
       }
     }
 
-    .searchBlock {
-      position: relative;
+    a {
+      text-wrap: nowrap;
+    }
 
-      .searchField {
-        position: absolute;
-        bottom: -40px;
-        right: 10px;
-        padding: 10px 16px;
-        width: 246px;
-        transform: scaleY(0);
-        transition: all 0.3s ease-in;
-        height: 0;
-        opacity: 0;
-        visibility: hidden;
-      }
-
-      .searchField.searchVis {
-        transform: scaleY(1);
-        opacity: 1;
-        height: 36px;
-        visibility: visible;
+    a {
+      @media (max-width: 1120px) {
+        text-wrap: wrap;
+        display: flex;
+        font-size: 14px;
+        align-items: center;
       }
     }
   }
@@ -147,12 +192,12 @@
 
       &::after {
         content: '';
-        width: 203px;
+        width: 235px;
         height: 1px;
         background-color: $outline;
         position: absolute;
-        top: 248px;
-        right: 32px;
+        top: 200px;
+        right: 16px;
       }
     }
 
