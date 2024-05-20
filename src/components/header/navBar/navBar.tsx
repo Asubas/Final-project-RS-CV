@@ -45,6 +45,9 @@ function NavBar() {
 
   return (
     <>
+      <Link className="brand" to="/">
+        Monkey Tea
+      </Link>
       <div className="burger-menu" onClick={updateMenu} ref={menuRef}>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>

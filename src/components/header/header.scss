@@ -62,7 +62,7 @@
 }
 
 .menu {
-  width: 60%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -71,6 +71,8 @@
 
   .page-links {
     display: flex;
+    margin-left: auto;
+    margin-right: auto;
 
     .nav_link {
       text-wrap: nowrap;
