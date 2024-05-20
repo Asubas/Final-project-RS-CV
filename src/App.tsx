@@ -11,11 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
-import apiRoot from './lib/BuildClient';
-import { projectKey } from './lib/anonymFlow';
+import apiRoot, { projectKey } from './lib/anonymFlow';
 
 function App() {
-  apiRoot.withProjectKey({ projectKey }).get().execute();
+  apiRoot().withProjectKey({ projectKey }).get().execute();
   return (
     <>
       <Routes>

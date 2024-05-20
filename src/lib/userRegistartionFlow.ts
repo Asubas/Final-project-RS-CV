@@ -1,5 +1,5 @@
 import getUserObjectRegistrationPage from '../components/getUserObjectRegistrationPage/getUserObjectRegistrationPage';
-import apiRoot, { projectKey } from './BuildClient';
+import apiRoot, { projectKey } from './anonymFlow';
 
 interface CustomerDrafts {
   email: string;
@@ -31,7 +31,7 @@ export async function registerCustomer() {
     regCustomerInformation.password !== null
   ) {
     try {
-      const response = await apiRoot
+      const response = await apiRoot()
         .withProjectKey({ projectKey })
         .customers()
         .post({
@@ -40,7 +40,7 @@ export async function registerCustomer() {
         .execute();
 
       if (response.statusCode === 201) {
-        apiRoot
+        apiRoot()
           .withProjectKey({ projectKey })
           .login()
           .post({
