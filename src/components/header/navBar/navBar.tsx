@@ -21,6 +21,12 @@ function NavBar() {
     checkIsUserLoggedIn();
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    setIsUserLoggedIn(false);
+    if (loginRef.current) loginRef.current.textContent = 'Sign in';
+  };
+
   useEffect(() => {
     checkIsUserLoggedIn();
     window.addEventListener('storage', handleStorageChange);
@@ -80,7 +86,12 @@ function NavBar() {
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
           </Link>
-          <Link className="btn_white btn_header" to={isUserLoggedIn ? '/' : 'login'} ref={loginRef}>
+          <Link
+            className="btn_white btn_header"
+            to={isUserLoggedIn ? '/' : 'login'}
+            ref={loginRef}
+            onClick={handleLogout}
+          >
             {isUserLoggedIn ? 'Log out' : 'Sign In'}
           </Link>
           <Link className="btn_black btn_header" to="registration">
