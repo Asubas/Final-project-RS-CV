@@ -4,38 +4,43 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
-import { useState } from 'react';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
-import { registerCustomer } from '../../lib/userRegistartionFlow';
-
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { loginRef } from '../../components/header/navBar/navBar';
+import { Bounce, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import registerCustomer from '../../lib/userRegistartionFlow';
 function RegistrationPage() {
-  // localStorage.clear()
+  const navigate = useNavigate();
   const {
-    watch,
     register,
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-  const passwordEmpty = watch('password');
-  const inputContainerPasswordName = `viewPassword ${passwordEmpty ? 'not-empty' : 'empty'}`;
-
-  const [type, setType] = useState('');
-
-  const showPassword = () => {
-    if (type === 'password') {
-      setType('text');
-    } else {
-      setType('password');
-    }
+  const onSubmit: SubmitHandler<Inputs> = () => {
+    registerCustomer().then((res) => {
+      localStorage.setItem('userId', `${res}`);
+      navigate('/');
+      if (loginRef.current) loginRef.current.textContent = 'log out';
+      toast.success('🦄 You have successfully logged in', {
+        position: 'top-right',
+        autoClose: 3000,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+    });
   };
 
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
   const [isCheckedBilling, setIsCheckedBilling] = useState(false);
-  const [isCheckedSameAddresses, setIsCheckedSameAddresses] = useState(false);
   const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedShipping(event.target.checked);
     localStorage.setItem('setDefaultShippingAddress', String(event.target.checked));
@@ -45,26 +50,6 @@ function RegistrationPage() {
     setIsCheckedBilling(event.target.checked);
     localStorage.setItem('setDefaultBillingAddress', String(event.target.checked));
   };
-
-  //   const handleCheckboxSameAddressesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setIsCheckedSameAddresses(event.target.checked);
-  //     localStorage.setItem('setSameAddress', String(event.target.checked));
-  //     const billingContainer = document.querySelector('.registration-form_billing-address-block') as HTMLElement;
-  //     if(event.target.checked === true){
-
-  //       const billingCityInput = (billingContainer.children[1].children[0] as HTMLInputElement).value =  localStorage.getItem('cityShipping') as string;
-  //       const billingStreetInput =(billingContainer.children[2].children[0] as HTMLInputElement).value = localStorage.getItem('streetShipping') as string;
-  //       const billingPostalCodeInput =(billingContainer.children[3].children[0] as HTMLInputElement).value = localStorage.getItem('postalCodeShipping') as string;
-
-  //     } else {
-  //       const billingCityInput = (billingContainer.children[1].children[0] as HTMLInputElement).removeAttribute('disabled');
-
-  //       const billingStreetInput =(billingContainer.children[2].children[0] as HTMLInputElement).removeAttribute('disabled');
-
-  //       const billingPosalCodeInput =(billingContainer.children[3].children[0] as HTMLInputElement).removeAttribute('disabled');
-  //     }
-  // };
-
   return (
     <div className="registration-field">
       <form
@@ -140,7 +125,6 @@ function RegistrationPage() {
                 <MyInput
                   className="registration__input registration-form_password-input"
                   autoComplete="current-password"
-                  type={type}
                   placeholder="Enter your password"
                   {...register('password', {
                     required: 'This field must be completed',
@@ -150,7 +134,6 @@ function RegistrationPage() {
                     border: errors.password ? '1px solid red' : '',
                   }}
                 />
-                <span className={inputContainerPasswordName} onClick={showPassword}></span>
                 {errors.password && <span>{errors.password.message}</span>}
               </div>
 
@@ -174,7 +157,6 @@ function RegistrationPage() {
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
               <SelectCountry />
-
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -193,7 +175,6 @@ function RegistrationPage() {
                     border: errors.cityShipping ? '1px solid red' : '',
                   }}
                 />
-
                 {errors.cityShipping && <span>{errors.cityShipping.message}</span>}
               </div>
               <div className="registration-form_street-input-container">
@@ -215,7 +196,6 @@ function RegistrationPage() {
                 />
                 {errors.streetShipping && <span>{errors.streetShipping.message}</span>}
               </div>
-
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
@@ -252,7 +232,6 @@ function RegistrationPage() {
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
               <SelectCountry />
-
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -271,7 +250,6 @@ function RegistrationPage() {
                     border: errors.cityBilling ? '1px solid red' : '',
                   }}
                 />
-
                 {errors.cityBilling && <span>{errors.cityBilling.message}</span>}
               </div>
               <div className="registration-form_street-input-container">
@@ -293,7 +271,6 @@ function RegistrationPage() {
                 />
                 {errors.streetBilling && <span>{errors.streetBilling.message}</span>}
               </div>
-
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
@@ -326,23 +303,12 @@ function RegistrationPage() {
                 onChange={handleCheckboxBillingChange}
               />
             </label>
-
-            {/* <label className="registration-form_remember-Label" htmlFor="rem">
-              {' '}
-              Also use as billind address
-              <MyInput 
-              className="registration-form_remember-Input" 
-              type="checkbox" id="remSameAddresses"
-              checked={isCheckedSameAddresses}
-              onChange={handleCheckboxSameAddressesChange}
-               />
-            </label> */}
             <span className="error-message"></span>
             <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
               {' '}
               Sign in
             </MyButton>
-            <MyButton className="btn_black " type="submit">
+            <MyButton className="btn_black " type="button">
               {' '}
               Back to Login page
             </MyButton>

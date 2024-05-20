@@ -9,6 +9,7 @@ import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
 import { Bounce, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { loginRef } from '../../components/header/navBar/navBar';
 
 type Inputs = {
   login: string;
@@ -42,6 +43,7 @@ function AccountPage() {
           if (res.statusCode === 200) {
             localStorage.setItem('userId', `${res.body.customer.id}`);
             navigate('/');
+            if (loginRef.current) loginRef.current.textContent = 'log out';
             toast.success('🦄 You have successfully logged in', {
               position: 'top-right',
               autoClose: 3000,
@@ -131,7 +133,7 @@ function AccountPage() {
             <span className={inputContainerPasswordName} onClick={showPassword}></span>
             {errors.password && <span>{errors.password?.message}</span>}
           </div>
-          <MyButton className="btn_black " type="submit">
+          <MyButton className="btn_white " type="submit">
             {' '}
             Sign in
           </MyButton>

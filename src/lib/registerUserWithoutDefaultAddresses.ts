@@ -20,7 +20,6 @@ interface CustomerDraftsWithoutDefaultAddress {
 }
 
 async function registerUserWithoutDefaultAddresses() {
-  console.log('without');
   getUserObjectRegistrationPage();
   const addressesShipping: AddressCust = {
     firstName: localStorage.getItem('firstName') || '',
@@ -98,15 +97,11 @@ async function registerUserWithoutDefaultAddresses() {
         console.log(newCustomerResponse);
         return newCustomerResponse.body.customer;
       } else {
-        console.error(
-          `Failed to register customer, status code: ${newCustomerResponse.statusCode}`,
-        );
         return null;
       }
     } catch (error) {
       const spanError = document.querySelector('.error-message') as HTMLSpanElement;
       spanError.innerText = (error as Error).message;
-      console.error('Error during customer registration:', error);
       return null;
     }
   }
