@@ -13,7 +13,6 @@ export type Inputs = {
   cityBilling: string;
   streetBilling: string;
   postalCodeBilling: string;
-  
 };
 
 export type InewValue = {

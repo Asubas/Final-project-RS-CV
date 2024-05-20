@@ -1,5 +1,6 @@
 import { StylesConfig } from 'react-select';
 import { InewValue } from '../types/typeRegistrationPage';
+import getShippingOrBillingContainer from '../components/accordanceCountryToPostalCode/getShippingOrBillingContainer';
 
 export const currentElementPostalCodeInput = (
   document.getElementsByClassName(
@@ -102,3 +103,5 @@ export const customStyles: StylesConfig<InewValue> = {
     paddingLeft: 35,
   }),
 };
+
+// export classNameShippingOrBillingContainer = getShippingOrBillingContainer();

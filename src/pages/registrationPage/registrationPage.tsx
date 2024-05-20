@@ -10,6 +10,7 @@ import AccordanceCountryToPostalCode from '../../components/accordanceCountryToP
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
 import { registerCustomer } from '../../lib/userRegistartionFlow';
+import getParentContainer from '../../components/accordanceCountryToPostalCode/getParentContainer';
 
 function RegistrationPage() {
   const {
@@ -186,7 +187,7 @@ function RegistrationPage() {
                     placeholder="Postal code: "
                     {...register('postalCodeShipping', {
                       required: 'This field must be completed',
-                      validate: AccordanceCountryToPostalCode('registration-form_shipping-address-block'),
+                      validate: {AccordanceCountryToPostalCode},
                     })}
                     style={{
                       border: errors.postalCodeShipping ? '1px solid red' : '',
