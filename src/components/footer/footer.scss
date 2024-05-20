@@ -1,12 +1,16 @@
 @import '../../App.scss';
 
 .footer {
-  width: 100%;
+  background-color: $backgroundVariant;
+}
+
+.footerWrap {
+  max-width: 1280px;
   display: flex;
   align-items: start;
   justify-content: space-between;
   padding: 30px 76px;
-  background-color: $backgroundVariant;
+  margin: 0 auto;
 
   @media (max-width: 980px) {
     flex-wrap: wrap;
