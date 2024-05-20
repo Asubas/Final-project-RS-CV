@@ -12,6 +12,7 @@ import { Inputs } from '../../types/typeRegistrationPage';
 import { registerCustomer } from '../../lib/userRegistartionFlow';
 
 function RegistrationPage() {
+  // localStorage.clear()
   const {
     watch,
     register,
@@ -32,6 +33,38 @@ function RegistrationPage() {
     }
   };
 
+  const [isCheckedShipping, setIsCheckedShipping] = useState(false);
+  const [isCheckedBilling, setIsCheckedBilling] = useState(false);
+  const [isCheckedSameAddresses, setIsCheckedSameAddresses] = useState(false);
+  const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedShipping(event.target.checked);
+    localStorage.setItem('setDefaultShippingAddress', String(event.target.checked));
+  };
+
+  const handleCheckboxBillingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedBilling(event.target.checked);
+    localStorage.setItem('setDefaultBillingAddress', String(event.target.checked));
+  };
+
+  //   const handleCheckboxSameAddressesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setIsCheckedSameAddresses(event.target.checked);
+  //     localStorage.setItem('setSameAddress', String(event.target.checked));
+  //     const billingContainer = document.querySelector('.registration-form_billing-address-block') as HTMLElement;
+  //     if(event.target.checked === true){
+
+  //       const billingCityInput = (billingContainer.children[1].children[0] as HTMLInputElement).value =  localStorage.getItem('cityShipping') as string;
+  //       const billingStreetInput =(billingContainer.children[2].children[0] as HTMLInputElement).value = localStorage.getItem('streetShipping') as string;
+  //       const billingPostalCodeInput =(billingContainer.children[3].children[0] as HTMLInputElement).value = localStorage.getItem('postalCodeShipping') as string;
+
+  //     } else {
+  //       const billingCityInput = (billingContainer.children[1].children[0] as HTMLInputElement).removeAttribute('disabled');
+
+  //       const billingStreetInput =(billingContainer.children[2].children[0] as HTMLInputElement).removeAttribute('disabled');
+
+  //       const billingPosalCodeInput =(billingContainer.children[3].children[0] as HTMLInputElement).removeAttribute('disabled');
+  //     }
+  // };
+
   return (
     <div className="registration-field">
       <form
@@ -46,6 +79,7 @@ function RegistrationPage() {
               <div className="registration-form_first-name-input-container">
                 <MyInput
                   className="registration__input registration-form_first-name-input"
+                  autoComplete="current-password"
                   type="text"
                   placeholder="First name: "
                   {...register('firstName', {
@@ -65,6 +99,7 @@ function RegistrationPage() {
               <div className="registration-form_last-name-input-container">
                 <MyInput
                   className="registration__input registration-form_last-name-input"
+                  autoComplete="current-password"
                   type="text"
                   placeholder="Last name: "
                   {...register('lastName', {
@@ -84,6 +119,7 @@ function RegistrationPage() {
               <div className="registration-form_email-input-container">
                 <MyInput
                   className="registration__input registration-form_email-input"
+                  autoComplete="current-password"
                   type="email"
                   placeholder="Email Address"
                   {...register('email', {
@@ -103,6 +139,7 @@ function RegistrationPage() {
               <div className="registration-form_password-input-container">
                 <MyInput
                   className="registration__input registration-form_password-input"
+                  autoComplete="current-password"
                   type={type}
                   placeholder="Enter your password"
                   {...register('password', {
@@ -120,6 +157,7 @@ function RegistrationPage() {
               <div className="registration-form_date-of-birth-input-container">
                 <MyInput
                   className="registration__input registration-form_date-of-birth-input"
+                  autoComplete="current-password"
                   type={'date'}
                   {...register('dateOfBirth', {
                     required: 'This field must be completed',
@@ -140,6 +178,7 @@ function RegistrationPage() {
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
                   {...register('cityShipping', {
@@ -160,6 +199,7 @@ function RegistrationPage() {
               <div className="registration-form_street-input-container">
                 <MyInput
                   className="registration__input registration-form_street-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Street: "
                   {...register('streetShipping', {
@@ -179,6 +219,7 @@ function RegistrationPage() {
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Postal code: "
                   {...register('postalCodeShipping', {
@@ -194,6 +235,20 @@ function RegistrationPage() {
               </div>
             </div>
 
+            <label className="registration-form_defaultAddress-Label" htmlFor="remShippingAddress">
+              {' '}
+              Set as default shipping address
+              <MyInput
+                className="registration-form_defaultAddress-Input"
+                autoComplete="current-password"
+                name="shipping"
+                type="checkbox"
+                id="remShippingAddress"
+                checked={isCheckedShipping}
+                onChange={handleCheckboxShippingChange}
+              />
+            </label>
+
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
               <SelectCountry />
@@ -201,6 +256,7 @@ function RegistrationPage() {
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
                   {...register('cityBilling', {
@@ -221,6 +277,7 @@ function RegistrationPage() {
               <div className="registration-form_street-input-container">
                 <MyInput
                   className="registration__input registration-form_street-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Street: "
                   {...register('streetBilling', {
@@ -240,6 +297,7 @@ function RegistrationPage() {
               <div className="registration-form_postal-code-input-container">
                 <MyInput
                   className="registration__input registration-form_postal-code-input"
+                  autoComplete="current-password"
                   type={'text'}
                   placeholder="Postal code: "
                   {...register('postalCodeBilling', {
@@ -255,11 +313,30 @@ function RegistrationPage() {
               </div>
             </div>
 
-            <label className="registration-form_remember-Label" htmlFor="rem">
+            <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
               {' '}
-              Please remember me
-              <MyInput className="registration-form_remember-Input" type="checkbox" id="rem" />
+              Set as default billing address
+              <MyInput
+                className="registration-form_defaultAddress-Input"
+                autoComplete="current-password"
+                type="checkbox"
+                name="billing"
+                id="remBillingAddress"
+                checked={isCheckedBilling}
+                onChange={handleCheckboxBillingChange}
+              />
             </label>
+
+            {/* <label className="registration-form_remember-Label" htmlFor="rem">
+              {' '}
+              Also use as billind address
+              <MyInput 
+              className="registration-form_remember-Input" 
+              type="checkbox" id="remSameAddresses"
+              checked={isCheckedSameAddresses}
+              onChange={handleCheckboxSameAddressesChange}
+               />
+            </label> */}
             <span className="error-message"></span>
             <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
               {' '}
