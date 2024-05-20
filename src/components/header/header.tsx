@@ -1,5 +1,5 @@
 import './header.scss';
-import NavBar from './navBar/navBar';
+import { NavBar } from './navBar/navBar';
 
 function Header() {
   return (
