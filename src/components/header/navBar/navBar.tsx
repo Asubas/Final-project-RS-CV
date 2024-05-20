@@ -1,16 +1,41 @@
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 
+let loginRef: RefObject<HTMLAnchorElement>;
+
 function NavBar() {
-  // change classes
   const [burgerClass, setBurgerClass] = useState('burger-bar unclicked');
   const [menuClass, setMenuClass] = useState('menu hidden');
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  loginRef = useRef<HTMLAnchorElement>(null);
+  const checkIsUserLoggedIn = () => {
+    const userId = localStorage.getItem('userId');
+    setIsUserLoggedIn(!!userId);
+  };
 
-  // toggle menu burger menu change
+  const handleStorageChange = () => {
+    checkIsUserLoggedIn();
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('userId');
+    setIsUserLoggedIn(false);
+    if (loginRef.current) loginRef.current.textContent = 'Sign in';
+  };
+
+  useEffect(() => {
+    checkIsUserLoggedIn();
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  });
+
   const updateMenu = () => {
     if (!isMenuClicked) {
       setBurgerClass('burger-bar clicked');
@@ -22,7 +47,6 @@ function NavBar() {
     setIsMenuClicked(!isMenuClicked);
   };
 
-  // check outside click
   const handleOutsideClick = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setBurgerClass('burger-bar unclicked');
@@ -49,7 +73,7 @@ function NavBar() {
         Monkey Tea
       </Link>
       <SearchBtn />
-      <nav className={menuClass}>
+      <nav className={menuClass} ref={menuRef}>
         <div className="page-links">
           <Link className="nav_link btn_blank" to="/collection">
             tea collection
@@ -58,20 +82,24 @@ function NavBar() {
             about us
           </Link>
         </div>
-        {/* <SearchBtn /> */}
         <div className="user-btns">
           <Link className="user-btns_btn" to="bag">
-            <img className="user-btns_btn__icon" src={logoCart} />
+            <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
           </Link>
-          <Link className="btn_white btn_header" to="login">
-            Sing In
+          <Link
+            className="btn_white btn_header"
+            to={isUserLoggedIn ? '/' : 'login'}
+            ref={loginRef}
+            onClick={handleLogout}
+          >
+            {isUserLoggedIn ? 'Log out' : 'Sign In'}
           </Link>
-          <Link className="btn_black btn_header" to="registrtion">
-            Sing up
+          <Link className="btn_black btn_header" to="registration">
+            Sign Up
           </Link>
         </div>
       </nav>
-      <div className="burger-menu" onClick={updateMenu} ref={menuRef}>
+      <div className="burger-menu" onClick={updateMenu}>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
@@ -80,4 +108,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export { NavBar, loginRef };
