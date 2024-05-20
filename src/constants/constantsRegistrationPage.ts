@@ -1,6 +1,5 @@
 import { StylesConfig } from 'react-select';
 import { InewValue } from '../types/typeRegistrationPage';
-import getShippingOrBillingContainer from '../components/accordanceCountryToPostalCode/getShippingOrBillingContainer';
 
 export const currentElementPostalCodeInput = (
   document.getElementsByClassName(
