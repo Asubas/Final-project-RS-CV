@@ -10,7 +10,6 @@ import AccordanceCountryToPostalCode from '../../components/accordanceCountryToP
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
 import { registerCustomer } from '../../lib/userRegistartionFlow';
-import getParentContainer from '../../components/accordanceCountryToPostalCode/getParentContainer';
 
 function RegistrationPage() {
   const {
@@ -32,9 +31,6 @@ function RegistrationPage() {
       setType('password');
     }
   };
-
-  const selectRefShipping = useRef(null);
-  const selectRefBilling = useRef(null);
 
   return (
     <div className="registration-field">
@@ -122,19 +118,19 @@ function RegistrationPage() {
               </div>
 
               <div className="registration-form_date-of-birth-input-container">
-                <MyInput
-                  className="registration__input registration-form_date-of-birth-input"
-                  type={'date'}
-                  {...register('dateOfBirth', {
-                    required: 'This field must be completed',
-                  })}
-                  required={true}
-                  onChange={dateCalculation}
-                  maxLength={10}
-                />
-                <span id="error"></span>
-                {errors.dateOfBirth && <span>{errors.dateOfBirth.message}</span>}
-              </div>
+                  <MyInput
+                    className="registration__input registration-form_date-of-birth-input"
+                    type={'date'}
+                    {...register('dateOfBirth', {
+                      required: 'This field must be completed',
+                    })}
+                    required={true}
+                    onChange={dateCalculation}
+                    maxLength={10}
+                  />
+                  <span id="error"></span>
+                  {errors.dateOfBirth && <span>{errors.dateOfBirth.message}</span>}
+                </div>
             </div>
 
             <h3>Shipping Address</h3>
@@ -181,24 +177,24 @@ function RegistrationPage() {
               </div>
 
               <div className="registration-form_postal-code-input-container">
-                <MyInput
-                  className="registration__input registration-form_postal-code-input"
-                  type={'text'}
-                  placeholder="Postal code: "
-                  {...register('postalCodeShipping', {
-                    required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
-                  })}
-                  style={{
-                    border: errors.postalCodeShipping ? '1px solid red' : '',
-                  }}
-                />
-                <span></span>
-                {errors.postalCodeShipping && <span>{errors.postalCodeShipping.message}</span>}
+                  <MyInput
+                    className="registration__input registration-form_postal-code-input"
+                    type={'text'}
+                    placeholder="Postal code: "
+                    {...register('postalCodeShipping', {
+                      required: 'This field must be completed',
+                      validate: {AccordanceCountryToPostalCode},
+                    })}
+                    style={{
+                      border: errors.postalCodeShipping ? '1px solid red' : '',
+                    }}
+                  />
+                  <span></span>
+                  {errors.postalCodeShipping && <span>{errors.postalCodeShipping.message}</span>}
+                </div>
               </div>
-            </div>
 
-            <h3>Billing Address</h3>
+              <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
               <SelectCountry />
 
@@ -242,21 +238,21 @@ function RegistrationPage() {
               </div>
 
               <div className="registration-form_postal-code-input-container">
-                <MyInput
-                  className="registration__input registration-form_postal-code-input"
-                  type={'text'}
-                  placeholder="Postal code: "
-                  {...register('postalCodeBilling', {
-                    required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
-                  })}
-                  style={{
-                    border: errors.postalCodeBilling ? '1px solid red' : '',
-                  }}
-                />
-                <span></span>
-                {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
-              </div>
+                  <MyInput
+                    className="registration__input registration-form_postal-code-input"
+                    type={'text'}
+                    placeholder="Postal code: "
+                    {...register('postalCodeBilling', {
+                      required: 'This field must be completed',
+                      validate: {AccordanceCountryToPostalCode},
+                    })}
+                    style={{
+                      border: errors.postalCodeBilling ? '1px solid red' : '',
+                    }}
+                  />
+                  <span></span>
+                  {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
+                </div>
             </div>
 
             <label className="registration-form_remember-Label" htmlFor="rem">

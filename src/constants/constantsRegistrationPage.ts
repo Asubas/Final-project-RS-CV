@@ -104,4 +104,3 @@ export const customStyles: StylesConfig<InewValue> = {
   }),
 };
 
-// export classNameShippingOrBillingContainer = getShippingOrBillingContainer();
