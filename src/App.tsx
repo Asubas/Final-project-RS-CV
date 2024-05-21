@@ -11,10 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
-import apiRoot, { projectKey } from './lib/anonymFlow';
 
 function App() {
-  apiRoot().withProjectKey({ projectKey }).get().execute();
   return (
     <>
       <Routes>
@@ -31,7 +29,14 @@ function App() {
             }
           />
           <Route path="bag" element={<MyBag />} />
-          <Route path="registration" element={<RegistrationForm />} />
+          <Route
+            path="registration"
+            element={
+              <ProtectedRoute redirectTo="/">
+                <RegistrationForm />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

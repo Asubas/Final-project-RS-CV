@@ -1,5 +1,3 @@
-import { countries } from '../../constants/constantsRegistrationPage';
-
 export function getUserObjectRegistrationPage() {
   const shippingContainer = document.querySelector(
     '.registration-form_shipping-address-block',
@@ -16,11 +14,6 @@ export function getUserObjectRegistrationPage() {
   const cityInputBilling = billingContainer.children[1].children[0] as HTMLInputElement;
   const streetInputBilling = billingContainer.children[2].children[0] as HTMLInputElement;
   const postalCodeInputBilling = billingContainer.children[3].children[0] as HTMLInputElement;
-
-  console.log(cityInputBilling.value);
-  console.log(streetInputBilling.value);
-  console.log(postalCodeInputBilling.value);
-
   const firstNameInput = document.querySelector(
     '.registration-form_first-name-input',
   ) as HTMLInputElement;

@@ -77,5 +77,16 @@
   "validate-branch-name": {
     "pattern": "^(master|main|develop){1}$|^(feature|fix|hotfix|release|ECOM-\\d+(_\\w+)?)\\/?.+$",
     "errorMsg": "Error branch name"
+  },
+  "build": {
+    "pushState": {
+      "redirects": [
+        {
+          "from": "/*",
+          "to": "/index.html",
+          "status": 200
+        }
+      ]
+    }
   }
 }

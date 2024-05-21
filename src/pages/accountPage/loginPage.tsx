@@ -7,9 +7,10 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loginRef } from '../../components/header/navBar/navBar';
+import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 
 type Inputs = {
   login: string;
@@ -25,7 +26,6 @@ function AccountPage() {
   } = useForm<Inputs>({ mode: 'onChange' });
 
   const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
@@ -44,33 +44,13 @@ function AccountPage() {
             localStorage.setItem('userId', `${res.body.customer.id}`);
             navigate('/');
             if (loginRef.current) loginRef.current.textContent = 'log out';
-            toast.success('🦄 You have successfully logged in', {
-              position: 'top-right',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-              transition: Bounce,
-            });
+            toast.success('🎉 You have successfully logged in', successLogin);
             createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
             return res.body.customer;
           }
         })
         .catch(() => {
-          toast.error('Invalid email or password or such user does not exist!', {
-            position: 'bottom-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            transition: Bounce,
-          });
+          toast.error('Invalid email or password or such user does not exist!', errorLogin);
         });
       return loggedUser;
     }
@@ -137,7 +117,7 @@ function AccountPage() {
             {' '}
             Sign in
           </MyButton>
-          <Link to="/" className="btn_black">
+          <Link to="/registration" className="btn_black">
             SIGN UP
           </Link>
         </fieldset>

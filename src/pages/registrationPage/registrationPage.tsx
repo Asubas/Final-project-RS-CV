@@ -1,6 +1,6 @@
 import './registartionPage.scss';
 import '../accountPage/loginPage.scss';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
@@ -11,9 +11,10 @@ import { Inputs } from '../../types/typeRegistrationPage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginRef } from '../../components/header/navBar/navBar';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import registerCustomer from '../../lib/userRegistartionFlow';
+import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 function RegistrationPage() {
   const navigate = useNavigate();
   const {
@@ -21,24 +22,40 @@ function RegistrationPage() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const onSubmit: SubmitHandler<Inputs> = () => {
-    registerCustomer().then((res) => {
-      localStorage.setItem('userId', `${res}`);
-      navigate('/');
-      if (loginRef.current) loginRef.current.textContent = 'log out';
-      toast.success('🦄 You have successfully logged in', {
-        position: 'top-right',
-        autoClose: 3000,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-        transition: Bounce,
+  const submitForm = async () => {
+    await registerCustomer()
+      .then((res) => {
+        if (res === null) {
+          toast.error(
+            'Registration error. Perhaps a user with this email already exists!',
+            errorRegister,
+          );
+          return;
+        } else if (res && res !== null) {
+          const emailUser = localStorage.getItem('email');
+          if (emailUser) localStorage.setItem('userId', emailUser);
+          navigate('/');
+          if (loginRef.current) loginRef.current.textContent = 'Log out';
+          toast.success('🔥 You have successfully registered and logged in!', successRegister);
+        }
+
+        const keyToKeep = 'userId';
+        const keys = Object.keys(localStorage);
+        keys.forEach((key) => {
+          if (key !== keyToKeep) {
+            localStorage.removeItem(key);
+          }
+        });
+      })
+      .catch(() => {
+        toast.error(
+          'Registration error. Perhaps a user with this email already exists!',
+          errorRegister,
+        );
       });
-    });
   };
 
+  const navigateToLogin = () => navigate('/login');
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
   const [isCheckedBilling, setIsCheckedBilling] = useState(false);
   const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +70,7 @@ function RegistrationPage() {
   return (
     <div className="registration-field">
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitForm)}
         className={`registration-field_form registration-form ${isValid ? 'form-valid' : 'form-invalid'}`}
       >
         <fieldset className="registration-form_fieldset">
@@ -153,7 +170,6 @@ function RegistrationPage() {
                 {errors.dateOfBirth && <span>{errors.dateOfBirth.message}</span>}
               </div>
             </div>
-
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
               <SelectCountry />
@@ -304,11 +320,11 @@ function RegistrationPage() {
               />
             </label>
             <span className="error-message"></span>
-            <MyButton className="btn_black " type="submit" onClick={registerCustomer}>
+            <MyButton className="btn_white " type="submit" onClick={submitForm}>
               {' '}
               Sign in
             </MyButton>
-            <MyButton className="btn_black " type="button">
+            <MyButton className="btn_black " type="button" onClick={navigateToLogin}>
               {' '}
               Back to Login page
             </MyButton>

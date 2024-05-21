@@ -1,8 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
-
+import { toast } from 'react-toastify';
+import { infoLogout } from '../../toastyOption/toastyOptions';
 let loginRef: RefObject<HTMLAnchorElement>;
 
 function NavBar() {
@@ -20,10 +21,15 @@ function NavBar() {
   const handleStorageChange = () => {
     checkIsUserLoggedIn();
   };
-
+  const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('userId');
     setIsUserLoggedIn(false);
+    console.log(loginRef.current?.textContent);
+    if (loginRef.current?.textContent === 'Log out') {
+      toast.info('🎈 You are logged out of your account!', infoLogout);
+      navigate('/');
+    }
     if (loginRef.current) loginRef.current.textContent = 'Sign in';
   };
 
