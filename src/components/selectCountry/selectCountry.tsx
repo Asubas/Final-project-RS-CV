@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Select, { OnChangeValue, PropsValue } from 'react-select';
 import { InewValue } from '../../types/typeRegistrationPage';
 import { countries, customStyles } from '../../constants/constantsRegistrationPage';
 import getShippingOrBillingContainer from '../accordanceCountryToPostalCode/getShippingOrBillingContainer';
+import './selectCountry.scss'
+
 export let cont: string;
-function SelectCountry() {
-  const [currentCountry, setCurrentCountry] = useState('');
+
+const SelectCountry: React.FC = () => {
+  const [currentCountry, setCurrentCountry] = useState<string>('');
+  const [currentContainer, setCurrentContainer] = useState<HTMLElement | null>(null);
 
   const getValueCountry = (): PropsValue<InewValue> | undefined => {
     return currentCountry
@@ -13,66 +17,78 @@ function SelectCountry() {
       : undefined;
   };
 
-  let currentContainer: HTMLElement;
-  const handleClick = (event: Event) => {
-    let element = event.target || null;
-    while (
-      (element as HTMLElement).className !== 'registration-form_shipping-address-block' ||
-      (element as HTMLElement).className !== 'registration-form_billing-address-block'
-    ) {
-      element = (element as HTMLElement).parentElement;
-      if (
-        (element as HTMLElement).className === 'registration-form_shipping-address-block' ||
-        (element as HTMLElement).className === 'registration-form_billing-address-block'
-      ) {
-        const className = (element as HTMLElement).className;
-        cont = getShippingOrBillingContainer(className);
-        return (currentContainer = element as HTMLElement);
-      }
+  const handleClick = useCallback((event: Event) => {
+    let element = event.target as HTMLElement | null;
+    while (element && 
+           !element.classList.contains('registration-form_shipping-address-block') &&
+           !element.classList.contains('registration-form_billing-address-block')) {
+      element = element.parentElement;
     }
-  };
+
+    if (element) {
+      const className = element.className;
+      cont = getShippingOrBillingContainer(className);
+      setCurrentContainer(element);
+    }
+  }, []);
 
   const onChange = (newValue: OnChangeValue<InewValue, boolean>) => {
-    const postalCodeContainer = currentContainer as HTMLElement;
-    const postalCodeInput = ((currentContainer as HTMLElement).childNodes[3] as HTMLElement)
-      .children[0] as HTMLInputElement;
+    if (!currentContainer) return;
 
-    if (currentContainer.className === 'registration-form_shipping-address-block') {
+    const postalCodeContainer = currentContainer;
+    const postalCodeInput = postalCodeContainer.querySelector('input[type="text"]') as HTMLInputElement;
+
+    if (!postalCodeInput) return;
+
+    if (currentContainer.classList.contains('registration-form_shipping-address-block')) {
       if (newValue) {
-        setCurrentCountry((newValue as InewValue).value);
-        localStorage.setItem('countryShipping', (newValue as InewValue).value);
-        localStorage.setItem('patternShipping', (newValue as InewValue).pattern);
-        localStorage.setItem('countryCodeShipping', (newValue as InewValue).countryCode);
+        const newCountry = newValue as InewValue;
+        setCurrentCountry(newCountry.value);
+        localStorage.setItem('countryShipping', newCountry.value);
+        localStorage.setItem('patternShipping', newCountry.pattern);
+        localStorage.setItem('countryCodeShipping', newCountry.countryCode);
 
-        if (postalCodeInput) {
-          postalCodeInput.value = '';
-          postalCodeInput.removeAttribute('style');
-          if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
-            (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
-          }
-          postalCodeInput.pattern = String((newValue as InewValue).pattern);
+        postalCodeInput.value = '';
+        postalCodeInput.removeAttribute('style');
+        const spanElement = postalCodeContainer.querySelector('span') as HTMLSpanElement;
+        if (spanElement) {
+          spanElement.innerText = '';
         }
+        postalCodeInput.pattern = String(newCountry.pattern);
       }
     }
 
-    if (currentContainer.className === 'registration-form_billing-address-block') {
+    if (currentContainer.classList.contains('registration-form_billing-address-block')) {
       if (newValue) {
-        setCurrentCountry((newValue as InewValue).value);
-        localStorage.setItem('countryBilling', (newValue as InewValue).value);
-        localStorage.setItem('patternBilling', (newValue as InewValue).pattern);
-        localStorage.setItem('countryCodeBilling', (newValue as InewValue).countryCode);
+        const newCountry = newValue as InewValue;
+        setCurrentCountry(newCountry.value);
+        localStorage.setItem('countryBilling', newCountry.value);
+        localStorage.setItem('patternBilling', newCountry.pattern);
+        localStorage.setItem('countryCodeBilling', newCountry.countryCode);
 
-        if (postalCodeInput) {
-          postalCodeInput.value = '';
-          postalCodeInput.removeAttribute('style');
-          if (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement) {
-            (postalCodeContainer.children[3].childNodes[1] as HTMLSpanElement).innerText = '';
-          }
-          postalCodeInput.pattern = String((newValue as InewValue).pattern);
+        postalCodeInput.value = '';
+        postalCodeInput.removeAttribute('style');
+        const spanElement = postalCodeContainer.querySelector('span') as HTMLSpanElement;
+        if (spanElement) {
+          spanElement.innerText = '';
         }
+        postalCodeInput.pattern = String(newCountry.pattern);
       }
     }
   };
+
+  useEffect(() => {
+    const handleDocumentClick = (event: Event) => {
+      handleClick(event);
+    };
+
+    document.addEventListener('click', handleDocumentClick, { passive: true });
+    document.addEventListener('touchend', handleDocumentClick, { passive: true });
+    return () => {
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('touchend', handleDocumentClick);
+    };
+  }, [handleClick]);
 
   return (
     <Select
@@ -87,13 +103,15 @@ function SelectCountry() {
         IndicatorSeparator: () => null,
       }}
       onMenuOpen={() => {
-        document.addEventListener('click', handleClick);
+        document.addEventListener('click', handleClick, { passive: true });
+        document.addEventListener('touchend', handleClick, { passive: true });
       }}
       onMenuClose={() => {
         document.removeEventListener('click', handleClick);
+        document.removeEventListener('touchend', handleClick);
       }}
     />
   );
-}
+};
 
 export default SelectCountry;

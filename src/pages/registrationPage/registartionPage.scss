@@ -110,6 +110,14 @@
             gap: 10px;
           }
         }
+        .labels-block{
+          width: 90%;
+          display: flex;
+          flex-direction: column;
+          margin: 0 auto;
+          gap: 20px;
+         align-items: start;
+        }
         .registration-form_defaultAddress-Label {
           display: flex;
           flex-direction: row-reverse;
@@ -146,45 +154,41 @@
         .registration-form_block {
           width: inherit;
           .registration-form_user-data-block {
-             
-              // // max-width: 456px;
+            // // max-width: 456px;
+            width: 100%;
+            .registration-form_first-name-input-container,
+            .registration-form_last-name-input-container,
+            .registration-form_email-input-container,
+            .registration-form_password-input-container,
+            .registration-form_date-of-birth-input-container {
               width: 100%;
-                .registration-form_first-name-input-container,
-                .registration-form_last-name-input-container,
-                .registration-form_email-input-container,
-                .registration-form_password-input-container,
-                .registration-form_date-of-birth-input-container {
-                    width: 100%;
-                    .registration__input {
-                      font-size: 100%;
-                      width: 100%;
-                    }
-                }
-           
-              }
               .registration__input {
                 font-size: 100%;
                 width: 100%;
               }
-              span {
-                width: inherit;
-              }
             }
-            .registration-form_shipping-address-block,
-            .registration-form_billing-address-block{
-              width: 100%;
-              .registration-form_city-input-container,
-              .registration-form_street-input-container,
-              .registration-form_postal-code-input-container {
-                width: 100%;
-                .registration__input {
-                  font-size: 100%;
-                  width: 100%;
-                }
-              }
-
           }
-       
+          .registration__input {
+            font-size: 100%;
+            width: 100%;
+          }
+          span {
+            width: inherit;
+          }
+        }
+        .registration-form_shipping-address-block,
+        .registration-form_billing-address-block {
+          width: 100%;
+          .registration-form_city-input-container,
+          .registration-form_street-input-container,
+          .registration-form_postal-code-input-container {
+            width: 100%;
+            .registration__input {
+              font-size: 100%;
+              width: 100%;
+            }
+          }
+        }
       }
     }
   }
