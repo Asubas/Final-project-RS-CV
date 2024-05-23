@@ -2,6 +2,7 @@ import productList from '../../../requestsToProducts/productList';
 
 const ProductCard = () => {
   const productProperty = productList().then((r) => r.results);
+  console.log(productProperty);
   return (
     <div className="productsCard">
       <ul className="productsCard-list">
