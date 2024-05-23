@@ -13,6 +13,7 @@ import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
 import Category from './pages/category/category';
 import Product from './pages/product/product';
+import CategoryCheck from './lib/categoryCheck';
 
 function App() {
   return (
@@ -22,8 +23,11 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="collection" element={<Collection />} />
-          <Route path="collection/:category" element={<Category />} />
-          <Route path="collection/:category/:id" element={<Product />} />
+          <Route path="collection/:category" element={<CategoryCheck />}>
+            <Route index element={<Category />} />
+            <Route path=":id" element={<Product />} />
+          </Route>
+          {/* <Route path="collection/:category/:id" element={<Product />} /> */}
           <Route
             path="login"
             element={
