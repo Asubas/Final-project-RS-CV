@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import HomePage from './pages/homePage/homePage';
 import AboutUs from './pages/aboutUs/aboutUs';
-import Collection from './pages/collections/collection';
+import Collection from './pages/collections/collectionPage';
 import MyBag from './pages/myBag/myBag';
 import LoginPage from './pages/accountPage/loginPage';
 import ProtectedRoute from './pages/protectedRouter';

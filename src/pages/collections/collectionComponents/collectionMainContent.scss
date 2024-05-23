@@ -1,0 +1,13 @@
+.collection-page_content {
+  max-width: 1130px;
+  margin: 30px 75px;
+  display: grid;
+  grid-template-rows: 30px 1fr;
+  grid-template-columns: 216px 1fr;
+  gap: 50px;
+}
+
+.collection-page_breadcrumbLinks {
+  grid-row: 1/2;
+  grid-column: 1/-1;
+}
