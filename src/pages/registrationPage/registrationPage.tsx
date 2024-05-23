@@ -7,7 +7,7 @@ import validatePassword from '../accountPage/validatePassword';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-import { Inputs } from '../../types/typeRegistrationPage';
+import { InewValue, Inputs } from '../../types/typeRegistrationPage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginRef } from '../../components/header/navBar/navBar';
@@ -15,6 +15,10 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import registerCustomer from '../../lib/userRegistartionFlow';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
+import validatePostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
+import { countries } from '../../constants/constantsRegistrationPage';
+import { PropsValue } from 'react-select';
+import registerUser from '../../lib/registerUser';
 
 function RegistrationPage() {
   const navigate = useNavigate();
@@ -25,7 +29,7 @@ function RegistrationPage() {
   } = useForm<Inputs>({ mode: 'onChange' });
   const submitForm = async () => {
     if (isValid) {
-      await registerCustomer()
+      await registerUser()
         .then((res) => {
           if (res === null) {
             toast.error(
@@ -94,6 +98,23 @@ function RegistrationPage() {
       setIsSecondSelectDisabled(false);
     }
   };
+
+
+  // const [selectedCountryPostalCodeShipping, setSelectedCountryPostalCodeShipping] = useState<string>('');
+  // const [selectedCountryPostalCodeBilling, setSelectedCountryPostalCodeBilling] = useState<string>('');
+
+  // const handleCountryChangeShipping = () => {
+  //   const country = countries.find((country) => country.value === localStorage.getItem('countryShipping'));
+  //   if(!country){
+  //     return
+  //   }
+  //   console.log(country)
+  //   setSelectedCountryPostalCodeShipping(country.pattern);
+  // };
+
+  // const handleCountryChangeBilling = (countryCode: string) => {
+  //   setSelectedCountryPostalCodeBilling(countryCode);
+  // };
 
   return (
     <div className="registration-field">
@@ -190,7 +211,7 @@ function RegistrationPage() {
                   {...register('dateOfBirth', {
                     required: 'This field must be completed',
                   })}
-                  required={true}
+                  // required={true}
                   onChange={dateCalculation}
                   maxLength={10}
                 />
@@ -248,7 +269,7 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeShipping', {
                     required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
+                    validate:validatePostalCode(localStorage.getItem('patternShipping') as string),
                   })}
                   style={{
                     border: errors.postalCodeShipping ? '1px solid red' : '',
@@ -353,7 +374,7 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeBilling', {
                     required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
+                    validate:  validatePostalCode(localStorage.getItem('patternBilling') as string),
                   })}
                   style={{
                     border:

@@ -40,7 +40,7 @@ const SelectCountry: React.FC<SelectCountryProps> = ({ isDisabled }) => {
 
   const onChange = (newValue: OnChangeValue<InewValue, boolean>) => {
     if (!currentContainer) return;
-
+  
     const postalCodeContainer = currentContainer;
     const postalCodeInput = postalCodeContainer.querySelector(
       'input[type="text"]',
