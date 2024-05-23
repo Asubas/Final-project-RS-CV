@@ -24,7 +24,11 @@ function getUserRequestObject() {
   const checkSetDefaultShippingAddress = localStorage.getItem('setDefaultShippingAddress') || '';
   const checkSetDefaultBillingAddress = localStorage.getItem('setDefaultBillingAddress') || '';
   const checkSetSameAddresses = localStorage.getItem('setSameAddress') || '';
-  if (checkSetSameAddresses === 'true' && checkSetDefaultShippingAddress === 'true' && checkSetDefaultBillingAddress === 'true') {
+  if (
+    checkSetSameAddresses === 'true' &&
+    checkSetDefaultShippingAddress === 'true' &&
+    checkSetDefaultBillingAddress === 'true'
+  ) {
     return {
       email: localStorage.getItem('email') || '',
       firstName: localStorage.getItem('firstName') || '',
@@ -34,7 +38,11 @@ function getUserRequestObject() {
       defaultShippingAddress: 0,
       defaultBillingAddress: 0,
     };
-  } else if(checkSetSameAddresses === 'true' && checkSetDefaultShippingAddress === 'true' && checkSetDefaultBillingAddress !== 'true'){
+  } else if (
+    checkSetSameAddresses === 'true' &&
+    checkSetDefaultShippingAddress === 'true' &&
+    checkSetDefaultBillingAddress !== 'true'
+  ) {
     return {
       email: localStorage.getItem('email') || '',
       firstName: localStorage.getItem('firstName') || '',
@@ -43,7 +51,11 @@ function getUserRequestObject() {
       addresses: [addressesShipping],
       defaultShippingAddress: 0,
     };
-  } else if(checkSetSameAddresses === 'true' && checkSetDefaultShippingAddress !== 'true' && checkSetDefaultBillingAddress !== 'true'){
+  } else if (
+    checkSetSameAddresses === 'true' &&
+    checkSetDefaultShippingAddress !== 'true' &&
+    checkSetDefaultBillingAddress !== 'true'
+  ) {
     return {
       email: localStorage.getItem('email') || '',
       firstName: localStorage.getItem('firstName') || '',
@@ -51,7 +63,11 @@ function getUserRequestObject() {
       password: localStorage.getItem('password') || '',
       addresses: [addressesShipping],
     };
-  } else if (checkSetSameAddresses !== 'true' && checkSetDefaultShippingAddress !== 'true' && checkSetDefaultBillingAddress !== 'true') {
+  } else if (
+    checkSetSameAddresses !== 'true' &&
+    checkSetDefaultShippingAddress !== 'true' &&
+    checkSetDefaultBillingAddress !== 'true'
+  ) {
     return {
       email: localStorage.getItem('email') || '',
       firstName: localStorage.getItem('firstName') || '',

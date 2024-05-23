@@ -24,36 +24,39 @@ function RegistrationPage() {
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
   const submitForm = async () => {
-    await registerCustomer()
-      .then((res) => {
-        if (res === null) {
+    if (isValid) {
+      await registerCustomer()
+        .then((res) => {
+          if (res === null) {
+            toast.error(
+              'Registration error. Perhaps a user with this email already exists!',
+              errorRegister,
+            );
+            return;
+          } else if (res && res !== null) {
+            const emailUser = localStorage.getItem('email');
+            if (emailUser) localStorage.setItem('userId', emailUser);
+            navigate('/');
+            if (loginRef.current) loginRef.current.textContent = 'Log out';
+            toast.success('🔥 You have successfully registered and logged in!', successRegister);
+          }
+
+          const keyToKeep = 'userId';
+          const keys = Object.keys(localStorage);
+          keys.forEach((key) => {
+            if (key !== keyToKeep) {
+              localStorage.removeItem(key);
+            }
+          });
+        })
+        .catch(() => {
           toast.error(
             'Registration error. Perhaps a user with this email already exists!',
             errorRegister,
           );
-          return;
-        } else if (res && res !== null) {
-          const emailUser = localStorage.getItem('email');
-          if (emailUser) localStorage.setItem('userId', emailUser);
-          navigate('/');
-          if (loginRef.current) loginRef.current.textContent = 'Log out';
-          toast.success('🔥 You have successfully registered and logged in!', successRegister);
-        }
-
-        const keyToKeep = 'userId';
-        const keys = Object.keys(localStorage);
-        keys.forEach((key) => {
-          if (key !== keyToKeep) {
-            localStorage.removeItem(key);
-          }
         });
-      })
-      .catch(() => {
-        toast.error(
-          'Registration error. Perhaps a user with this email already exists!',
-          errorRegister,
-        );
-      });
+    }
+    return;
   };
 
   const navigateToLogin = () => navigate('/login');
@@ -80,14 +83,14 @@ function RegistrationPage() {
     localStorage.setItem('setSameAddress', String(event.target.checked));
 
     if (event.target.checked === true) {
-      setIsDisabledCityBilling(true)
-      setIsDisabledStreetBilling(true)
-      setIsDisabledPostalCodeBilling(true)
+      setIsDisabledCityBilling(true);
+      setIsDisabledStreetBilling(true);
+      setIsDisabledPostalCodeBilling(true);
       setIsSecondSelectDisabled(true);
     } else {
-      setIsDisabledCityBilling(false)
-      setIsDisabledStreetBilling(false)
-      setIsDisabledPostalCodeBilling(false)
+      setIsDisabledCityBilling(false);
+      setIsDisabledStreetBilling(false);
+      setIsDisabledPostalCodeBilling(false);
       setIsSecondSelectDisabled(false);
     }
   };
@@ -140,7 +143,6 @@ function RegistrationPage() {
                   style={{
                     border: errors.lastName ? '1px solid red' : '',
                   }}
-                 
                 />
                 {errors.lastName && <span>{errors.lastName.message}</span>}
               </div>
@@ -212,12 +214,10 @@ function RegistrationPage() {
                       message:
                         'Must contain at least one latin character and no special characters or numbers',
                     },
-                  }
-                )}
+                  })}
                   style={{
                     border: errors.cityShipping ? '1px solid red' : '',
                   }}
-                 
                 />
                 {errors.cityShipping && <span>{errors.cityShipping.message}</span>}
               </div>
@@ -301,22 +301,27 @@ function RegistrationPage() {
                   autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
-                  {...register('cityBilling', 
-                    isDisabledCityBilling ? {} : 
-                    {
-                    required: 'This field must be completed',
-                    pattern: {
-                      value: /^[a-zA-Z]+$/,
-                      message:
-                        'Must contain at least one latin character and no special characters or numbers',
-                    },
-                  })}
+                  {...register(
+                    'cityBilling',
+                    isDisabledCityBilling
+                      ? {}
+                      : {
+                          required: 'This field must be completed',
+                          pattern: {
+                            value: /^[a-zA-Z]+$/,
+                            message:
+                              'Must contain at least one latin character and no special characters or numbers',
+                          },
+                        },
+                  )}
                   style={{
                     border: !isDisabledCityBilling && errors.cityBilling ? '1px solid red' : '',
                   }}
                   disabled={isDisabledCityBilling}
                 />
-                {!isDisabledCityBilling && errors.cityBilling && <span>{errors.cityBilling.message}</span>}
+                {!isDisabledCityBilling && errors.cityBilling && (
+                  <span>{errors.cityBilling.message}</span>
+                )}
               </div>
               <div className="registration-form_street-input-container">
                 <MyInput
@@ -336,7 +341,9 @@ function RegistrationPage() {
                   }}
                   disabled={isDisabledStreetBilling}
                 />
-                {!isDisabledStreetBilling && errors.streetBilling && <span>{errors.streetBilling.message}</span>}
+                {!isDisabledStreetBilling && errors.streetBilling && (
+                  <span>{errors.streetBilling.message}</span>
+                )}
               </div>
               <div className="registration-form_postal-code-input-container">
                 <MyInput
@@ -349,12 +356,17 @@ function RegistrationPage() {
                     validate: { AccordanceCountryToPostalCode },
                   })}
                   style={{
-                    border: !isDisabledPostalCodeBilling && errors.postalCodeBilling ? '1px solid red' : '',
+                    border:
+                      !isDisabledPostalCodeBilling && errors.postalCodeBilling
+                        ? '1px solid red'
+                        : '',
                   }}
                   disabled={isDisabledPostalCodeBilling}
                 />
                 <span></span>
-                {!isDisabledPostalCodeBilling && errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
+                {!isDisabledPostalCodeBilling && errors.postalCodeBilling && (
+                  <span>{errors.postalCodeBilling.message}</span>
+                )}
               </div>
             </div>
 

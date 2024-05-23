@@ -21,18 +21,18 @@ function AccordanceCountryToPostalCode() {
             return 'Must be contain 4 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
         case 'Belarus':
         case 'Russia': {
-          currentElementPostalCodeInput.pattern = '^\\d{6}$';
+          currentElementPostalCodeInput.pattern = '^d{6}$';
           const matchesBelRus = /^\d{6}$/.test(currentElementPostalCodeInput.value);
           if (matchesBelRus === false) {
             currentElementPostalCodeInput.setAttribute('style', 'border: 1px solid red');
             return 'Must be contain 6 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         case 'Poland': {
@@ -43,7 +43,7 @@ function AccordanceCountryToPostalCode() {
             return 'Must be have format 00-000';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         case 'Serbia':
@@ -55,13 +55,13 @@ function AccordanceCountryToPostalCode() {
             return 'Must be contain 5 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         default:
           currentElementPostalCodeInput.removeAttribute('style');
           currentElementPostalCodeInput.value = '';
-          return ' ';
+          return;
       }
     } else if (currentElementContainer.className === 'registration-form_billing-address-block') {
       currentCountry = localStorage.getItem('countryBilling') || '';
@@ -74,7 +74,7 @@ function AccordanceCountryToPostalCode() {
             return 'Must be contain 4 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
         case 'Belarus':
         case 'Russia': {
@@ -85,7 +85,7 @@ function AccordanceCountryToPostalCode() {
             return 'Must be contain 6 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         case 'Poland': {
@@ -96,7 +96,7 @@ function AccordanceCountryToPostalCode() {
             return 'Must be have format 00-000';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         case 'Serbia':
@@ -108,13 +108,13 @@ function AccordanceCountryToPostalCode() {
             return 'Must be contain 5 numbers';
           }
           currentElementPostalCodeInput.removeAttribute('style');
-          return '';
+          return;
         }
 
         default:
           currentElementPostalCodeInput.removeAttribute('style');
           currentElementPostalCodeInput.value = '';
-          return ' ';
+          return;
       }
     }
   }

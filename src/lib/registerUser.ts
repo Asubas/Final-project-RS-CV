@@ -29,7 +29,6 @@ async function registerUser() {
               return res.body.customer;
             }
           });
-        console.log(newCustomerResponse.body.customer);
         return newCustomerResponse.body.customer;
       } else {
         return null;
