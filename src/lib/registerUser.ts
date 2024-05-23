@@ -2,45 +2,44 @@ import getUserRequestObject from '../components/getUserObjectRegistrationPage/ge
 import apiRoot, { projectKey } from './anonymFlow';
 
 async function registerUser() {
-
-const bodyRequest = getUserRequestObject();
-if(bodyRequest){
+  const bodyRequest = getUserRequestObject();
+  if (bodyRequest) {
     try {
-        const newCustomerResponse = await apiRoot()
+      const newCustomerResponse = await apiRoot()
+        .withProjectKey({ projectKey })
+        .customers()
+        .post({
+          body: bodyRequest,
+        })
+        .execute();
+      if (newCustomerResponse.statusCode === 201) {
+        apiRoot()
           .withProjectKey({ projectKey })
-          .customers()
+          .login()
           .post({
-            body: bodyRequest,
+            body: {
+              email: bodyRequest.email,
+              password: bodyRequest.password,
+            },
           })
-          .execute();
-        if (newCustomerResponse.statusCode === 201) {
-          apiRoot()
-            .withProjectKey({ projectKey })
-            .login()
-            .post({
-              body: {
-                email: bodyRequest.email,
-                password: bodyRequest.password,
-              },
-            })
-            .execute()
-            .then((res) => {
-              if (res.statusCode === 200) {
-                localStorage.setItem('userId', `${res.body.customer.id}`);
-                return res.body.customer;
-              }
-            });
-            console.log(newCustomerResponse.body.customer)
-          return newCustomerResponse.body.customer;
-        } else {
-          return null;
-        }
-      } catch (error) {
-        const spanError = document.querySelector('.error-message') as HTMLSpanElement;
-        spanError.innerText = (error as Error).message;
+          .execute()
+          .then((res) => {
+            if (res.statusCode === 200) {
+              localStorage.setItem('userId', `${res.body.customer.id}`);
+              return res.body.customer;
+            }
+          });
+        console.log(newCustomerResponse.body.customer);
+        return newCustomerResponse.body.customer;
+      } else {
         return null;
       }
+    } catch (error) {
+      const spanError = document.querySelector('.error-message') as HTMLSpanElement;
+      spanError.innerText = (error as Error).message;
+      return null;
     }
+  }
 }
 
 export default registerUser;

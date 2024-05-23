@@ -3,11 +3,15 @@ import Select, { OnChangeValue, PropsValue } from 'react-select';
 import { InewValue } from '../../types/typeRegistrationPage';
 import { countries, customStyles } from '../../constants/constantsRegistrationPage';
 import getShippingOrBillingContainer from '../accordanceCountryToPostalCode/getShippingOrBillingContainer';
-import './selectCountry.scss'
+import './selectCountry.scss';
 
 export let cont: string;
 
-const SelectCountry: React.FC = () => {
+interface SelectCountryProps {
+  isDisabled: boolean;
+}
+
+const SelectCountry: React.FC<SelectCountryProps> = ({ isDisabled }) => {
   const [currentCountry, setCurrentCountry] = useState<string>('');
   const [currentContainer, setCurrentContainer] = useState<HTMLElement | null>(null);
 
@@ -19,9 +23,11 @@ const SelectCountry: React.FC = () => {
 
   const handleClick = useCallback((event: Event) => {
     let element = event.target as HTMLElement | null;
-    while (element && 
-           !element.classList.contains('registration-form_shipping-address-block') &&
-           !element.classList.contains('registration-form_billing-address-block')) {
+    while (
+      element &&
+      !element.classList.contains('registration-form_shipping-address-block') &&
+      !element.classList.contains('registration-form_billing-address-block')
+    ) {
       element = element.parentElement;
     }
 
@@ -36,45 +42,32 @@ const SelectCountry: React.FC = () => {
     if (!currentContainer) return;
 
     const postalCodeContainer = currentContainer;
-    const postalCodeInput = postalCodeContainer.querySelector('input[type="text"]') as HTMLInputElement;
+    const postalCodeInput = postalCodeContainer.querySelector(
+      'input[type="text"]',
+    ) as HTMLInputElement;
 
     if (!postalCodeInput) return;
 
+    const newCountry = newValue as InewValue;
+    setCurrentCountry(newCountry.value);
+
     if (currentContainer.classList.contains('registration-form_shipping-address-block')) {
-      if (newValue) {
-        const newCountry = newValue as InewValue;
-        setCurrentCountry(newCountry.value);
-        localStorage.setItem('countryShipping', newCountry.value);
-        localStorage.setItem('patternShipping', newCountry.pattern);
-        localStorage.setItem('countryCodeShipping', newCountry.countryCode);
-
-        postalCodeInput.value = '';
-        postalCodeInput.removeAttribute('style');
-        const spanElement = postalCodeContainer.querySelector('span') as HTMLSpanElement;
-        if (spanElement) {
-          spanElement.innerText = '';
-        }
-        postalCodeInput.pattern = String(newCountry.pattern);
-      }
+      localStorage.setItem('countryShipping', newCountry.value);
+      localStorage.setItem('patternShipping', newCountry.pattern);
+      localStorage.setItem('countryCodeShipping', newCountry.countryCode);
+    } else if (currentContainer.classList.contains('registration-form_billing-address-block')) {
+      localStorage.setItem('countryBilling', newCountry.value);
+      localStorage.setItem('patternBilling', newCountry.pattern);
+      localStorage.setItem('countryCodeBilling', newCountry.countryCode);
     }
 
-    if (currentContainer.classList.contains('registration-form_billing-address-block')) {
-      if (newValue) {
-        const newCountry = newValue as InewValue;
-        setCurrentCountry(newCountry.value);
-        localStorage.setItem('countryBilling', newCountry.value);
-        localStorage.setItem('patternBilling', newCountry.pattern);
-        localStorage.setItem('countryCodeBilling', newCountry.countryCode);
-
-        postalCodeInput.value = '';
-        postalCodeInput.removeAttribute('style');
-        const spanElement = postalCodeContainer.querySelector('span') as HTMLSpanElement;
-        if (spanElement) {
-          spanElement.innerText = '';
-        }
-        postalCodeInput.pattern = String(newCountry.pattern);
-      }
+    postalCodeInput.value = '';
+    postalCodeInput.removeAttribute('style');
+    const spanElement = postalCodeContainer.querySelector('span') as HTMLSpanElement;
+    if (spanElement) {
+      spanElement.innerText = '';
     }
+    postalCodeInput.pattern = String(newCountry.pattern);
   };
 
   useEffect(() => {
@@ -99,17 +92,11 @@ const SelectCountry: React.FC = () => {
       isSearchable={true}
       placeholder="Select country"
       styles={customStyles}
+      isDisabled={isDisabled}
       components={{
         IndicatorSeparator: () => null,
       }}
-      onMenuOpen={() => {
-        document.addEventListener('click', handleClick, { passive: true });
-        document.addEventListener('touchend', handleClick, { passive: true });
-      }}
-      onMenuClose={() => {
-        document.removeEventListener('click', handleClick);
-        document.removeEventListener('touchend', handleClick);
-      }}
+      
     />
   );
 };

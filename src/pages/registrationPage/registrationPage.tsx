@@ -15,7 +15,6 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import registerCustomer from '../../lib/userRegistartionFlow';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
-import CustomSelect from '../../components/selectCountry/selectCountryNew';
 function RegistrationPage() {
   const navigate = useNavigate();
   const {
@@ -74,17 +73,24 @@ function RegistrationPage() {
   const handleCheckboxSameAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedSameAddress(event.target.checked);
     localStorage.setItem('setSameAddress', String(event.target.checked));
-    const billingContainer = (document.querySelector('.registration-form_billing-address-block') as HTMLElement);
-    if(event.target.checked === true){
+    const billingContainer = document.querySelector(
+      '.registration-form_billing-address-block',
+    ) as HTMLElement;
+    if (event.target.checked === true) {
       billingContainer.children[1].children[0].setAttribute('disabled', 'disabled');
       billingContainer.children[2].children[0].setAttribute('disabled', 'disabled');
-      billingContainer.children[3].children[0].setAttribute('disabled', 'disabled')
+      billingContainer.children[3].children[0].setAttribute('disabled', 'disabled');
+      setIsSecondSelectDisabled(true);
     } else {
       billingContainer.children[1].children[0].removeAttribute('disabled');
       billingContainer.children[2].children[0].removeAttribute('disabled');
-      billingContainer.children[3].children[0].removeAttribute('disabled')
+      billingContainer.children[3].children[0].removeAttribute('disabled');
+      setIsSecondSelectDisabled(false);
     }
   };
+
+
+  const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   return (
     <div className="registration-field">
       <form
@@ -190,7 +196,7 @@ function RegistrationPage() {
             </div>
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
-              <SelectCountry />
+              <SelectCountry isDisabled={false}/>
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -250,7 +256,10 @@ function RegistrationPage() {
             </div>
 
             <div className="labels-block">
-              <label className="registration-form_defaultAddress-Label" htmlFor="remShippingAddress">
+              <label
+                className="registration-form_defaultAddress-Label"
+                htmlFor="remShippingAddress"
+              >
                 {' '}
                 Set as default shipping address
                 <MyInput
@@ -279,12 +288,9 @@ function RegistrationPage() {
               </label>
             </div>
 
-          
-
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
-              <CustomSelect/>
-              <SelectCountry />
+              <SelectCountry isDisabled={isSecondSelectDisabled}/>
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -344,22 +350,21 @@ function RegistrationPage() {
             </div>
 
             <div className="labels-block">
-            <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
-              {' '}
-              Set as default billing address
-              <MyInput
-                className="registration-form_defaultAddress-Input"
-                autoComplete="current-password"
-                type="checkbox"
-                name="billing"
-                id="remBillingAddress"
-                checked={isCheckedBilling}
-                onChange={handleCheckboxBillingChange}
-              />
-            </label>
+              <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
+                {' '}
+                Set as default billing address
+                <MyInput
+                  className="registration-form_defaultAddress-Input"
+                  autoComplete="current-password"
+                  type="checkbox"
+                  name="billing"
+                  id="remBillingAddress"
+                  checked={isCheckedBilling}
+                  onChange={handleCheckboxBillingChange}
+                />
+              </label>
             </div>
 
-           
             <span className="error-message"></span>
             <MyButton className="btn_white " type="submit" onClick={submitForm}>
               {' '}
