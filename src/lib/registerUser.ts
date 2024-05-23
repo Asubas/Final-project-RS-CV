@@ -35,8 +35,6 @@ async function registerUser() {
         return null;
       }
     } catch (error) {
-      const spanError = document.querySelector('.error-message') as HTMLSpanElement;
-      spanError.innerText = (error as Error).message;
       return null;
     }
   }

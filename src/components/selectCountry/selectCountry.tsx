@@ -96,7 +96,6 @@ const SelectCountry: React.FC<SelectCountryProps> = ({ isDisabled }) => {
       components={{
         IndicatorSeparator: () => null,
       }}
-      
     />
   );
 };

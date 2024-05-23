@@ -48,9 +48,9 @@ export const countries: InewValue[] = [
 ];
 
 export const customStyles: StylesConfig<InewValue> = {
-  container: (provided, state) => ({
+  container: (provided) => ({
     ...provided,
-    
+
     width: 230,
     '@media (max-width: 620px)': {
       ...provided,
@@ -78,7 +78,6 @@ export const customStyles: StylesConfig<InewValue> = {
     borderColor: state.isDisabled ? '#ccc' : '#007bff',
     cursor: state.isDisabled ? 'default' : 'text',
     opacity: state.isDisabled ? 0.5 : 1,
-    // cursor: 'text',
     boxSizing: 'border-box',
     '&:hover': {
       border: '1px solid rgb(118, 118, 118)',

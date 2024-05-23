@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import registerCustomer from '../../lib/userRegistartionFlow';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
+
 function RegistrationPage() {
   const navigate = useNavigate();
   const {
@@ -56,9 +57,13 @@ function RegistrationPage() {
   };
 
   const navigateToLogin = () => navigate('/login');
+  const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
   const [isCheckedBilling, setIsCheckedBilling] = useState(false);
   const [isCheckedSameAddress, setIsCheckedSameAddress] = useState(false);
+  const [isDisabledCityBilling, setIsDisabledCityBilling] = useState(false);
+  const [isDisabledStreetBilling, setIsDisabledStreetBilling] = useState(false);
+  const [isDisabledPostalCodeBilling, setIsDisabledPostalCodeBilling] = useState(false);
 
   const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedShipping(event.target.checked);
@@ -73,24 +78,20 @@ function RegistrationPage() {
   const handleCheckboxSameAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedSameAddress(event.target.checked);
     localStorage.setItem('setSameAddress', String(event.target.checked));
-    const billingContainer = document.querySelector(
-      '.registration-form_billing-address-block',
-    ) as HTMLElement;
+
     if (event.target.checked === true) {
-      billingContainer.children[1].children[0].setAttribute('disabled', 'disabled');
-      billingContainer.children[2].children[0].setAttribute('disabled', 'disabled');
-      billingContainer.children[3].children[0].setAttribute('disabled', 'disabled');
+      setIsDisabledCityBilling(true)
+      setIsDisabledStreetBilling(true)
+      setIsDisabledPostalCodeBilling(true)
       setIsSecondSelectDisabled(true);
     } else {
-      billingContainer.children[1].children[0].removeAttribute('disabled');
-      billingContainer.children[2].children[0].removeAttribute('disabled');
-      billingContainer.children[3].children[0].removeAttribute('disabled');
+      setIsDisabledCityBilling(false)
+      setIsDisabledStreetBilling(false)
+      setIsDisabledPostalCodeBilling(false)
       setIsSecondSelectDisabled(false);
     }
   };
 
-
-  const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   return (
     <div className="registration-field">
       <form
@@ -139,6 +140,7 @@ function RegistrationPage() {
                   style={{
                     border: errors.lastName ? '1px solid red' : '',
                   }}
+                 
                 />
                 {errors.lastName && <span>{errors.lastName.message}</span>}
               </div>
@@ -196,7 +198,7 @@ function RegistrationPage() {
             </div>
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
-              <SelectCountry isDisabled={false}/>
+              <SelectCountry isDisabled={false} />
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -210,10 +212,12 @@ function RegistrationPage() {
                       message:
                         'Must contain at least one latin character and no special characters or numbers',
                     },
-                  })}
+                  }
+                )}
                   style={{
                     border: errors.cityShipping ? '1px solid red' : '',
                   }}
+                 
                 />
                 {errors.cityShipping && <span>{errors.cityShipping.message}</span>}
               </div>
@@ -290,14 +294,16 @@ function RegistrationPage() {
 
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
-              <SelectCountry isDisabled={isSecondSelectDisabled}/>
+              <SelectCountry isDisabled={isSecondSelectDisabled} />
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
                   autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
-                  {...register('cityBilling', {
+                  {...register('cityBilling', 
+                    isDisabledCityBilling ? {} : 
+                    {
                     required: 'This field must be completed',
                     pattern: {
                       value: /^[a-zA-Z]+$/,
@@ -306,10 +312,11 @@ function RegistrationPage() {
                     },
                   })}
                   style={{
-                    border: errors.cityBilling ? '1px solid red' : '',
+                    border: !isDisabledCityBilling && errors.cityBilling ? '1px solid red' : '',
                   }}
+                  disabled={isDisabledCityBilling}
                 />
-                {errors.cityBilling && <span>{errors.cityBilling.message}</span>}
+                {!isDisabledCityBilling && errors.cityBilling && <span>{errors.cityBilling.message}</span>}
               </div>
               <div className="registration-form_street-input-container">
                 <MyInput
@@ -325,10 +332,11 @@ function RegistrationPage() {
                     },
                   })}
                   style={{
-                    border: errors.streetBilling ? '1px solid red' : '',
+                    border: !isDisabledStreetBilling && errors.streetBilling ? '1px solid red' : '',
                   }}
+                  disabled={isDisabledStreetBilling}
                 />
-                {errors.streetBilling && <span>{errors.streetBilling.message}</span>}
+                {!isDisabledStreetBilling && errors.streetBilling && <span>{errors.streetBilling.message}</span>}
               </div>
               <div className="registration-form_postal-code-input-container">
                 <MyInput
@@ -341,11 +349,12 @@ function RegistrationPage() {
                     validate: { AccordanceCountryToPostalCode },
                   })}
                   style={{
-                    border: errors.postalCodeBilling ? '1px solid red' : '',
+                    border: !isDisabledPostalCodeBilling && errors.postalCodeBilling ? '1px solid red' : '',
                   }}
+                  disabled={isDisabledPostalCodeBilling}
                 />
                 <span></span>
-                {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
+                {!isDisabledPostalCodeBilling && errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
               </div>
             </div>
 
@@ -365,7 +374,6 @@ function RegistrationPage() {
               </label>
             </div>
 
-            <span className="error-message"></span>
             <MyButton className="btn_white " type="submit" onClick={submitForm}>
               {' '}
               Sign in
