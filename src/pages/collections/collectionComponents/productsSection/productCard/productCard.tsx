@@ -1,23 +1,32 @@
-import productList from '../../../requestsToProducts/productList';
+import { products } from '../../../requestsToProducts/productList';
 
 const ProductCard = () => {
-  const productProperty = productList().then((r) => r.results);
-  console.log(productProperty);
   return (
-    <div className="productsCard">
-      <ul className="productsCard-list">
-        <li className="productsCard-item productsCard-item_img">
-          <img src="#" width="264px" alt="some"></img>
-        </li>
-        <li className="productsCard-item productsCard-item_description">
-          <p>Описание товара</p>
-        </li>
-        <li className="productsCard-item productsCard-item_price">
-          <span>Цена товара</span>
-        </li>
-      </ul>
-    </div>
+    <>
+      {products.results.map((product) => {
+        const { id, slug, masterVariant } = product;
+        const { images, prices } = masterVariant;
+        return (
+          <div className="productsCard" key={id}>
+            <ul className="productsCard-list">
+              <li className="productsCard-item productsCard-item_img">
+                <img src={images?.[0]?.url} width="264px" alt={slug['en-GB']} />
+              </li>
+              <li className="productsCard-item productsCard-item_description">
+                <p>{slug['en-GB']}</p>
+              </li>
+              <li className="productsCard-item productsCard-item_price">
+                {prices?.[1]?.value?.centAmount ? (
+                  <span>
+                    {prices[1].value.centAmount / 100} {prices[1].value.currencyCode}
+                  </span>
+                ) : null}
+              </li>
+            </ul>
+          </div>
+        );
+      })}
+    </>
   );
 };
-
 export default ProductCard;

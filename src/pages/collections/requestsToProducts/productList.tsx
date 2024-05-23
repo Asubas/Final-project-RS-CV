@@ -28,12 +28,12 @@ const ctpClient = new ClientBuilder()
   .withProjectKey(projectKey)
   .withClientCredentialsFlow(authMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
-  //   .withLoggerMiddleware()
+  // .withLoggerMiddleware()
   .build();
 
 const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 
-const productList = async (): Promise<ProductProjectionPagedQueryResponse> => {
+const getProductList = async (): Promise<ProductProjectionPagedQueryResponse> => {
   return apiRoot
     .productProjections()
     .get({
@@ -44,5 +44,5 @@ const productList = async (): Promise<ProductProjectionPagedQueryResponse> => {
     .execute()
     .then((res) => res.body as ProductProjectionPagedQueryResponse);
 };
-
-export default productList;
+const products = await getProductList();
+export { products };
