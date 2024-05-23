@@ -1,5 +1,19 @@
 .products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: 30px repeat(3, 1fr);
+  gap: 1vw;
+}
+
+.products_sort-container {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: -1;
+
+  button {
+    display: block;
+    margin-left: auto;
+    margin-right: 20px;
+  }
 }

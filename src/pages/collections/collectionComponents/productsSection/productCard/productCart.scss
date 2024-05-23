@@ -1,0 +1,42 @@
+@import '../../../../../App.scss';
+
+.productsCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  border: 1px solid $backgroundVariant;
+  border-radius: 5%;
+  transition: 1s;
+  padding: 1vw;
+  cursor: pointer;
+
+  &:hover {
+    transition: 1s;
+    transform: scale(1.14);
+  }
+}
+
+.productsCard-list {
+  display: grid;
+  grid-template-rows: 20vw 20px auto;
+  gap: 1vw;
+}
+
+.productsCard-item_price {
+  justify-self: center;
+}
+
+.productsCard-item_description {
+  text-align: center;
+
+  p {
+    display: inline-block;
+    width: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+  }
+}

@@ -1,3 +1,4 @@
+import './productCart.scss';
 import { products } from '../../../requestsToProducts/productList';
 
 const ProductCard = () => {
