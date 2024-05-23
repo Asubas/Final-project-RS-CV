@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { NavigateBack, NavigateForward } from '../../components/navigateBtn/navigateBtn';
 
 function Category() {
   console.log('category page');
@@ -7,6 +8,8 @@ function Category() {
   return (
     <>
       <h2>Category {location.pathname.split('/').slice(-1)}</h2>
+      <NavigateBack />
+      <NavigateForward />
     </>
   );
 }

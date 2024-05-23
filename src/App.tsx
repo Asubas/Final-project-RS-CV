@@ -27,7 +27,6 @@ function App() {
             <Route index element={<Category />} />
             <Route path=":id" element={<Product />} />
           </Route>
-          {/* <Route path="collection/:category/:id" element={<Product />} /> */}
           <Route
             path="login"
             element={

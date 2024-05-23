@@ -1,4 +1,5 @@
 import { useParams, useLocation } from 'react-router-dom';
+import { NavigateBack, NavigateForward } from '../../components/navigateBtn/navigateBtn';
 
 function Product() {
   console.log('product page');
@@ -10,6 +11,8 @@ function Product() {
     <>
       <h1>Product page {id}</h1>
       <h2>path to page: {location.pathname}</h2>
+      <NavigateBack />
+      <NavigateForward />
     </>
   );
 }
