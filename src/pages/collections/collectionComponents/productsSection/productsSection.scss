@@ -3,6 +3,14 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 30px repeat(3, 1fr);
   gap: 1vw;
+
+  @media (max-width: 950px) {
+    grid-template-columns: repeat(2, 1fr);
+    > *:nth-child(10) {
+      grid-column-start: 1;
+      grid-column-end: -1;
+    }
+  }
 }
 
 .products_sort-container {

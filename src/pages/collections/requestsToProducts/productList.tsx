@@ -31,18 +31,20 @@ const ctpClient = new ClientBuilder()
   // .withLoggerMiddleware()
   .build();
 
-const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
+const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 
-const getProductList = async (): Promise<ProductProjectionPagedQueryResponse> => {
-  return apiRoot
+const getProductList = async (count: number = 0): Promise<ProductProjectionPagedQueryResponse> => {
+  return request
     .productProjections()
     .get({
       queryArgs: {
         limit: 9,
+        offset: count,
+        // count: countRequestProducts,
       },
     })
     .execute()
     .then((res) => res.body as ProductProjectionPagedQueryResponse);
 };
-const products = await getProductList();
-export { products };
+// const products = await getProductList();
+export { getProductList };

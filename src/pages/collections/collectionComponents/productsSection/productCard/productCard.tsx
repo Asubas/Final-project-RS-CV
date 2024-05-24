@@ -1,10 +1,12 @@
 import './productCart.scss';
-import { products } from '../../../requestsToProducts/productList';
+import { useContext } from 'react';
+import { ProductsPageContext } from '../../../context';
 
 const ProductCard = () => {
+  const { state } = useContext(ProductsPageContext);
   return (
     <>
-      {products.results.map((product) => {
+      {state.results.map((product) => {
         const { id, slug, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
