@@ -5,19 +5,15 @@ import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
 import validatePassword from '../accountPage/validatePassword';
 import SelectCountry from '../../components/selectCountry/selectCountry';
-import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-import { InewValue, Inputs } from '../../types/typeRegistrationPage';
+import { Inputs } from '../../types/typeRegistrationPage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loginRef } from '../../components/header/navBar/navBar';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import registerCustomer from '../../lib/userRegistartionFlow';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 import validatePostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
-import { countries } from '../../constants/constantsRegistrationPage';
-import { PropsValue } from 'react-select';
 import registerUser from '../../lib/registerUser';
 
 function RegistrationPage() {
@@ -27,40 +23,52 @@ function RegistrationPage() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const submitForm = async () => {
-    if (isValid) {
-      await registerUser()
-        .then((res) => {
-          if (res === null) {
-            toast.error(
-              'Registration error. Perhaps a user with this email already exists!',
-              errorRegister,
-            );
-            return;
-          } else if (res && res !== null) {
-            const emailUser = localStorage.getItem('email');
-            if (emailUser) localStorage.setItem('userId', emailUser);
-            navigate('/');
-            if (loginRef.current) loginRef.current.textContent = 'Log out';
-            toast.success('🔥 You have successfully registered and logged in!', successRegister);
-          }
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-          const keyToKeep = 'userId';
-          const keys = Object.keys(localStorage);
-          keys.forEach((key) => {
-            if (key !== keyToKeep) {
-              localStorage.removeItem(key);
-            }
-          });
-        })
-        .catch(() => {
-          toast.error(
-            'Registration error. Perhaps a user with this email already exists!',
-            errorRegister,
-          );
-        });
+  const submitForm = async () => {
+    if (!isValid) {
+      return;
     }
-    return;
+
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await registerUser();
+
+      if (res === null) {
+        toast.error(
+          'Registration error. Perhaps a user with this email already exists!',
+          errorRegister,
+        );
+        setIsSubmitting(false);
+        return;
+      } else if (res) {
+        const emailUser = localStorage.getItem('email');
+        if (emailUser) localStorage.setItem('userId', emailUser);
+        navigate('/');
+        if (loginRef.current) loginRef.current.textContent = 'Log out';
+        toast.success('🔥 You have successfully registered and logged in!', successRegister);
+
+        const keyToKeep = 'userId';
+        const keys = Object.keys(localStorage);
+        keys.forEach((key) => {
+          if (key !== keyToKeep) {
+            localStorage.removeItem(key);
+          }
+        });
+      }
+    } catch (error) {
+      toast.error(
+        'Registration error. Perhaps a user with this email already exists!',
+        errorRegister,
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const navigateToLogin = () => navigate('/login');
@@ -98,23 +106,6 @@ function RegistrationPage() {
       setIsSecondSelectDisabled(false);
     }
   };
-
-
-  // const [selectedCountryPostalCodeShipping, setSelectedCountryPostalCodeShipping] = useState<string>('');
-  // const [selectedCountryPostalCodeBilling, setSelectedCountryPostalCodeBilling] = useState<string>('');
-
-  // const handleCountryChangeShipping = () => {
-  //   const country = countries.find((country) => country.value === localStorage.getItem('countryShipping'));
-  //   if(!country){
-  //     return
-  //   }
-  //   console.log(country)
-  //   setSelectedCountryPostalCodeShipping(country.pattern);
-  // };
-
-  // const handleCountryChangeBilling = (countryCode: string) => {
-  //   setSelectedCountryPostalCodeBilling(countryCode);
-  // };
 
   return (
     <div className="registration-field">
@@ -269,7 +260,7 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeShipping', {
                     required: 'This field must be completed',
-                    validate:validatePostalCode(localStorage.getItem('patternShipping') as string),
+                    validate: validatePostalCode(localStorage.getItem('patternShipping') as string),
                   })}
                   style={{
                     border: errors.postalCodeShipping ? '1px solid red' : '',
@@ -374,7 +365,7 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeBilling', {
                     required: 'This field must be completed',
-                    validate:  validatePostalCode(localStorage.getItem('patternBilling') as string),
+                    validate: validatePostalCode(localStorage.getItem('patternBilling') as string),
                   })}
                   style={{
                     border:

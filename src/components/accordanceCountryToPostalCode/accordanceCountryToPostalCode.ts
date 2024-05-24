@@ -5,7 +5,7 @@ import { useCallback, useState } from 'react';
 import { countries } from '../../constants/constantsRegistrationPage';
 
 const validatePostalCode = (countryCode: string) => {
-//  console.log(countryCode)
+  //  console.log(countryCode)
   return (postalCode: string) => {
     const country = countries.find((country) => country.pattern === countryCode);
     // console.log(country)
@@ -14,7 +14,6 @@ const validatePostalCode = (countryCode: string) => {
     }
     const regex = new RegExp(country.pattern);
     if (!regex.test(postalCode)) {
-      
       return `Invalid postal code for ${country.label}`;
     }
     return true;
@@ -23,8 +22,7 @@ const validatePostalCode = (countryCode: string) => {
 
 export default validatePostalCode;
 // function AccordanceCountryToPostalCode() {
- 
-  
+
 //   let currentCountry: string | '';
 //   const currentContainerClassName = cont;
 //   if (currentContainerClassName !== null) {

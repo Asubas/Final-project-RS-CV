@@ -6,39 +6,40 @@ async function registerUser() {
   const bodyRequest = getUserRequestObject();
   if (bodyRequest) {
     try {
-      const newCustomerResponse = await apiRoot()
+      const response = await apiRoot()
         .withProjectKey({ projectKey })
         .customers()
         .post({
           body: bodyRequest,
         })
-        .execute().then((resp) => {
-          if (resp.statusCode === 201) {
-            createAuthorizedClient(bodyRequest.email, bodyRequest.password)
-              .withProjectKey({ projectKey })
-              .login()
-              .post({
-                body: {
-                  email: bodyRequest.email,
-                  password: bodyRequest.password,
-                },
-              })
-              .execute()
-              .then((res) => {
-                if (res.statusCode === 200) {
-                  localStorage.setItem('userId', `${res.body.customer.id}`);
-                  return res.body.customer;
-                }
-              });
-              console.log(resp.body.customer)
-            return resp.body.customer;
-          } else {
-            return null;
-          }
-        })
-      } catch (error) {
+        .execute();
+
+      if (response.statusCode === 201) {
+        createAuthorizedClient(bodyRequest.email, bodyRequest.password)
+          .withProjectKey({ projectKey })
+          .login()
+          .post({
+            body: {
+              email: bodyRequest.email,
+              password: bodyRequest.password,
+            },
+          })
+          .execute()
+          .then((res) => {
+            if (res.statusCode === 200) {
+              localStorage.setItem('userId', `${res.body.customer.id}`);
+              return res.body.customer;
+            }
+          });
+
+        return response.body;
+      } else {
         return null;
       }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
   }
 }
 
