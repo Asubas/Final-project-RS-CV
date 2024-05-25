@@ -9,9 +9,6 @@ const ProductCard = () => {
       {state.results.map((product) => {
         const { id, slug, masterVariant } = product;
         const { images, prices } = masterVariant;
-        if (masterVariant.price?.discounted) {
-          console.log('есь скидка ');
-        }
         return (
           <div className="productsCard" key={id}>
             <ul className="productsCard-list">

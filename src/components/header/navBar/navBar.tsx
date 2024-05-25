@@ -25,7 +25,6 @@ function NavBar() {
   const handleLogout = () => {
     localStorage.removeItem('userId');
     setIsUserLoggedIn(false);
-    console.log(loginRef.current?.textContent);
     if (loginRef.current?.textContent === 'Log out') {
       toast.info('🎈 You are logged out of your account!', infoLogout);
       navigate('/');
