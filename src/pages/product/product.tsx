@@ -2,8 +2,6 @@ import { useParams, useLocation } from 'react-router-dom';
 import { NavigateBack, NavigateForward } from '../../components/navigateBtn/navigateBtn';
 
 function Product() {
-  console.log('product page');
-
   const location = useLocation();
   const { id } = useParams();
 

@@ -74,3 +74,19 @@
     transform: rotate(45deg);
   }
 }
+
+// недодуманный дизэйбл кнопок навигации
+.navigateBtn.goBack.disabled,
+.navigateBtn.goForward.disabled {
+  pointer-events: none;
+
+  .goForward_line {
+    background-color: $outline;
+    pointer-events: none;
+  }
+
+  .goBack_line {
+    background-color: $outline;
+    pointer-events: none;
+  }
+}
