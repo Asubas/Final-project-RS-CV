@@ -15,6 +15,7 @@ import Category from './pages/category/category';
 import Product from './pages/product/product';
 import CategoryCheck from './lib/categoryCheck';
 import Profile from './pages/profile/profile';
+import ProtectedProfile from './lib/protectedRoute';
 
 function App() {
   return (
@@ -46,7 +47,14 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedProfile redirectTo="/">
+                <Profile />
+              </ProtectedProfile>
+            }
+          />
         </Route>
       </Routes>
       <ToastContainer
