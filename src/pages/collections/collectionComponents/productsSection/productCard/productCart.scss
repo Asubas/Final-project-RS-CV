@@ -22,6 +22,16 @@
   display: grid;
   grid-template-rows: 20vw 20px auto;
   gap: 1vw;
+
+  .productsCard-item_price__discount {
+    margin-right: 5px;
+
+    & + .productsCard-item_price__clear {
+      color: $outline;
+      font-size: 90%;
+      text-decoration: line-through;
+    }
+  }
 }
 
 .productsCard-item_price {

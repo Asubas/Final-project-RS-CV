@@ -26,7 +26,6 @@ const PaginationContainer = () => {
   }, []);
 
   const handleTargetPageClick = useCallback((page: number) => {
-    console.log(page);
     setCurrentPage(page);
   }, []);
   return (

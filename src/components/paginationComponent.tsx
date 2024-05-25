@@ -19,7 +19,7 @@ const PaginationComponent = (props: PaginationProps) => {
           onClick={handlePrevPageClick}
           disabled={disable.left}
         >
-          {`${nav.current}`}
+          {`${nav.current === 1 ? (nav.current = 1) : nav.current - 1}`}
         </button>
         <button
           className="collection-page_pagination-buttonNext"

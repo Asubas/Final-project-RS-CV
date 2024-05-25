@@ -9,6 +9,9 @@ const ProductCard = () => {
       {state.results.map((product) => {
         const { id, slug, masterVariant } = product;
         const { images, prices } = masterVariant;
+        if (masterVariant.price?.discounted) {
+          console.log('есь скидка ');
+        }
         return (
           <div className="productsCard" key={id}>
             <ul className="productsCard-list">
@@ -19,8 +22,14 @@ const ProductCard = () => {
                 <p>{slug['en-GB']}</p>
               </li>
               <li className="productsCard-item productsCard-item_price">
+                {prices?.[1].discounted?.value.centAmount ? (
+                  <span className="productsCard-item_price__discount">
+                    {prices?.[1].discounted?.value.centAmount / 100}{' '}
+                    {prices?.[1].discounted?.value.currencyCode}
+                  </span>
+                ) : null}
                 {prices?.[1]?.value?.centAmount ? (
-                  <span>
+                  <span className="productsCard-item_price__clear">
                     {prices[1].value.centAmount / 100} {prices[1].value.currencyCode}
                   </span>
                 ) : null}
