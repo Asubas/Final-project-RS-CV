@@ -81,4 +81,9 @@
       user-select: none;
     }
   }
+
+  @media (max-width: 870px) {
+    grid-column-start: 1;
+    grid-row-start: 3;
+  }
 }
