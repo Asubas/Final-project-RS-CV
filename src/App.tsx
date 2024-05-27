@@ -21,8 +21,7 @@ import { CocoaPage } from './pages/collections/subCollections/cocoaPage';
 function App() {
   return (
     <>
-      <DisplayProductInformation />
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
@@ -78,7 +77,7 @@ function App() {
         pauseOnHover
         theme="light"
         transition={Bounce}
-      /> */}
+      />
     </>
   );
 }
