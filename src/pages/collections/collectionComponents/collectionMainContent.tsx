@@ -4,6 +4,7 @@ import Filters from './filtersSection/filtersSection';
 import { PaginationContainer } from './pagination/pagination';
 import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
+import { NavigateBack, NavigateForward } from '../../../components/navigateBtn/navigateBtn';
 
 const showFilter = () => {
   console.log('тут будет выпадать поле с фильтрами и чекбоксами');
@@ -25,7 +26,9 @@ const Content = () => {
   return (
     <>
       <div className="collection-page collection-page_content">
+        <NavigateBack />
         <div className="collection-page_breadcrumbLinks">Тут будут типа хлебные крошки</div>
+        <NavigateForward />
         {screenWidth > 870 ? (
           <>
             <Filters />

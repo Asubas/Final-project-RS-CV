@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import NotFound from '../pages/notFound/notFound';
 
-const CATEGORIES = ['tea', 'coffee', 'cacao'] as const;
+const CATEGORIES = ['tea', 'coffee', 'cocoa'] as const;
 
 type Category = (typeof CATEGORIES)[number];
 
