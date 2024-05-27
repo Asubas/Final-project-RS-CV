@@ -11,6 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
+import Category from './pages/category/category';
+import Product from './pages/product/product';
+import CategoryCheck from './lib/categoryCheck';
+import Profile from './pages/profile/profile';
+import ProtectedProfile from './lib/protectedRoute';
 
 function App() {
   return (
@@ -20,6 +25,10 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="collection" element={<Collection />} />
+          <Route path="collection/:category" element={<CategoryCheck />}>
+            <Route index element={<Category />} />
+            <Route path=":id" element={<Product />} />
+          </Route>
           <Route
             path="login"
             element={
@@ -38,6 +47,14 @@ function App() {
             }
           />
           <Route path="*" element={<NotFound />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedProfile redirectTo="/">
+                <Profile />
+              </ProtectedProfile>
+            }
+          />
         </Route>
       </Routes>
       <ToastContainer

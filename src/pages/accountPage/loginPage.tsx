@@ -9,7 +9,7 @@ import createAuthorizedClient from '../../lib/userLoginFlow';
 import apiRoot, { projectKey } from '../../lib/anonymFlow';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRef } from '../../components/header/navBar/navBar';
+import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 
 type Inputs = {
@@ -43,7 +43,10 @@ function AccountPage() {
           if (res.statusCode === 200) {
             localStorage.setItem('userId', `${res.body.customer.id}`);
             navigate('/');
-            if (loginRef.current) loginRef.current.textContent = 'log out';
+            if (loginRef.current && reqRef.current) {
+              loginRef.current.textContent = 'log out';
+              reqRef.current.textContent = 'profile';
+            }
             toast.success('🎉 You have successfully logged in', successLogin);
             createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
             return res.body.customer;

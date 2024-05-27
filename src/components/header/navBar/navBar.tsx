@@ -4,7 +4,9 @@ import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
+
 let loginRef: RefObject<HTMLAnchorElement>;
+let reqRef: RefObject<HTMLAnchorElement>;
 
 function NavBar() {
   const [burgerClass, setBurgerClass] = useState('burger-bar unclicked');
@@ -81,7 +83,7 @@ function NavBar() {
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links">
           <Link className="nav_link btn_blank" to="/collection">
-            tea collection
+            collection
           </Link>
           <Link className="nav_link btn_blank" to="/about">
             about us
@@ -99,8 +101,12 @@ function NavBar() {
           >
             {isUserLoggedIn ? 'Log out' : 'Sign In'}
           </Link>
-          <Link className="btn_black btn_header" to="registration">
-            Sign Up
+          <Link
+            className="btn_black btn_header"
+            to={isUserLoggedIn ? 'profile' : 'registration'}
+            ref={reqRef}
+          >
+            {isUserLoggedIn ? 'Profile' : 'Sign Up'}
           </Link>
         </div>
       </nav>
@@ -113,4 +119,4 @@ function NavBar() {
   );
 }
 
-export { NavBar, loginRef };
+export { NavBar, loginRef, reqRef };
