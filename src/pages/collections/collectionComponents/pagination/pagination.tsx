@@ -44,7 +44,7 @@ const PaginationContainer = () => {
             )}
           </ul>
         ) : (
-          'no data'
+          'Something went wrong. try again'
         )}
         {state.results.length && (
           <PaginationComponent

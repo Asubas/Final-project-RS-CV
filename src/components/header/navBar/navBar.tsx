@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logoCard from '../../../assets/svg/icon-local_mall.svg';
+import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
@@ -89,7 +89,7 @@ function NavBar() {
         </div>
         <div className="user-btns">
           <Link className="user-btns_btn" to="bag">
-            <img className="user-btns_btn__icon" src={logoCard} alt="Card" />
+            <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
           </Link>
           <Link
             className="btn_white btn_header"

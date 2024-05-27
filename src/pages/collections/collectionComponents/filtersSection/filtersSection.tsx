@@ -4,24 +4,26 @@ const Filters = () => {
   return (
     <>
       <section className="collection-page_content-filters">
-        <div>
-          <label>
-            Какой то выбор
-            <MyInput type="checkbox" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Какой то выбор
-            <MyInput type="checkbox" />
-          </label>
-        </div>
-        <div>
-          <label>
-            Какой то выбор
-            <MyInput type="checkbox" />
-          </label>
-        </div>
+        <ul className="filters-list">
+          <li className="filters-list__item">
+            <label>
+              Какой то выбор
+              <MyInput type="checkbox" />
+            </label>
+          </li>
+          <li className="filters-list__item">
+            <label>
+              Какой то выбор
+              <MyInput type="checkbox" />
+            </label>
+          </li>
+          <li className="filters-list__item">
+            <label>
+              Какой то выбор
+              <MyInput type="checkbox" />
+            </label>
+          </li>
+        </ul>
       </section>
     </>
   );

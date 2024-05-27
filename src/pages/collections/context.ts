@@ -9,12 +9,12 @@ export type TState = {
   total?: number;
 };
 
-type SomeProps = {
+type ProductContentType = {
   state: TState;
   handleFetch: (page: number) => void;
 };
 
-export const productsPageContextDefaultValue: SomeProps = {
+export const productsPageContextDefaultValue: ProductContentType = {
   state: {
     count: 0,
     limit: 0,
@@ -25,4 +25,6 @@ export const productsPageContextDefaultValue: SomeProps = {
   handleFetch: () => {},
 };
 
-export const ProductsPageContext = createContext<SomeProps>(productsPageContextDefaultValue);
+export const ProductsPageContext = createContext<ProductContentType>(
+  productsPageContextDefaultValue,
+);
