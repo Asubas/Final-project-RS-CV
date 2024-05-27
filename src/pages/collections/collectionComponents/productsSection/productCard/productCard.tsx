@@ -18,7 +18,7 @@ const ProductCard = () => {
               <li className="productsCard-item productsCard-item_description">
                 <p>{slug['en-GB']}</p>
               </li>
-              <li className="productsCard-item productsCard-item_price">
+              {/* <li className="productsCard-item productsCard-item_price">
                 {prices?.[1].discounted?.value.centAmount ? (
                   <span className="productsCard-item_price__discount">
                     {prices?.[1].discounted?.value.centAmount / 100}{' '}
@@ -30,7 +30,7 @@ const ProductCard = () => {
                     {prices[1].value.centAmount / 100} {prices[1].value.currencyCode}
                   </span>
                 ) : null}
-              </li>
+              </li> */}
             </ul>
           </div>
         );

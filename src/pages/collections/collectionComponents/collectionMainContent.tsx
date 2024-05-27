@@ -5,13 +5,13 @@ import { PaginationContainer } from './pagination/pagination';
 import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
 import { NavigateBack, NavigateForward } from '../../../components/navigateBtn/navigateBtn';
-
+import { IContentProps } from '../../../interfaces/contentProps';
 const showFilter = () => {
-  console.log('тут будет выпадать поле с фильтрами и чекбоксами');
+  console.log('тут будет выпадать поле c фильтрами и чекбоксами');
   return;
 };
 
-const Content = () => {
+const MainContent = ({ collectionType }: IContentProps) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -26,9 +26,11 @@ const Content = () => {
   return (
     <>
       <div className="collection-page collection-page_content">
-        <NavigateBack />
-        <div className="collection-page_breadcrumbLinks">Тут будут типа хлебные крошки</div>
-        <NavigateForward />
+        <div className="collection-page_breadcrumbLinks">
+          <NavigateBack />
+          Тут будут типа хлебные крошки
+          <NavigateForward />
+        </div>
         {screenWidth > 870 ? (
           <>
             <Filters />
@@ -56,4 +58,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export { MainContent };

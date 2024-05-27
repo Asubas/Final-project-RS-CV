@@ -12,10 +12,9 @@ import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
 import Product from './pages/product/product';
-import CategoryCheck from './lib/categoryCheck';
 import Profile from './pages/profile/profile';
 import ProtectedProfile from './lib/protectedRoute';
-import TeaCollection from './pages/collections/collectionMain';
+import SelectedCollection from './pages/collections/collectionMain';
 
 function App() {
   return (
@@ -25,10 +24,8 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="collection" element={<Collection />} />
-          <Route path="collection/:category" element={<CategoryCheck />}>
-            <Route index element={<TeaCollection />} />
-            <Route path=":id" element={<Product />} />
-          </Route>
+          <Route path="collection/:collectionType" element={<SelectedCollection />} />
+          <Route path="collection/:collectionType/:productId" element={<Product />} />
           <Route
             path="login"
             element={
