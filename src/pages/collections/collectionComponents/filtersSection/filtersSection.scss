@@ -1,0 +1,9 @@
+.collection-page_content-filters {
+  grid-column-start: 1;
+}
+
+@media (max-width: 870px) {
+  .collection-page_content-filters {
+    position: absolute;
+  }
+}

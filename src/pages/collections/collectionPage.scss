@@ -1,0 +1,9 @@
+.collection-page_top-img {
+  width: 100%;
+  min-height: 308px;
+  background: url('/src/assets/img/catalogTeaImg.jpg') no-repeat center / cover;
+
+  @media (max-width: 870px) {
+    min-height: 180px;
+  }
+}

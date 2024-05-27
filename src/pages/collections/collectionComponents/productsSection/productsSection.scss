@@ -1,0 +1,25 @@
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1vw;
+
+  @media (max-width: 950px) {
+    grid-template-columns: repeat(2, 1fr);
+    > *:nth-child(9) {
+      grid-column-start: 1;
+      grid-column-end: -1;
+    }
+  }
+}
+
+.products_sort-container {
+  grid-row: 1 / 2;
+  grid-column-end: -1;
+
+  button {
+    display: block;
+    margin-left: auto;
+    margin-right: 20px;
+  }
+}
