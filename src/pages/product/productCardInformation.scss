@@ -1,6 +1,12 @@
+h3 {
+  font-weight: 500;
+  font-size: 24px;
+}
+
 .product-card__container {
   max-width: 1280px;
   width: 100%;
+  margin: 0 auto;
   .product-card__block {
     // max-width: 1126px;
     width: 90%;
@@ -9,24 +15,29 @@
     flex-direction: row;
     justify-content: space-between;
     .product-image {
-      width: 456px;
+      max-width: 456px;
       height: 507px;
     }
     .product-parameters {
       display: flex;
       flex-direction: column;
       gap: 21px;
-      width: 574px;
+      max-width: 574px;
       .information-about-the-origin-of-the-goods {
-        width: 429px;
+        max-width: 429px;
+        width: 100%;
         display: flex;
         flex-direction: row;
-        gap: 61px;
+        justify-content: space-between;
         .information {
           display: flex;
           flex-direction: row;
           justify-content: space-between;
           gap: 8px;
+          img {
+            width: 18px;
+            height: 18px;
+          }
         }
       }
       .product-variants__block {
@@ -49,11 +60,130 @@
       .product-quntity-and-add-to-bag__block {
         display: flex;
         flex-direction: row;
+        align-items: center;
+        font-size: 14px;
         .product-quantity {
           display: flex;
           flex-direction: row;
+          align-items: center;
+          height: 32px;
+          margin-right: 23px;
+
+          .product-quantity__count {
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+          }
+        }
+        .btn_product-card {
+          width: 264px;
+          height: 56px;
+          position: relative;
+        }
+        .btn_product-card::after {
+          content: '';
+          position: absolute;
+          top: 19px;
+          left: 60px;
+          width: 18px;
+          height: 18px;
+
+          background: url('/src/assets/svg/icon-local_mall.svg') center no-repeat;
         }
       }
+    }
+  }
+  .steeping-instruction-and-about-tea-block {
+    max-width: 1280px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    gap: 10px;
+    .stepping-instruction__container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 40px;
+      margin-bottom: 40px;
+      margin-left: 120px;
+      max-width: 344px;
+
+      .stepping-instruction__title {
+        margin-bottom: 31px;
+        font-weight: 300;
+      }
+      .steeping-instruction__list {
+        font-size: 14px;
+
+        max-width: 344px;
+        .list-point {
+          height: 40px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          img {
+            padding-right: 2px;
+            width: 24px;
+            height: 24px;
+          }
+        }
+        .separator {
+          margin: 0;
+          margin: 0 auto;
+          width: 264px;
+        }
+      }
+    }
+    .about-tea__container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 40px;
+      margin-right: 83px;
+      max-width: 573px;
+      .about-tea__title {
+        margin-bottom: 24px;
+        font-weight: 300;
+      }
+      .about-tea__list {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .about-tea__list-point {
+          max-width: 171px;
+          width: 100%;
+          height: 57px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 7px;
+          border-right: 1px solid #a0a0a0;
+          text-align: center;
+          padding: 5px;
+        }
+
+        .about-tea__list-point:nth-child(1) {
+          text-align: left;
+        }
+        .about-tea__list-point:nth-child(4) {
+          border-right: none;
+        }
+      }
+      .product-ingredient {
+        margin-top: 36px;
+        h3 {
+          margin-bottom: 10px;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+  .similar-products__container {
+    height: 400px;
+    .similar-products__title {
+      text-align: center;
+      margin-top: 32px;
     }
   }
 }
@@ -62,4 +192,48 @@
   width: 24px;
   height: 24px;
   background-color: #ffffff00;
+}
+
+@media (max-width: 922px) {
+  .product-card__container {
+    .steeping-instruction-and-about-tea-block {
+      .stepping-instruction__container {
+        margin-left: 40px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-card__container {
+    .product-card__block {
+      flex-direction: column;
+    }
+    .steeping-instruction-and-about-tea-block {
+      flex-direction: column;
+      .stepping-instruction__container {
+        margin-left: 10px;
+        margin-bottom: 24px;
+      }
+      .about-tea__container {
+        margin: 0;
+        margin-left: 10px;
+        margin-bottom: 48px;
+      }
+    }
+  }
+}
+
+@media (max-width: 405px) {
+  .product-card__container {
+    .product-card__block {
+      .product-parameters {
+        .product-quntity-and-add-to-bag__block {
+          .btn_product-card::after {
+            left: 45px;
+          }
+        }
+      }
+    }
+  }
 }

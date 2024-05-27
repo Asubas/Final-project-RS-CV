@@ -54,17 +54,81 @@ function DisplayProductInformation() {
                 {' '}
                 -
               </MyButton>
-              <p>0</p>
+              <p className="product-quantity__count">0</p>
               <MyButton className="btn_transparent " type="button">
                 {' '}
                 +
               </MyButton>
             </div>
-            <MyButton className="btn_black " type="button">
+            <MyButton className="btn_black btn_product-card" type="button">
               {' '}
               ADD TO BAG
             </MyButton>
           </div>
+        </div>
+      </div>
+
+      <div className="steeping-instruction-and-about-tea-block">
+        <div className="stepping-instruction__container">
+          <h3 className="stepping-instruction__title">Steeping instruction</h3>
+          <ul className="steeping-instruction__list">
+            <li className="list-point">
+              <img src="/src/assets/svg/icon-kettle.svg" alt="icon-kettle" />
+              <p className="list-point__text"> SERVING SIZE: 2 tsp per cup, 6 tsp per pot</p>
+            </li>
+            <hr className="separator" />
+            <li className="list-point">
+              <img src="/src/assets/svg/icon-water_voc.svg" alt="icon-water-voc" />
+              <p className="list-point__text"> WATER TEMPERATURE: 100°C</p>
+            </li>
+            <hr className="separator" />
+            <li className="list-point">
+              <img src="/src/assets/svg/icon-alarm.svg" alt="icon-alarm" />
+              <p className="list-point__text"> STEEPING TIME: 3 - 5 minutes</p>
+            </li>
+            <hr className="separator" />
+            <li className="list-point">
+              <img src="/src/assets/svg/icon-color.svg" alt="icon-color" />
+              <p className="list-point__text">COLOR AFTER 3 MINUTES</p>
+            </li>
+          </ul>
+        </div>
+        <div className="about-tea__container">
+          <h3 className="about-tea__title">About this tea</h3>
+          <ul className="about-tea__list">
+            <li className="about-tea__list-point">
+              <h4>FLAVOR</h4>
+              <p>Spicy</p>
+            </li>
+            <li className="about-tea__list-point">
+              <h4>QUALITIES</h4>
+              <p>Smoothing</p>
+            </li>
+            <li className="about-tea__list-point">
+              <h4>CAFFEINE</h4>
+              <p>Medium</p>
+            </li>
+            <li className="about-tea__list-point">
+              <h4>ALLERGENS</h4>
+              <p>Nuts-free</p>
+            </li>
+          </ul>
+          <div className="product-ingredient">
+            <h3>Ingredient</h3>
+            <p>
+              Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks,
+              Cardamom, Cinnamon pieces.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="similar-products__container">
+        <h3 className="similar-products__title">You may also like</h3>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
     </div>
