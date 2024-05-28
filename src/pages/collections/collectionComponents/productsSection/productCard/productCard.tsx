@@ -5,14 +5,14 @@ import GetProductById from '../../../../../lib/getProductInfo';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
-  console.log(state)
+  console.log(state);
   return (
     <>
       {state.results.map((product) => {
         const { id, slug, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
-          <div className="productsCard" key={id} onClick={()=>GetProductById(id)}>
+          <div className="productsCard" key={id} onClick={() => GetProductById(id)}>
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
                 <img src={images?.[0]?.url} width="264px" alt={slug['en-GB']} />
