@@ -1,18 +1,18 @@
 import './productCart.scss';
 import { useContext } from 'react';
 import { ProductsPageContext } from '../../../context';
-import getProductById from '../../../../../lib/getProductInfo';
+import GetProductById from '../../../../../lib/getProductInfo';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
-  console.log(state);
+  console.log(state)
   return (
     <>
       {state.results.map((product) => {
         const { id, name, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
-          <div className="productsCard" key={id} onClick={() => getProductById(id)}>
+          <div className="productsCard" key={id} onClick={()=>GetProductById(id)}>
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
                 <img src={images?.[0]?.url} width="264px" alt={name['en-GB']} />
