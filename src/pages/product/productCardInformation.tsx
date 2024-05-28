@@ -1,16 +1,34 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
+import { useLocation } from 'react-router-dom';
+// import getProductById from '../../lib/getProductInfo';
 
+let productName: string;
 function DisplayProductInformation() {
+  const location = useLocation();
+  // const { id } = useParams();
+
+  // getProductById('4141ca24-a332-43aa-afc4-fd4c4243f1ec').then((res) => {
+  //   // if(res.statusCode === 200){
+  //   //   return productName = res?.name || '';
+  //   // }
+
+  // })
+
+  // if(productName !== ''){
+
+  //   console.log(productName)
+  // }
+
   return (
     <div className="product-card__container">
-      <h4>PATH</h4>
+      <h2>path to page: {location.pathname}</h2>
       <div className="product-card__block">
         <div className="product-image">
           <img src="#" alt="product-image" />
         </div>
         <div className="product-parameters">
-          <h3>Ceylon Ginger Cinnamon chai tea</h3>
+          <h3>{`${productName}`}</h3>
           <p>A lovely warming Chai tea with ginger cinnamon flavours.</p>
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">

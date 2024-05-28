@@ -28,7 +28,9 @@ function App() {
           <Route path="collection" element={<Collection />} />
           <Route path="collection/:category" element={<CategoryCheck />}>
             <Route index element={<TeaCollection />} />
-            <Route path=":id" element={<Product />} />
+            <Route path=":id" element={<Product />} >
+              
+            </Route>
           </Route>
           <Route
             path="login"
