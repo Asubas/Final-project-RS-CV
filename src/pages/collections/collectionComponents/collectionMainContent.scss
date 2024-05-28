@@ -9,11 +9,7 @@
   width: 100%;
 
   @media (max-width: 980px) {
-    padding: 8px 16px;
-  }
-
-  @media (max-width: 870px) {
-    grid-template-rows: 30px 1fr 30px;
+    grid-template-rows: 30px 1fr;
     grid-template-columns: 1fr;
     padding: 8px 16px;
   }

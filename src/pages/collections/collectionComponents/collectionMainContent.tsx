@@ -6,6 +6,8 @@ import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
 import { NavigateBack, NavigateForward } from '../../../components/navigateBtn/navigateBtn';
 import { IContentProps } from '../../../interfaces/contentProps';
+import Breadcrumbs from './breadcrumbLinks/breadcrumbs';
+
 const showFilter = () => {
   console.log('тут будет выпадать поле c фильтрами и чекбоксами');
   return;
@@ -28,10 +30,10 @@ const MainContent = ({ collectionType }: IContentProps) => {
       <div className="collection-page collection-page_content">
         <div className="collection-page_breadcrumbLinks">
           <NavigateBack />
-          Тут будут типа хлебные крошки
+          <Breadcrumbs />
           <NavigateForward />
         </div>
-        {screenWidth > 870 ? (
+        {screenWidth > 980 ? (
           <>
             <Filters />
             <div className="products_sort-container">
