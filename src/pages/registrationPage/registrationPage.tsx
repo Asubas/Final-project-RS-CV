@@ -55,6 +55,7 @@ function RegistrationPage() {
       });
   };
 
+  // const navigate = useNavigate();
   const navigateToLogin = () => navigate('/login');
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
   const [isCheckedBilling, setIsCheckedBilling] = useState(false);
