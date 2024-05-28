@@ -11,12 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
-import Product from './pages/product/product';
 import CategoryCheck from './lib/categoryCheck';
 import Profile from './pages/profile/profile';
 import ProtectedProfile from './lib/protectedRoute';
 import TeaCollection from './pages/collections/collectionMain';
-// import DisplayProductInformation from './pages/product/productCardInformation';
+import { DisplayProductInformation } from './pages/product/productCardInformation';
 
 function App() {
   return (
@@ -28,8 +27,8 @@ function App() {
           <Route path="collection" element={<Collection />} />
           <Route path="collection/:category" element={<CategoryCheck />}>
             <Route index element={<TeaCollection />} />
-            <Route path=":id" element={<Product />}></Route>
           </Route>
+          <Route path="collection/:category/:id" element={<DisplayProductInformation />} />
           <Route
             path="login"
             element={
