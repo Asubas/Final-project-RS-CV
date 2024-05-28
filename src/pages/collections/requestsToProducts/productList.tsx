@@ -51,9 +51,22 @@ const getProductList = async (
     .execute()
     .then((res) => res.body as unknown as ProductProjectionPagedQueryResponse);
 };
-export { getProductList };
 
-//вывод категорий. Подсказал шарик
+const getAllProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
+  const limit = 130;
+  return request
+    .productProjections()
+    .get({
+      queryArgs: {
+        limit,
+      },
+    })
+    .execute()
+    .then((res) => res.body as unknown as ProductProjectionPagedQueryResponse);
+};
+export { getProductList, getAllProducts };
+
+// // вывод категорий. Подсказал шарик
 // const getCategories = async (): Promise<CategoryPagedQueryResponse> => {
 //   return request
 //     .categories()
@@ -73,39 +86,39 @@ export { getProductList };
 //     console.error('Error fetching categories:', error);
 //   });
 
-const getCategories = async (
-  limit: number = 20,
-  offset: number = 0,
-): Promise<CategoryPagedQueryResponse> => {
-  return request
-    .categories()
-    .get({
-      queryArgs: {
-        limit,
-        offset,
-      },
-    })
-    .execute()
-    .then((res) => res.body as CategoryPagedQueryResponse);
-};
+// const getCategories = async (
+//   limit: number = 20,
+//   offset: number = 0,
+// ): Promise<CategoryPagedQueryResponse> => {
+//   return request
+//     .categories()
+//     .get({
+//       queryArgs: {
+//         limit,
+//         offset,
+//       },
+//     })
+//     .execute()
+//     .then((res) => res.body as CategoryPagedQueryResponse);
+// };
 
-// Вызовите функцию и обработайте результат
-const fetchAllCategories = async () => {
-  let offset = 0;
-  const limit = 100; // Установите желаемое количество категорий на странице
-  let hasMoreCategories = true;
+// // Вызовите функцию и обработайте результат
+// const fetchAllCategories = async () => {
+//   let offset = 0;
+//   const limit = 100; // Установите желаемое количество категорий на странице
+//   let hasMoreCategories = true;
 
-  while (hasMoreCategories) {
-    const categoryResponse = await getCategories(limit, offset);
-    categoryResponse.results.forEach((category) => {
-      console.log(`Category ID: ${category.id}, Category Key: ${category.key}`);
-    });
+//   while (hasMoreCategories) {
+//     const categoryResponse = await getCategories(limit, offset);
+//     categoryResponse.results.forEach((category) => {
+//       console.log(`Category ID: ${category.id}, Category Key: ${category.key}`);
+//     });
 
-    offset += limit;
-    hasMoreCategories = categoryResponse.count > offset;
-  }
-};
+//     offset += limit;
+//     hasMoreCategories = categoryResponse.count > offset;
+//   }
+// };
 
-fetchAllCategories().catch((error) => {
-  console.error('Error fetching categories:', error);
-});
+// fetchAllCategories().catch((error) => {
+//   console.error('Error fetching categories:', error);
+// });

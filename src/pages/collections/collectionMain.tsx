@@ -2,9 +2,9 @@ import './collectionPage.scss';
 import { useCallback, useEffect, useState } from 'react';
 import { MainContent } from './collectionComponents/collectionMainContent';
 import { ProductsPageContext, productsPageContextDefaultValue } from './context';
-import { getProductList } from './requestsToProducts/productList';
+import { getAllProducts, getProductList } from './requestsToProducts/productList';
 import { useParams } from 'react-router-dom';
-
+import MyButton from '../../components/button/button';
 function SelectedCollection() {
   let collectionTypeId = '';
   const { collectionType = '' } = useParams();
@@ -32,12 +32,13 @@ function SelectedCollection() {
   useEffect(() => {
     handleFetch();
   }, [handleFetch]);
-
-  console.log(collectionTypeId);
   return (
     <ProductsPageContext.Provider value={{ handleFetch, state }}>
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>
       <MainContent collectionType={collectionTypeId} />
+      <MyButton className="btn_black" onClick={getAllProducts}>
+        ПОЛУЧИТБ ВСЕ ПРОДУКТЫ В ОТВЕТЕ С СЕРВЕРА НАХ{' '}
+      </MyButton>
     </ProductsPageContext.Provider>
   );
 }
