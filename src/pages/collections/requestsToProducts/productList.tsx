@@ -1,5 +1,5 @@
 import {
-  CategoryPagedQueryResponse,
+  // CategoryPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
@@ -34,57 +34,34 @@ const ctpClient = new ClientBuilder()
 
 const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 
+// const getProductListQueryArgs = (count: number = 0, categoryID: string = '') => {
+//   return {
+//     limit: 9,
+//     offset: count,
+//     filter: `categories.id:"${categoryID}"`,
+//   };
+// };
+
 const getProductList = async (
-  count: number = 0,
-  categoryID: string = '',
+  limitAtr: number,
+  offsetAtr: number,
+  categoryID: string,
 ): Promise<ProductProjectionPagedQueryResponse> => {
   return request
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        limit: 9,
-        offset: count,
+        limit: limitAtr,
+        offset: offsetAtr,
         filter: `categories.id:"${categoryID}"`,
       },
     })
     .execute()
-    .then((res) => res.body as unknown as ProductProjectionPagedQueryResponse);
+    .then((res) => res.body as ProductProjectionPagedQueryResponse);
 };
 
-const getAllProducts = async (): Promise<ProductProjectionPagedQueryResponse> => {
-  const limit = 130;
-  return request
-    .productProjections()
-    .get({
-      queryArgs: {
-        limit,
-      },
-    })
-    .execute()
-    .then((res) => res.body as unknown as ProductProjectionPagedQueryResponse);
-};
-export { getProductList, getAllProducts };
-
-// // вывод категорий. Подсказал шарик
-// const getCategories = async (): Promise<CategoryPagedQueryResponse> => {
-//   return request
-//     .categories()
-//     .get()
-//     .execute()
-//     .then((res) => res.body as CategoryPagedQueryResponse);
-// };
-
-// // Вызовите функцию и обработайте результат
-// getCategories()
-//   .then((categoryResponse) => {
-//     categoryResponse.results.forEach((category) => {
-//       console.log(`Category ID: ${category.id}, Category Key: ${category.key}`);
-//     });
-//   })
-//   .catch((error) => {
-//     console.error('Error fetching categories:', error);
-//   });
+export { getProductList };
 
 // const getCategories = async (
 //   limit: number = 20,
@@ -102,10 +79,9 @@ export { getProductList, getAllProducts };
 //     .then((res) => res.body as CategoryPagedQueryResponse);
 // };
 
-// // Вызовите функцию и обработайте результат
 // const fetchAllCategories = async () => {
 //   let offset = 0;
-//   const limit = 100; // Установите желаемое количество категорий на странице
+//   const limit = 100;
 //   let hasMoreCategories = true;
 
 //   while (hasMoreCategories) {
@@ -119,6 +95,4 @@ export { getProductList, getAllProducts };
 //   }
 // };
 
-// fetchAllCategories().catch((error) => {
-//   console.error('Error fetching categories:', error);
-// });
+// export { fetchAllCategories };

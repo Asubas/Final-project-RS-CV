@@ -4,9 +4,8 @@ import Filters from './filtersSection/filtersSection';
 import { PaginationContainer } from './pagination/pagination';
 import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
-import { NavigateBack, NavigateForward } from '../../../components/navigateBtn/navigateBtn';
 import { IContentProps } from '../../../interfaces/contentProps';
-import Breadcrumbs from './breadcrumbLinks/breadcrumbs';
+import { BreadcrumbsComponent } from './breadcrumbLinks/breadBackForwComp';
 
 const showFilter = () => {
   console.log('тут будет выпадать поле c фильтрами и чекбоксами');
@@ -28,11 +27,7 @@ const MainContent = ({ collectionType }: IContentProps) => {
   return (
     <>
       <div className="collection-page collection-page_content">
-        <div className="collection-page_breadcrumbLinks">
-          <NavigateBack />
-          <Breadcrumbs />
-          <NavigateForward />
-        </div>
+        <BreadcrumbsComponent />
         {screenWidth > 980 ? (
           <>
             <Filters />
