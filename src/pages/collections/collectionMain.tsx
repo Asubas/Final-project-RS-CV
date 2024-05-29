@@ -3,41 +3,49 @@ import { useCallback, useEffect, useState } from 'react';
 import { MainContent } from './collectionComponents/collectionMainContent';
 import { ProductsPageContext, productsPageContextDefaultValue } from './context';
 import { getProductList } from './requestsToProducts/productList';
-import { useParams } from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
+import { teaUrl, TeaUrlType } from '../../constants/teaCollection';
+import { coffeeUrl } from '../../constants/coffeeCollections';
+import { cocoaUrl } from '../../constants/cocaCollections';
 function SelectedCollection() {
-  let collectionTypeId = '';
-  const { collectionType = '' } = useParams();
+  const { pathname } = useLocation();
+  const pathParts = pathname.split('/');
+  const collectionTypeUrl: string = pathParts[pathParts.length - 1] || '';
   let selectorName = '';
-  if (collectionType === 'tea') {
+  let collectionType = '';
+
+  if (pathParts[2] === 'tea') {
     selectorName = 'collection-page_top-img__tea';
-    collectionTypeId = 'caf2b3c5-799e-4d6e-860c-363bf2d6542b';
-  } else if (collectionType === 'coffee') {
+    collectionType =
+      Object.keys(teaUrl).find((k) => (teaUrl as TeaUrlType)[k] === collectionTypeUrl) || '';
+  } else if (pathParts[2] === 'coffee') {
     selectorName = 'collection-page_top-img__coffee';
-    collectionTypeId = '86625d6c-fcb0-4f8d-a58f-9f67cc8b13a4';
-  } else if (collectionType === 'cocoa') {
+    collectionType =
+      Object.keys(coffeeUrl).find((k) => (coffeeUrl as TeaUrlType)[k] === collectionTypeUrl) || '';
+  } else if (pathParts[2] === 'cocoa') {
     selectorName = 'collection-page_top-img__cocoa';
-    collectionTypeId = '7a2657a3-ae01-452b-8e33-edb51503dceb';
-  } else if (collectionType === 'kitchen') {
-    collectionTypeId = '608ca2b6-ea06-4e5c-b6d6-5a8ae2724903';
+    collectionType =
+      Object.keys(cocoaUrl).find((k) => (cocoaUrl as TeaUrlType)[k] === collectionTypeUrl) || '';
   }
+
   const [state, setState] = useState(productsPageContextDefaultValue.state);
+
   const handleFetch = useCallback(
-    (offset?: number) => {
-      getProductList(offset, collectionTypeId || '').then((res) => setState(res));
+    (offset: number) => {
+      getProductList(9, offset, collectionType).then((res) => setState(res));
     },
-    [collectionTypeId],
+    [collectionType],
   );
 
   useEffect(() => {
-    handleFetch();
+    handleFetch(0);
   }, [handleFetch]);
 
-  console.log(collectionTypeId);
+  const currentCollectionType = collectionType;
   return (
     <ProductsPageContext.Provider value={{ handleFetch, state }}>
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>
-      <MainContent collectionType={collectionTypeId} />
+      <MainContent collectionType={currentCollectionType} />
     </ProductsPageContext.Provider>
   );
 }

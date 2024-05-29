@@ -17,7 +17,11 @@
 
 .products_sort-container {
   grid-row: 1 / 2;
-  grid-column-end: -1;
+  grid-column: 2 / -1;
+  width: max-content;
+  align-self: end;
+  position: relative;
+  right: -85%;
 
   button {
     display: block;

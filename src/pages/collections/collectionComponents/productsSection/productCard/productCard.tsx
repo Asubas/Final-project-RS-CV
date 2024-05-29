@@ -19,15 +19,15 @@ const ProductCard = () => {
                 <p>{slug['en-GB']}</p>
               </li>
               <li className="productsCard-item productsCard-item_price">
-                {prices?.[1].discounted?.value.centAmount ? (
+                {prices?.[0]?.discounted?.value?.centAmount ? (
                   <span className="productsCard-item_price__discount">
-                    {prices?.[1].discounted?.value.centAmount / 100}{' '}
-                    {prices?.[1].discounted?.value.currencyCode}
+                    {prices[0].discounted.value.centAmount / 100}{' '}
+                    {prices[0].discounted.value.currencyCode}
                   </span>
                 ) : null}
-                {prices?.[1]?.value?.centAmount ? (
+                {prices?.[0]?.value?.centAmount ? (
                   <span className="productsCard-item_price__clear">
-                    {prices[1].value.centAmount / 100} {prices[1].value.currencyCode}
+                    {prices[0].value.centAmount / 100} {prices[0].value.currencyCode}
                   </span>
                 ) : null}
               </li>
