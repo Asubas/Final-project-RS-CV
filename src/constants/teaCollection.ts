@@ -7,7 +7,7 @@ const subcategoriesTea = [
   'Chai',
   'Oolong',
   'ROOIBOS',
-  'TEAWARE',
+  'ALL',
 ];
 
 const backgroundImagesTea = [
@@ -31,6 +31,7 @@ const teaUrl = {
   '814d9351-c793-4ab3-8df6-136b6e590dcf': 'chaiTea',
   '483c6c62-1927-4cea-8069-777b5475ea09': 'ooloong',
   'd7ea34fe-98c1-4fc9-8483-45e4928fcb0b': 'rooibos',
+  'caf2b3c5-799e-4d6e-860c-363bf2d6542b': 'All',
 };
 
 export interface TeaUrlType {
