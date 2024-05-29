@@ -1,21 +1,37 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 let productName: string;
 function DisplayProductInformation() {
+  const [productQuantity, setProductQuantity] = useState<number>(0);
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const buttonType = e.currentTarget.textContent?.trim();
+    if (buttonType === '-') {
+      setProductQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
+    } else if (buttonType === '+') {
+      setProductQuantity((prevQuantity) => prevQuantity + 1);
+    }
+  }
   const location = useLocation();
   const product = location.state;
+  console.log(product)
+  const productName = product.masterData.current.name['en-US'];
+  const productDescription = product.masterData.current.description?.['en-US'];
+  const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
+  const productPriceUs = product.masterData.current.masterVariant.prices[2]?.['value'].centAmount;
   return (
     <div className="product-card__container">
       {/* <h2>path to page: {location.pathname}</h2> */}
       <div className="product-card__block">
         <div className="product-image">
-          <img src="#" alt="product-image" />
+          <img src={`${productImage}`} alt="product-image" />
         </div>
         <div className="product-parameters">
           <h3>{`${productName}`}</h3>
-          <p>A lovely warming Chai tea with ginger cinnamon flavours.</p>
+          <p>{`${productDescription}`}</p>
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">
               <img src="/src/assets/svg/icon-language.svg" alt="icon-language" />
@@ -30,7 +46,7 @@ function DisplayProductInformation() {
               <p>Vegan</p>
             </div>
           </div>
-          <p className="price">€3.90</p>
+          <p className="price">{`€`}</p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
@@ -54,12 +70,12 @@ function DisplayProductInformation() {
           </div>
           <div className="product-quntity-and-add-to-bag__block">
             <div className="product-quantity">
-              <MyButton className="btn_transparent " type="button">
+              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
                 {' '}
                 -
               </MyButton>
-              <p className="product-quantity__count">0</p>
-              <MyButton className="btn_transparent " type="button">
+              <p className="product-quantity__count">{`${productQuantity}`}</p>
+              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
                 {' '}
                 +
               </MyButton>
@@ -78,22 +94,22 @@ function DisplayProductInformation() {
           <ul className="steeping-instruction__list">
             <li className="list-point">
               <img src="/src/assets/svg/icon-kettle.svg" alt="icon-kettle" />
-              <p className="list-point__text"> SERVING SIZE: 2 tsp per cup, 6 tsp per pot</p>
+              <p className="list-point__text"> <b>SERVING SIZE:</b> 2 tsp per cup, 6 tsp per pot</p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-water_voc.svg" alt="icon-water-voc" />
-              <p className="list-point__text"> WATER TEMPERATURE: 100°C</p>
+              <p className="list-point__text"> <b>WATER TEMPERATURE:</b> 100°C</p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-alarm.svg" alt="icon-alarm" />
-              <p className="list-point__text"> STEEPING TIME: 3 - 5 minutes</p>
+              <p className="list-point__text"> <b>STEEPING TIME:</b> 3 - 5 minutes</p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-color.svg" alt="icon-color" />
-              <p className="list-point__text">COLOR AFTER 3 MINUTES</p>
+              <p className="list-point__text"><b>COLOR</b> AFTER 3 MINUTES</p>
             </li>
           </ul>
         </div>
