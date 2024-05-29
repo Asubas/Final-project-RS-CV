@@ -3,7 +3,6 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 1vw;
-  overflow: hidden;
 
   @media (max-width: 980px) {
     grid-template-columns: repeat(2, 1fr);
@@ -12,6 +11,11 @@
       grid-column-start: 1;
       grid-column-end: -1;
     }
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
