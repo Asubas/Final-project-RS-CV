@@ -38,25 +38,25 @@ async function getProductById(id: string) {
     .products()
     .withId({ ID: productId })
     .get()
-    .execute()
-    .then((response) => {
-      if (response.statusCode === 200) {
-        // navigate(`/${productId}`);
+    .execute();
+  // .then((response) => {
+  //   if (response.statusCode === 200) {
+  //     // navigate(`/${productId}`);
 
-        console.log(response.body);
-        const objProd = {
-          name: response.body.masterData.current.name['en-US'],
-          descripton: response.body.masterData.current.description,
-          images: response.body.masterData.current.masterVariant.images,
-        };
+  //     console.log(response.body);
+  //     const objProd = {
+  //       name: response.body.masterData.current.name['en-US'],
+  //       descripton: response.body.masterData.current.description,
+  //       images: response.body.masterData.current.masterVariant.images,
+  //     };
 
-        console.log(objProd);
-        return objProd;
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+  //     console.log(objProd);
+  //     return objProd;
+  //   }
+  // })
+  // .catch((error) => {
+  //   console.error(error);
+  // });
 }
 
 export default getProductById;

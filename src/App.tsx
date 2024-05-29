@@ -16,12 +16,13 @@ import CategoryCheck from './lib/categoryCheck';
 import Profile from './pages/profile/profile';
 import ProtectedProfile from './lib/protectedRoute';
 import TeaCollection from './pages/collections/collectionMain';
-// import DisplayProductInformation from './pages/product/productCardInformation';
+import DisplayProductInformation from './pages/product/productCardInformation';
 
 function App() {
   return (
     <>
-      <Routes>
+      <DisplayProductInformation />
+      {/* <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
@@ -70,7 +71,7 @@ function App() {
         pauseOnHover
         theme="light"
         transition={Bounce}
-      />
+      /> */}
     </>
   );
 }
