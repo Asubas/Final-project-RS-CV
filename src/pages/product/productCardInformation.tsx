@@ -46,7 +46,7 @@ function DisplayProductInformation() {
               <p>Vegan</p>
             </div>
           </div>
-          <p className="price">{`€`}</p>
+          <p className="price"><b>{`€${productPriceUs}`}</b></p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
