@@ -1,18 +1,28 @@
 import './productCart.scss';
 import { useContext } from 'react';
 import { ProductsPageContext } from '../../../context';
-import GetProductById from '../../../../../lib/getProductInfo';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getProductById } from '../../../../../lib/getProductInfo';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
-  console.log(state);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleClick = (id: string) => {
+    getProductById(id).then((res) => {
+      if (res.statusCode === 200) {
+        const currentUrl = location.pathname;
+        navigate(`${currentUrl}/${id}`, { state: res.body });
+      }
+    });
+  };
   return (
     <>
       {state.results.map((product) => {
         const { id, name, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
-          <div className="productsCard" key={id} onClick={() => GetProductById(id)}>
+          <div className="productsCard" key={id} onClick={() => handleClick(id)}>
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
                 <img src={images?.[0]?.url} width="264px" alt={name['en-GB']} />
@@ -40,4 +50,4 @@ const ProductCard = () => {
     </>
   );
 };
-export default ProductCard;
+export { ProductCard };

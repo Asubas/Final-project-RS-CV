@@ -37,7 +37,7 @@ function DisplayProductInformation() {
         </div>
         <div className="product-parameters">
           <h3>{`${productName}`}</h3>
-          <p>{`${productDescription}`}</p>
+          <p>A lovely warming Chai tea with ginger cinnamon flavours.</p>
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">
               <img src="/src/assets/svg/icon-language.svg" alt="icon-language" />
