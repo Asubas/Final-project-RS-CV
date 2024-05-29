@@ -2,10 +2,13 @@ import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { ProductCard } from '../collections/collectionComponents/productsSection/productCard/productCard';
+import Products from '../collections/collectionComponents/productsSection/productsSection';
 
 let productName: string;
 function DisplayProductInformation() {
   const [productQuantity, setProductQuantity] = useState<number>(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const buttonType = e.currentTarget.textContent?.trim();
@@ -14,19 +17,22 @@ function DisplayProductInformation() {
     } else if (buttonType === '+') {
       setProductQuantity((prevQuantity) => prevQuantity + 1);
     }
-  }
+  };
   const location = useLocation();
   const product = location.state;
-  console.log(product)
+  console.log(product);
   const productName = product.masterData.current.name['en-US'];
   const productDescription = product.masterData.current.description?.['en-US'];
   const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
   const productPriceUs = product.masterData.current.masterVariant.prices[2]?.['value'].centAmount;
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
     <div className="product-card__container">
       {/* <h2>path to page: {location.pathname}</h2> */}
       <div className="product-card__block">
-        <div className="product-image">
+        <div className="product-image" onClick={openModal}>
           <img src={`${productImage}`} alt="product-image" />
         </div>
         <div className="product-parameters">
@@ -46,7 +52,9 @@ function DisplayProductInformation() {
               <p>Vegan</p>
             </div>
           </div>
-          <p className="price"><b>{`€${productPriceUs}`}</b></p>
+          <p className="price">
+            <b>{`€${productPriceUs}`}</b>
+          </p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
@@ -94,22 +102,33 @@ function DisplayProductInformation() {
           <ul className="steeping-instruction__list">
             <li className="list-point">
               <img src="/src/assets/svg/icon-kettle.svg" alt="icon-kettle" />
-              <p className="list-point__text"> <b>SERVING SIZE:</b> 2 tsp per cup, 6 tsp per pot</p>
+              <p className="list-point__text">
+                {' '}
+                <b>SERVING SIZE:</b> 2 tsp per cup, 6 tsp per pot
+              </p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-water_voc.svg" alt="icon-water-voc" />
-              <p className="list-point__text"> <b>WATER TEMPERATURE:</b> 100°C</p>
+              <p className="list-point__text">
+                {' '}
+                <b>WATER TEMPERATURE:</b> 100°C
+              </p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-alarm.svg" alt="icon-alarm" />
-              <p className="list-point__text"> <b>STEEPING TIME:</b> 3 - 5 minutes</p>
+              <p className="list-point__text">
+                {' '}
+                <b>STEEPING TIME:</b> 3 - 5 minutes
+              </p>
             </li>
             <hr className="separator" />
             <li className="list-point">
               <img src="/src/assets/svg/icon-color.svg" alt="icon-color" />
-              <p className="list-point__text"><b>COLOR</b> AFTER 3 MINUTES</p>
+              <p className="list-point__text">
+                <b>COLOR</b> AFTER 3 MINUTES
+              </p>
             </li>
           </ul>
         </div>
@@ -145,12 +164,21 @@ function DisplayProductInformation() {
 
       <div className="similar-products__container">
         <h3 className="similar-products__title">You may also like</h3>
-        <div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
+       
       </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>
+              &times;
+            </span>
+            <img src={`${productImage}`} alt="product-modal-image" />
+            <h3>{productName}</h3>
+            <p>{productDescription}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
