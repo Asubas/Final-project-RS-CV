@@ -46,6 +46,7 @@ const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
   categoryID: string,
+  sort: string = '',
 ): Promise<ProductProjectionPagedQueryResponse> => {
   return request
     .productProjections()
@@ -55,6 +56,7 @@ const getProductList = async (
         limit: limitAtr,
         offset: offsetAtr,
         filter: `categories.id:"${categoryID}"`,
+        sort: [sort],
       },
     })
     .execute()

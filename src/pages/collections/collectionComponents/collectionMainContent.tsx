@@ -6,13 +6,10 @@ import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
 import { IContentProps } from '../../../interfaces/contentProps';
 import { BreadcrumbsComponent } from './breadcrumbLinks/breadBackForwComp';
-
-const showFilter = () => {
-  console.log('тут будет выпадать поле c фильтрами и чекбоксами');
-  return;
-};
+import { SortContainer } from './sortContainer/sortContainer';
 
 const MainContent = ({ collectionType }: IContentProps) => {
+  const [open, setOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -31,21 +28,22 @@ const MainContent = ({ collectionType }: IContentProps) => {
         {screenWidth > 980 ? (
           <>
             <Filters />
-            <div className="products_sort-container">
-              <MyButton type="button">SORT BY </MyButton>
-            </div>
+            <SortContainer mobile={false} />
           </>
         ) : (
           <>
-            <MyButton className="collection-page_show-filter" onClick={showFilter}>
+            <MyButton
+              className={`collection-page_show-filter ${open ? 'collection-page_show-filter__active' : ''}`}
+              onClick={() => setOpen(!open)}
+            >
               FILTER
             </MyButton>
-            <div className="collection-page_mobile-search">
-              <Filters />
-              <div className="products_sort-container">
-                <MyButton type="button">SORT BY </MyButton>
+            {open && (
+              <div className="collection-page_mobile-search">
+                <Filters />
+                <SortContainer mobile={true} />
               </div>
-            </div>
+            )}
           </>
         )}
         <Products />

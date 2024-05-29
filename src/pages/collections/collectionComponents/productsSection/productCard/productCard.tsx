@@ -7,16 +7,16 @@ const ProductCard = () => {
   return (
     <>
       {state.results.map((product) => {
-        const { id, slug, masterVariant } = product;
+        const { id, name, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
           <div className="productsCard" key={id}>
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
-                <img src={images?.[0]?.url} width="264px" alt={slug['en-GB']} />
+                <img src={images?.[0]?.url} width="264px" alt={name['en-GB']} />
               </li>
               <li className="productsCard-item productsCard-item_description">
-                <p>{slug['en-GB']}</p>
+                <p>{name['en-GB']}</p>
               </li>
               <li className="productsCard-item productsCard-item_price">
                 {prices?.[0]?.discounted?.value?.centAmount ? (
