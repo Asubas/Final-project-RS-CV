@@ -3,7 +3,6 @@ import Select, { OnChangeValue, PropsValue } from 'react-select';
 import { InewValue } from '../../types/typeRegistrationPage';
 import { countries, customStyles } from '../../constants/constantsRegistrationPage';
 import getShippingOrBillingContainer from '../accordanceCountryToPostalCode/getShippingOrBillingContainer';
-import './selectCountry.scss';
 
 export let cont: string;
 
