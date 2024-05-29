@@ -1,47 +1,21 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
-import getProductById from '../../lib/getProductInfo';
-import { useEffect, useState } from 'react';
 
 let productName: string;
 function DisplayProductInformation() {
   const location = useLocation();
-  const [productName, setProductName] = useState<string | null>(null);
-  const [productDescription, setProductDescription] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const res = await getProductById('4141ca24-a332-43aa-afc4-fd4c4243f1ec');
-        if (res.statusCode === 200) {
-          const name = res.body.masterData.current.name['en-US'];
-          const descriptionProd =
-            res.body.masterData.current.description?.['en-US'] || 'No description available';
-          setProductName(name);
-
-          console.log(descriptionProd);
-          setProductDescription(descriptionProd);
-        } else {
-          console.error('Failed to fetch product:', res);
-        }
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    };
-
-    fetchProduct();
-  }, []);
+  const product = location.state;
   return (
     <div className="product-card__container">
-      <h2>path to page: {location.pathname}</h2>
+      {/* <h2>path to page: {location.pathname}</h2> */}
       <div className="product-card__block">
         <div className="product-image">
           <img src="#" alt="product-image" />
         </div>
         <div className="product-parameters">
           <h3>{`${productName}`}</h3>
-          <p>{`${productDescription}`}</p>
+          <p>A lovely warming Chai tea with ginger cinnamon flavours.</p>
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">
               <img src="/src/assets/svg/icon-language.svg" alt="icon-language" />
@@ -165,4 +139,4 @@ function DisplayProductInformation() {
   );
 }
 
-export default DisplayProductInformation;
+export { DisplayProductInformation };
