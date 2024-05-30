@@ -1,6 +1,7 @@
 import {
   // CategoryPagedQueryResponse,
   // CategoryPagedQueryResponse,
+  // CategoryPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
@@ -55,7 +56,10 @@ const getProductList = async (
   const filters = [`categories.id:"${categoryID}"`];
   if (sortPriceDesc === 'price desc') sort.push('id desc');
   if (country) filters.push(`variants.attributes.origin:"${country}"`);
-  if (flavour) filters.push(`variants.attributes.flavor:"${flavour}"`);
+  if (flavour) {
+    // flavour.toLocaleLowerCase();
+    filters.push(`variants.attributes.flavor:"${flavour.toLocaleLowerCase()}"`);
+  }
   return request
     .productProjections()
     .search()

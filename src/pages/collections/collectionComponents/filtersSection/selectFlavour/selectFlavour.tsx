@@ -1,10 +1,19 @@
+import { useCallback, useContext } from 'react';
 import MyInput from '../../../../../components/input/input';
 import { SelectFlavourProps } from '../../../../../interfaces/interfaces';
+import { ProductsPageContext } from '../../../context';
 
 function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps) {
-  const handleFlavourChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onFlavourChange(event.target.value);
-  };
+  const { handleFetch, setSelectedFlavour, setCurrentPage } = useContext(ProductsPageContext);
+  const handleFlavourChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onFlavourChange(event.target.value);
+      setSelectedFlavour(event.target.value);
+      setCurrentPage(1);
+      handleFetch(1);
+    },
+    [onFlavourChange, setSelectedFlavour, setCurrentPage, handleFetch],
+  );
   return (
     <ul className="filters-list">
       <li>Select flavour</li>
@@ -61,14 +70,14 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
         </label>
       </li>
       <li className="filters-list__item">
-        <label htmlFor="Graccy">
-          Graccy
+        <label htmlFor="Grassy">
+          Grassy
           <MyInput
             type="radio"
             name="flavour"
-            id="Graccy"
-            value="Graccy"
-            checked={selectedFlavour === 'Graccy'}
+            id="Grassy"
+            value="Grassy"
+            checked={selectedFlavour === 'Grassy'}
             onChange={handleFlavourChange}
           />
         </label>

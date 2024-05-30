@@ -13,6 +13,9 @@ function SelectedCollection() {
   const [selectedCountry, setSelectedCountry] = useState<string>(
     productsPageContextDefaultValue.selectedCountry,
   );
+  const [selectedFlavour, setSelectedFlavour] = useState<string>(
+    productsPageContextDefaultValue.selectedFlavour,
+  );
   const [sortOption, setSortOption] = useState<string>(productsPageContextDefaultValue.sortOption);
   const pathParts = pathname.split('/');
   const collectionTypeUrl: string = pathParts[pathParts.length - 1] || '';
@@ -38,7 +41,7 @@ function SelectedCollection() {
   const handleFetch = useCallback(
     (page: number) => {
       const offset = (page - 1) * 9;
-      getProductList(9, offset, collectionType, sortOption, selectedCountry).then(
+      getProductList(9, offset, collectionType, sortOption, selectedCountry, selectedFlavour).then(
         (res: ProductProjectionPagedQueryResponse) => {
           setState({
             count: res.count,
@@ -51,7 +54,7 @@ function SelectedCollection() {
         },
       );
     },
-    [collectionType, sortOption, selectedCountry],
+    [collectionType, sortOption, selectedCountry, selectedFlavour],
   );
 
   useEffect(() => {
@@ -69,6 +72,8 @@ function SelectedCollection() {
         setCurrentPage: () => {},
         selectedCountry,
         setSelectedCountry,
+        selectedFlavour,
+        setSelectedFlavour,
       }}
     >
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>

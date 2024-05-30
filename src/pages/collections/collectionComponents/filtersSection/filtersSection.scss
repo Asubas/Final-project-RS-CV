@@ -54,5 +54,10 @@
 @media (max-width: 870px) {
   .collection-page_content-filters {
     position: absolute;
+
+    button {
+      margin-bottom: 20px;
+      margin-top: -35px;
+    }
   }
 }
