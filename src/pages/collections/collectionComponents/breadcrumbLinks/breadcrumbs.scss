@@ -1,0 +1,18 @@
+@import '../../../../App.scss';
+
+.breadcrumbs {
+  ol {
+    display: flex;
+    font-size: 110%;
+
+    li .breadcrumbs_item {
+      transition: 0.5s;
+    }
+  }
+
+  li .breadcrumbs_item:hover {
+    color: $secondary;
+    font-size: 115%;
+    transition: 0.5s;
+  }
+}

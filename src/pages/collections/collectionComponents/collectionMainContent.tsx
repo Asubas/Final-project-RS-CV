@@ -4,14 +4,15 @@ import Filters from './filtersSection/filtersSection';
 import { PaginationContainer } from './pagination/pagination';
 import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';
-import { NavigateBack, NavigateForward } from '../../../components/navigateBtn/navigateBtn';
+import { IContentProps } from '../../../interfaces/contentProps';
+import { BreadcrumbsComponent } from './breadcrumbLinks/breadBackForwComp';
 
 const showFilter = () => {
-  console.log('тут будет выпадать поле с фильтрами и чекбоксами');
+  console.log('тут будет выпадать поле c фильтрами и чекбоксами');
   return;
 };
 
-const Content = () => {
+const MainContent = ({ collectionType }: IContentProps) => {
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => {
@@ -26,10 +27,8 @@ const Content = () => {
   return (
     <>
       <div className="collection-page collection-page_content">
-        <NavigateBack />
-        <div className="collection-page_breadcrumbLinks">Тут будут типа хлебные крошки</div>
-        <NavigateForward />
-        {screenWidth > 870 ? (
+        <BreadcrumbsComponent />
+        {screenWidth > 980 ? (
           <>
             <Filters />
             <div className="products_sort-container">
@@ -56,4 +55,4 @@ const Content = () => {
   );
 };
 
-export default Content;
+export { MainContent };

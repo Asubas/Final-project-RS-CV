@@ -1,4 +1,5 @@
 import {
+  // CategoryPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
@@ -33,18 +34,65 @@ const ctpClient = new ClientBuilder()
 
 const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 
-const getProductList = async (count: number = 0): Promise<ProductProjectionPagedQueryResponse> => {
+// const getProductListQueryArgs = (count: number = 0, categoryID: string = '') => {
+//   return {
+//     limit: 9,
+//     offset: count,
+//     filter: `categories.id:"${categoryID}"`,
+//   };
+// };
+
+const getProductList = async (
+  limitAtr: number,
+  offsetAtr: number,
+  categoryID: string,
+): Promise<ProductProjectionPagedQueryResponse> => {
   return request
     .productProjections()
+    .search()
     .get({
       queryArgs: {
-        limit: 9,
-        offset: count,
-        // count: countRequestProducts,
+        limit: limitAtr,
+        offset: offsetAtr,
+        filter: `categories.id:"${categoryID}"`,
       },
     })
     .execute()
     .then((res) => res.body as ProductProjectionPagedQueryResponse);
 };
-// const products = await getProductList();
+
 export { getProductList };
+
+// const getCategories = async (
+//   limit: number = 20,
+//   offset: number = 0,
+// ): Promise<CategoryPagedQueryResponse> => {
+//   return request
+//     .categories()
+//     .get({
+//       queryArgs: {
+//         limit,
+//         offset,
+//       },
+//     })
+//     .execute()
+//     .then((res) => res.body as CategoryPagedQueryResponse);
+// };
+
+// const fetchAllCategories = async () => {
+//   let offset = 0;
+//   const limit = 100;
+//   let hasMoreCategories = true;
+
+//   while (hasMoreCategories) {
+//     const categoryResponse = await getCategories(limit, offset);
+//     categoryResponse.results.forEach((category) => {
+//       console.log(`Category ID: ${category.id}, Category Key: ${category.key}`);
+//     });
+
+//     offset += limit;
+//     hasMoreCategories = categoryResponse.count > offset;
+//   }
+// };
+
+// export { fetchAllCategories };

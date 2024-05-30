@@ -1,9 +1,54 @@
-.collection-page_top-img {
-  width: 100%;
-  min-height: 308px;
-  background: url('/src/assets/img/catalogTeaImg.jpg') no-repeat center / cover;
+.collection-page_main {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: space-around;
+  margin: 20px auto;
+  overflow: hidden;
+}
 
-  @media (max-width: 870px) {
-    min-height: 180px;
+.collection-page_link {
+  width: 30%;
+  min-width: 350px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+
+  .collection_coffee-page,
+  .collection_tea-page,
+  .collection_cocoa-page {
+    width: 100%;
+    height: 100%;
+    background: url('../../assets/img/collection-coffee-prewiew.jpg') no-repeat center / cover;
+    transition: 0.5s;
+    border-radius: 5px;
+    border: 2px solid black;
+
+    &:hover {
+      transition: 0.5s;
+      scale: 1.09;
+    }
+
+    @media (max-width: 860px) {
+      width: 95%;
+      height: 95%;
+    }
+
+    @media (max-width: 500px) {
+      width: 90%;
+      height: 90%;
+    }
+  }
+  .collection_tea-page {
+    background: url('../../assets/img/collection-tea-preview.png') no-repeat center / cover;
+  }
+
+  .collection_cocoa-page {
+    background: url('../../assets/img/collection-cococa-preview.jpg') no-repeat center / cover;
+    min-height: 60%;
   }
 }
