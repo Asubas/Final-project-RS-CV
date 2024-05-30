@@ -164,7 +164,6 @@ function DisplayProductInformation() {
 
       <div className="similar-products__container">
         <h3 className="similar-products__title">You may also like</h3>
-       
       </div>
 
       {isModalOpen && (
