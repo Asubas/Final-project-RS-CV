@@ -110,6 +110,7 @@ h3 {
       margin-bottom: 40px;
       margin-left: 120px;
       max-width: 344px;
+      width: 100%;
 
       .stepping-instruction__title {
         margin-bottom: 31px;
@@ -142,7 +143,10 @@ h3 {
       flex-direction: column;
       margin-top: 40px;
       margin-right: 83px;
+      margin-bottom: 48px;
       max-width: 573px;
+      width: 100%;
+    
       .about-tea__title {
         margin-bottom: 24px;
         font-weight: 300;
@@ -189,6 +193,9 @@ h3 {
   }
 }
 
+
+
+
 .btn_transparent {
   width: 24px;
   height: 24px;
@@ -213,14 +220,34 @@ h3 {
     border: 1px solid #888;
     width: 80%;
     max-width: 600px;
-    position: relative;
+    // position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     h3 {
       margin-bottom: 10px;
     }
+    .slideWrapProduct{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      .slideImgProduct{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+       
+      }
+    }
     .close {
-      position: absolute;
-      top: 10px;
-      right: 25px;
+      align-self:flex-end;
+      // position: absolute;
+      // top: 10px;
+      // right: 25px;
+      height: 40px;
       color: #aaa;
       font-size: 40px;
       font-weight: bold;
@@ -235,8 +262,27 @@ h3 {
   }
 }
 
+.react-multi-carousel-item{
+  padding: 0 5px;
+}
+
+
+
+
+
+
+
 @media (max-width: 922px) {
   .product-card__container {
+   .product-card__block {
+      flex-direction: column;
+       .product-image{
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 20px;
+        }
+    }
+   
     .steeping-instruction-and-about-tea-block {
       .stepping-instruction__container {
         margin-left: 40px;
@@ -250,6 +296,9 @@ h3 {
     .product-card__block {
       flex-direction: column;
     }
+    .product-image{
+    height: fit-content;
+    }
     .steeping-instruction-and-about-tea-block {
       flex-direction: column;
       .stepping-instruction__container {
@@ -260,6 +309,7 @@ h3 {
         margin: 0;
         margin-left: 10px;
         margin-bottom: 48px;
+        width: inherit;
       }
     }
   }

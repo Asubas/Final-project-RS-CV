@@ -4,9 +4,33 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { ProductCard } from '../collections/collectionComponents/productsSection/productCard/productCard';
 import Products from '../collections/collectionComponents/productsSection/productsSection';
+import Slider from '../homePage/slider/slider';
+import Carousel from 'react-multi-carousel';
+import { category } from '../homePage/slider/sliderData';
+import categoryP from './productCardCategorySlider';
 
 let productName: string;
 function DisplayProductInformation() {
+ 
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 1280 },
+      items: 1,
+    },
+    desktop: {
+      breakpoint: { max: 1280, min: 768 },
+      items: 1,
+    },
+    tablet: {
+      breakpoint: { max: 1100, min: 768 },
+      items: 1,
+    },
+    mobile: {
+      breakpoint: { max: 768, min: 0 },
+      items: 1,
+    },
+  };
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,10 +45,22 @@ function DisplayProductInformation() {
   const location = useLocation();
   const product = location.state;
   console.log(product);
-  const productName = product.masterData.current.name['en-US'];
-  const productDescription = product.masterData.current.description?.['en-US'];
+  const productName = product.masterData.current.name['en-GB'];
+  const productDescription = product.masterData.current.description?.['en-GB'];
+  console.log(product.masterData.current)
   const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
-  const productPriceUs = product.masterData.current.masterVariant.prices[2]?.['value'].centAmount;
+  const productPriceUs = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
+  const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
+  const productIngredients = product.masterData.current.masterVariant.attributes[1].value
+  const productServingSize = product.masterData.current.masterVariant.attributes[2].value
+  const productWaterTemperature = product.masterData.current.masterVariant.attributes[3].value
+  const productSteepingTime = product.masterData.current.masterVariant.attributes[4].value
+  const productFlavor = product.masterData.current.masterVariant.attributes[7].value
+  const productFullDescription = product.masterData.current.masterVariant.attributes[0].value
+
+  const imagesSlider = product.masterData.current.masterVariant.images;
+
+  const productPriceFinal = (productPriceUs / 100) === Math.trunc(productPriceUs / 100 ) ? `${productPriceUs / 100}.00` : `${(productPriceUs / 100).toFixed(1)}0`
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -41,19 +77,15 @@ function DisplayProductInformation() {
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">
               <img src="/src/assets/svg/icon-language.svg" alt="icon-language" />
-              <p>Origin: Iran</p>
+              <p>{`Origin: ${productOrigin}`}</p>
             </div>
-            <div className="information information-origin">
-              <img src="/src/assets/svg/icon-redeem.svg" alt="icon-reddem" />
-              <p>Organic</p>
-            </div>
-            <div className="information information-food-category">
+            <div className="information information-flavor">
               <img src="/src/assets/svg/icon-eco.svg" alt="icon-eco" />
-              <p>Vegan</p>
+              <p>Flavor: {`${productFlavor}`}</p>
             </div>
           </div>
           <p className="price">
-            <b>{`€${productPriceUs}`}</b>
+            <b>{`$ ${productPriceFinal}`}</b>
           </p>
           <div className="product-variants__block">
             <p>Variants</p>
@@ -68,10 +100,6 @@ function DisplayProductInformation() {
               </div>
               <div className="variant variant-3">
                 <img src="/src/assets/svg/size-170.svg" alt="size-170" />
-                <p></p>
-              </div>
-              <div className="variant variant-4">
-                <img src="/src/assets/svg/size-sample.svg" alt="size-sampler" />
                 <p></p>
               </div>
             </div>
@@ -104,7 +132,7 @@ function DisplayProductInformation() {
               <img src="/src/assets/svg/icon-kettle.svg" alt="icon-kettle" />
               <p className="list-point__text">
                 {' '}
-                <b>SERVING SIZE:</b> 2 tsp per cup, 6 tsp per pot
+                <b>SERVING SIZE:</b> {`${productServingSize}`}
               </p>
             </li>
             <hr className="separator" />
@@ -112,7 +140,7 @@ function DisplayProductInformation() {
               <img src="/src/assets/svg/icon-water_voc.svg" alt="icon-water-voc" />
               <p className="list-point__text">
                 {' '}
-                <b>WATER TEMPERATURE:</b> 100°C
+                <b>WATER TEMPERATURE:</b> {`${productWaterTemperature}`}
               </p>
             </li>
             <hr className="separator" />
@@ -120,43 +148,20 @@ function DisplayProductInformation() {
               <img src="/src/assets/svg/icon-alarm.svg" alt="icon-alarm" />
               <p className="list-point__text">
                 {' '}
-                <b>STEEPING TIME:</b> 3 - 5 minutes
-              </p>
-            </li>
-            <hr className="separator" />
-            <li className="list-point">
-              <img src="/src/assets/svg/icon-color.svg" alt="icon-color" />
-              <p className="list-point__text">
-                <b>COLOR</b> AFTER 3 MINUTES
+                <b>STEEPING TIME:</b> {`${productSteepingTime}`}
               </p>
             </li>
           </ul>
         </div>
         <div className="about-tea__container">
           <h3 className="about-tea__title">About this tea</h3>
-          <ul className="about-tea__list">
-            <li className="about-tea__list-point">
-              <h4>FLAVOR</h4>
-              <p>Spicy</p>
-            </li>
-            <li className="about-tea__list-point">
-              <h4>QUALITIES</h4>
-              <p>Smoothing</p>
-            </li>
-            <li className="about-tea__list-point">
-              <h4>CAFFEINE</h4>
-              <p>Medium</p>
-            </li>
-            <li className="about-tea__list-point">
-              <h4>ALLERGENS</h4>
-              <p>Nuts-free</p>
-            </li>
-          </ul>
+          <div className='about-tea-full-discription'>
+            <p>{`${productFullDescription}`}</p>
+          </div>
           <div className="product-ingredient">
             <h3>Ingredient</h3>
             <p>
-              Black Ceylon tea, Green tea, Ginger root, Cloves, Black pepper, Cinnamon sticks,
-              Cardamom, Cinnamon pieces.
+              {`${productIngredients}`}
             </p>
           </div>
         </div>
@@ -172,8 +177,13 @@ function DisplayProductInformation() {
             <span className="close" onClick={closeModal}>
               &times;
             </span>
-           
-            <img src={`${productImage}`} alt="product-modal-image" />
+            <Carousel 
+             responsive={responsive}
+             infinite={true}
+             removeArrowOnDeviceType={['tablet', 'mobile']}>
+          
+            {categoryP(imagesSlider)}
+            </Carousel>
             <h3>{productName}</h3>
             <p>{productDescription}</p>
           </div>

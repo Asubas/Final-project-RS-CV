@@ -12,7 +12,8 @@ const ProductCard = () => {
     getProductById(id).then((res) => {
       if (res.statusCode === 200) {
         const currentUrl = location.pathname;
-        navigate(`${currentUrl}/${id}`, { state: res.body });
+        const path = res.body.masterData.current.slug['en-GB']
+        navigate(`${currentUrl}/${path}`, { state: res.body });
       }
     });
   };

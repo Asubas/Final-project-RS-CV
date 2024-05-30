@@ -18,6 +18,7 @@ import SelectedCollection from './pages/collections/collectionMain';
 import { TeaPage } from './pages/collections/subCollections/teaPage';
 import { CoffeePage } from './pages/collections/subCollections/coffeePage';
 import { CocoaPage } from './pages/collections/subCollections/cocoaPage';
+import { DisplayProductInformation } from './pages/product/productCardInformation';
 function App() {
   return (
     <>
@@ -35,7 +36,7 @@ function App() {
           />
           <Route
             path="collection/:collectionType/:collectionSubcategories/:productId"
-            element={<Product />}
+            element={<DisplayProductInformation />}
           />
           <Route
             path="login"
