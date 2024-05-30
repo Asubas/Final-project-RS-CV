@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom';
 import { teaUrl, TeaUrlType } from '../../constants/teaCollection';
 import { coffeeUrl } from '../../constants/coffeeCollections';
 import { cocoaUrl } from '../../constants/cocaCollections';
+import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 function SelectedCollection() {
   const { pathname } = useLocation();
   const [sortOption, setSortOption] = useState<string>(productsPageContextDefaultValue.sortOption);
@@ -32,20 +33,33 @@ function SelectedCollection() {
   const [state, setState] = useState(productsPageContextDefaultValue.state);
 
   const handleFetch = useCallback(
-    (offset: number) => {
-      if (sortOption === 'price desc') offset = 0;
-      getProductList(9, offset, collectionType, sortOption).then((res) => setState(res));
+    (page: number) => {
+      const offset = (page - 1) * 9;
+      getProductList(9, offset, collectionType, sortOption).then(
+        (res: ProductProjectionPagedQueryResponse) => {
+          setState({
+            count: res.count,
+            limit: res.limit,
+            offset: res.offset,
+            results: res.results,
+            total: res.total,
+            currentPage: res.offset / res.limit + 1,
+          });
+        },
+      );
     },
     [collectionType, sortOption],
   );
 
   useEffect(() => {
-    handleFetch(0);
+    handleFetch(1);
   }, [handleFetch]);
 
   const currentCollectionType = collectionType;
   return (
-    <ProductsPageContext.Provider value={{ handleFetch, state, sortOption, setSortOption }}>
+    <ProductsPageContext.Provider
+      value={{ handleFetch, state, sortOption, setSortOption, setCurrentPage: () => {} }}
+    >
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>
       <MainContent collectionType={currentCollectionType} />
     </ProductsPageContext.Provider>

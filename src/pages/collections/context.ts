@@ -4,10 +4,11 @@ import { createContext } from 'react';
 export type TState = {
   count: number;
   limit: number;
-  offset: number;
+  offset?: number;
   results: ProductProjection[];
   total?: number;
   sort?: string;
+  currentPage?: number;
 };
 
 type ProductContentType = {
