@@ -1,5 +1,6 @@
 import {
   // CategoryPagedQueryResponse,
+  // CategoryPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
@@ -46,8 +47,10 @@ const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
   categoryID: string,
-  sort: string = '',
+  sortF: string = '',
 ): Promise<ProductProjectionPagedQueryResponse> => {
+  const sort = [sortF];
+  if (sortF === 'price desc') sort.push('id desc');
   return request
     .productProjections()
     .search()
@@ -56,7 +59,7 @@ const getProductList = async (
         limit: limitAtr,
         offset: offsetAtr,
         filter: `categories.id:"${categoryID}"`,
-        sort: [sort],
+        sort: sort,
       },
     })
     .execute()
