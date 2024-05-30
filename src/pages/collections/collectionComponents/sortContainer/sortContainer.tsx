@@ -1,6 +1,6 @@
 import './sortContainer.scss';
 import MyButton from '../../../../components/button/button';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useCallback } from 'react';
 import { ProductsPageContext } from '../../context';
 
 function SortContainer({ mobile }: { mobile: boolean }) {
@@ -9,31 +9,40 @@ function SortContainer({ mobile }: { mobile: boolean }) {
   const [priceDirection, setPriceDirection] = useState<'asc' | 'desc'>('asc');
   const [nameDirection, setNameDirection] = useState<'asc' | 'desc'>('asc');
   const [sortName, setSortName] = useState<'price' | 'name.en-GB'>('price');
-  const { handleFetch, setSortOption } = useContext(ProductsPageContext);
+  const { handleFetch, setSortOption, currentPage, setCurrentPage } =
+    useContext(ProductsPageContext);
   const [activeSort, setActiveSort] = useState<'price' | 'name.en-GB'>('price');
-  useEffect(() => {
-    setSortName('price');
-  }, []);
 
-  const setItem = (option: 'price' | 'name.en-GB') => {
-    let newSortDirection: 'asc' | 'desc' = 'asc';
-    if (option === 'price') {
-      newSortDirection = priceDirection === 'asc' ? 'desc' : 'asc';
-      setPriceDirection(newSortDirection);
-      setNameDirection('asc');
-    } else {
-      newSortDirection = nameDirection === 'asc' ? 'desc' : 'asc';
-      setNameDirection(newSortDirection);
-      setPriceDirection('asc');
-    }
-    setSortOption(`${option} ${newSortDirection}`);
-    setSortName(option);
-    handleFetch(0);
-    setSortDirection(newSortDirection);
-    setOpen(false);
-    setActiveSort(option);
-  };
-
+  const setItem = useCallback(
+    (option: 'price' | 'name.en-GB') => {
+      let newSortDirection: 'asc' | 'desc' = 'asc';
+      if (option === 'price') {
+        newSortDirection = priceDirection === 'asc' ? 'desc' : 'asc';
+        setPriceDirection(newSortDirection);
+        setNameDirection('asc');
+      } else {
+        newSortDirection = nameDirection === 'asc' ? 'desc' : 'asc';
+        setNameDirection(newSortDirection);
+        setPriceDirection('asc');
+      }
+      setSortOption(`${option} ${newSortDirection}`);
+      setSortName(option);
+      setCurrentPage(1);
+      handleFetch(1);
+      setSortDirection(newSortDirection);
+      setOpen(false);
+      setActiveSort(option);
+    },
+    [
+      handleFetch,
+      nameDirection,
+      priceDirection,
+      setCurrentPage,
+      setSortOption,
+      setActiveSort,
+      setOpen,
+    ],
+  );
   return (
     <div className="products_sort-container">
       {mobile ? (

@@ -14,7 +14,7 @@ const PaginationContainer = () => {
   const endIndex = Math.min(startIndex + paginationRange - 1, totalPageCount);
 
   useEffect(() => {
-    handleFetch((currentPage - 1) * productPerPage + 1);
+    handleFetch(currentPage);
   }, [currentPage, handleFetch]);
 
   const handleNextPageClick = useCallback(() => {
@@ -25,9 +25,13 @@ const PaginationContainer = () => {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : prevPage));
   }, []);
 
-  const handleTargetPageClick = useCallback((page: number) => {
-    setCurrentPage(page);
-  }, []);
+  const handleTargetPageClick = useCallback(
+    (page: number) => {
+      setCurrentPage(page);
+      handleFetch(page);
+    },
+    [handleFetch],
+  );
   return (
     <>
       <div className="collection-page_pagination">
