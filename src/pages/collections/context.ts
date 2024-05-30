@@ -13,10 +13,12 @@ export type TState = {
 
 type ProductContentType = {
   sortOption: string;
+  selectedCountry: string;
   state: TState;
   handleFetch: (page: number) => void;
   setSortOption: React.Dispatch<React.SetStateAction<string>>;
   setCurrentPage: (page: number) => void;
+  setSelectedCountry: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const productsPageContextDefaultValue: ProductContentType = {
@@ -30,7 +32,9 @@ export const productsPageContextDefaultValue: ProductContentType = {
   setSortOption: () => {},
   handleFetch: () => {},
   sortOption: '',
+  setSelectedCountry: () => {},
   setCurrentPage: () => {},
+  selectedCountry: '',
 };
 
 export const ProductsPageContext = createContext<ProductContentType>(

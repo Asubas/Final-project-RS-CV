@@ -47,10 +47,15 @@ const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
   categoryID: string,
-  sortF: string = '',
+  sortPriceDesc: string = '',
+  country: string = '',
+  flavour: string = '',
 ): Promise<ProductProjectionPagedQueryResponse> => {
-  const sort = [sortF];
-  if (sortF === 'price desc') sort.push('id desc');
+  const sort = [sortPriceDesc];
+  const filters = [`categories.id:"${categoryID}"`];
+  if (sortPriceDesc === 'price desc') sort.push('id desc');
+  if (country) filters.push(`variants.attributes.origin:"${country}"`);
+  if (flavour) filters.push(`variants.attributes.flavor:"${flavour}"`);
   return request
     .productProjections()
     .search()
@@ -58,7 +63,8 @@ const getProductList = async (
       queryArgs: {
         limit: limitAtr,
         offset: offsetAtr,
-        filter: `categories.id:"${categoryID}"`,
+        filter: filters,
+        // filter: `variants.attributes.origin:"China"`,
         sort: sort,
       },
     })

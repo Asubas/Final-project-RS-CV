@@ -10,6 +10,9 @@ import { cocoaUrl } from '../../constants/cocaCollections';
 import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
 function SelectedCollection() {
   const { pathname } = useLocation();
+  const [selectedCountry, setSelectedCountry] = useState<string>(
+    productsPageContextDefaultValue.selectedCountry,
+  );
   const [sortOption, setSortOption] = useState<string>(productsPageContextDefaultValue.sortOption);
   const pathParts = pathname.split('/');
   const collectionTypeUrl: string = pathParts[pathParts.length - 1] || '';
@@ -35,7 +38,7 @@ function SelectedCollection() {
   const handleFetch = useCallback(
     (page: number) => {
       const offset = (page - 1) * 9;
-      getProductList(9, offset, collectionType, sortOption).then(
+      getProductList(9, offset, collectionType, sortOption, selectedCountry).then(
         (res: ProductProjectionPagedQueryResponse) => {
           setState({
             count: res.count,
@@ -48,7 +51,7 @@ function SelectedCollection() {
         },
       );
     },
-    [collectionType, sortOption],
+    [collectionType, sortOption, selectedCountry],
   );
 
   useEffect(() => {
@@ -58,7 +61,15 @@ function SelectedCollection() {
   const currentCollectionType = collectionType;
   return (
     <ProductsPageContext.Provider
-      value={{ handleFetch, state, sortOption, setSortOption, setCurrentPage: () => {} }}
+      value={{
+        handleFetch,
+        state,
+        sortOption,
+        setSortOption,
+        setCurrentPage: () => {},
+        selectedCountry,
+        setSelectedCountry,
+      }}
     >
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>
       <MainContent collectionType={currentCollectionType} />
