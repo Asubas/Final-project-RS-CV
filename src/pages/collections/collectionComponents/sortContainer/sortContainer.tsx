@@ -9,8 +9,7 @@ function SortContainer({ mobile }: { mobile: boolean }) {
   const [priceDirection, setPriceDirection] = useState<'asc' | 'desc'>('asc');
   const [nameDirection, setNameDirection] = useState<'asc' | 'desc'>('asc');
   const [sortName, setSortName] = useState<'price' | 'name.en-GB'>('price');
-  const { handleFetch, setSortOption, currentPage, setCurrentPage } =
-    useContext(ProductsPageContext);
+  const { handleFetch, setSortOption, setCurrentPage } = useContext(ProductsPageContext);
   const [activeSort, setActiveSort] = useState<'price' | 'name.en-GB'>('price');
 
   const setItem = useCallback(

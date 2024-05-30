@@ -15,6 +15,7 @@ type ProductContentType = {
   state: TState;
   handleFetch: (page: number) => void;
   setSortOption: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentPage: (page: number) => void;
 };
 
 export const productsPageContextDefaultValue: ProductContentType = {
@@ -28,6 +29,7 @@ export const productsPageContextDefaultValue: ProductContentType = {
   setSortOption: () => {},
   handleFetch: () => {},
   sortOption: '',
+  setCurrentPage: () => {},
 };
 
 export const ProductsPageContext = createContext<ProductContentType>(

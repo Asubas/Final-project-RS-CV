@@ -32,15 +32,9 @@ function SelectedCollection() {
   const [state, setState] = useState(productsPageContextDefaultValue.state);
 
   const handleFetch = useCallback(
-    (currentPage: number) => {
-      if (currentPage === 0) {
-        currentPage = 1;
-        console.log('Handling fetch:', { currentPage });
-        getProductList(9, (currentPage - 1) * 9, collectionType, sortOption).then((res) => {
-          console.log('Setting state:', res);
-          setState(res);
-        });
-      }
+    (offset: number) => {
+      if (sortOption === 'price desc') offset = 0;
+      getProductList(9, offset, collectionType, sortOption).then((res) => setState(res));
     },
     [collectionType, sortOption],
   );
