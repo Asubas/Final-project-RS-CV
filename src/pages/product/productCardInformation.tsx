@@ -2,18 +2,12 @@ import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import { ProductCard } from '../collections/collectionComponents/productsSection/productCard/productCard';
-import Products from '../collections/collectionComponents/productsSection/productsSection';
-import Slider from '../homePage/slider/slider';
 import Carousel from 'react-multi-carousel';
-import { category } from '../homePage/slider/sliderData';
-import categoryP from './productCardCategorySlider';
+import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 
-let productName: string;
 function DisplayProductInformation() {
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 1280 },
       items: 1,
     },
@@ -30,7 +24,7 @@ function DisplayProductInformation() {
       items: 1,
     },
   };
-  const [productPack, setProductPack] = useState<number>(0);
+
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -44,19 +38,17 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
+  console.log(product);
+
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
-  const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
   const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
   const productPriceFirstLoad =
     Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
       ? `${Number(productPrice50) / 100}.00`
       : `${(Number(productPrice50) / 100).toFixed(1)}0`;
-  console.log(productPrice50);
   const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
-  console.log(productPrice100);
   const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount;
-  console.log(productPrice170);
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
   const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
   const productServingSize = product.masterData.current.masterVariant.attributes[2].value;
@@ -64,12 +56,8 @@ function DisplayProductInformation() {
   const productSteepingTime = product.masterData.current.masterVariant.attributes[4].value;
   const productFlavor = product.masterData.current.masterVariant.attributes[7].value;
   const productFullDescription = product.masterData.current.masterVariant.attributes[0].value;
-
-  const imagesSlider = product.masterData.current.masterVariant.images;
-
-  const productPrice = [productPrice50, productPrice100, productPrice170];
-  const priceField = document.querySelector('.price') as HTMLParagraphElement;
-
+  const imagesSlider: SliderItemDataP[] = product.masterData.current.masterVariant.images;
+  const productPriceArr = [productPrice50, productPrice100, productPrice170];
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
     const prodPackParent = prodPack.parentNode?.childNodes;
@@ -81,7 +69,7 @@ function DisplayProductInformation() {
     let selectedPrice = 0;
     prodPackParent?.forEach((el, i) =>
       (el as HTMLElement).classList.contains('variant-active')
-        ? (selectedPrice = productPrice[i])
+        ? (selectedPrice = productPriceArr[i])
         : '',
     );
     const productPriceFinal =
@@ -94,14 +82,37 @@ function DisplayProductInformation() {
     }
   };
 
+  const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0]['url']);
+  const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
+    let selectImage = e.currentTarget.children[0] as HTMLImageElement;
+    let tempImgCurUrl = currentImg;
+    let tempImgSelUrl = selectImage.src;
+    selectImage.setAttribute('src', tempImgCurUrl);
+    setCurrentImg(tempImgSelUrl);
+  };
+
+  const createImagesContainer = (images: SliderItemDataP[], startIndex: number) => {
+    const slicedImages = images.slice(startIndex);
+    return slicedImages.map((image, index) => (
+      <div key={index} className="additional-image-block" onClick={handleClickChangeImage}>
+        <img className="additional-img" src={image.url} alt={`product-image-${image.label}`} />
+      </div>
+    ));
+  };
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   return (
     <div className="product-card__container">
       {/* <h2>path to page: {location.pathname}</h2> */}
       <div className="product-card__block">
-        <div className="product-image" onClick={openModal}>
-          <img src={`${productImage}`} alt="product-image" />
+        <div className="product-image">
+          <div className="product-image-main" onClick={openModal}>
+            <img src={`${currentImg}`} alt="product-image" />
+          </div>
+          <div className="additional-images-container">
+            {createImagesContainer(imagesSlider, 1)}
+          </div>
         </div>
         <div className="product-parameters">
           <h3>{`${productName}`}</h3>

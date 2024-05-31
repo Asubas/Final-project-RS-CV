@@ -16,8 +16,29 @@ h3 {
     justify-content: space-between;
     .product-image {
       max-width: 456px;
-      height: 507px;
-      cursor: pointer;
+      height: fit-content;
+      .product-image-main {
+        cursor: pointer;
+      }
+      .additional-images-container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        .additional-image-block {
+          max-width: 120px;
+          width: 100%;
+          border: 1px solid rgba(72, 72, 72, 0.523);
+          cursor: pointer;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
     }
     .product-parameters {
       display: flex;
