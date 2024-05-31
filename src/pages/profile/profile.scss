@@ -1,0 +1,27 @@
+@import '../../App.scss';
+
+.profileSection {
+  margin: 0 auto;
+}
+
+.personalWrap {
+  max-width: 1280px;
+  padding: 15px;
+  border-top: 1px solid $backgroundVariant;
+  border-bottom: 1px solid $backgroundVariant;
+
+  .personal {
+    display: flex;
+    gap: 15px;
+
+    &_label {
+      width: 150px;
+      padding: 3px 6px;
+      text-transform: uppercase;
+    }
+
+    &_value {
+      padding: 3px 6px;
+    }
+  }
+}
