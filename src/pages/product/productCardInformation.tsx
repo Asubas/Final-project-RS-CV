@@ -30,13 +30,9 @@ function DisplayProductInformation() {
       items: 1,
     },
   };
-  const [productPack, setProductPack] = useState<number>(0)
+  const [productPack, setProductPack] = useState<number>(0);
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-
-
- 
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const buttonType = e.currentTarget.textContent?.trim();
@@ -52,14 +48,15 @@ function DisplayProductInformation() {
   const productDescription = product.masterData.current.description?.['en-GB'];
   const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
   const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
-  const productPriceFirstLoad = Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
-  ? `${Number(productPrice50) / 100}.00`
-  : `${(Number(productPrice50) / 100).toFixed(1)}0`;
-  console.log(productPrice50)
+  const productPriceFirstLoad =
+    Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
+      ? `${Number(productPrice50) / 100}.00`
+      : `${(Number(productPrice50) / 100).toFixed(1)}0`;
+  console.log(productPrice50);
   const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
-  console.log(productPrice100)
-  const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount
-  console.log(productPrice170)
+  console.log(productPrice100);
+  const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount;
+  console.log(productPrice170);
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
   const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
   const productServingSize = product.masterData.current.masterVariant.attributes[2].value;
@@ -74,26 +71,28 @@ function DisplayProductInformation() {
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
 
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
-   
     const prodPack = e.currentTarget;
     const prodPackParent = prodPack.parentNode?.childNodes;
     const priceField = document.querySelector('.price') as HTMLParagraphElement;
     const activeProdPack = document.querySelector('.variant-active');
-    activeProdPack?.classList.remove('variant-active')
+    activeProdPack?.classList.remove('variant-active');
     prodPack.classList.add('variant-active');
     console.log(prodPack);
     let selectedPrice = 0;
-    prodPackParent?.forEach((el, i) => (el as HTMLElement).classList.contains('variant-active') ? selectedPrice = productPrice[i] : '');
+    prodPackParent?.forEach((el, i) =>
+      (el as HTMLElement).classList.contains('variant-active')
+        ? (selectedPrice = productPrice[i])
+        : '',
+    );
     const productPriceFinal =
-    Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
-      ? `${Number(selectedPrice) / 100}.00`
-      : `${(Number(selectedPrice) / 100).toFixed(1)}0`;
+      Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
+        ? `${Number(selectedPrice) / 100}.00`
+        : `${(Number(selectedPrice) / 100).toFixed(1)}0`;
 
     if (priceField) {
       priceField.innerText = `$ ${productPriceFinal}`;
     }
-  }
-
+  };
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -117,9 +116,7 @@ function DisplayProductInformation() {
               <p>Flavor: {`${productFlavor}`}</p>
             </div>
           </div>
-          <p className="price">
-            {`$ ${productPriceFirstLoad}`}
-          </p>
+          <p className="price">{`$ ${productPriceFirstLoad}`}</p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
