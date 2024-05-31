@@ -3,6 +3,8 @@ import { useContext } from 'react';
 import { ProductsPageContext } from '../../../context';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductById } from '../../../../../lib/getProductInfo';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { getProductById } from '../../../../../lib/getProductInfo';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
@@ -23,6 +25,7 @@ const ProductCard = () => {
         const { id, name, masterVariant } = product;
         const { images, prices } = masterVariant;
         return (
+          <div className="productsCard" key={id} onClick={() => handleClick(id)}>
           <div className="productsCard" key={id} onClick={() => handleClick(id)}>
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
@@ -51,4 +54,5 @@ const ProductCard = () => {
     </>
   );
 };
+export { ProductCard };
 export { ProductCard };
