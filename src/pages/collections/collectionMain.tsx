@@ -13,6 +13,9 @@ function SelectedCollection() {
   const [selectedCountry, setSelectedCountry] = useState<string>(
     productsPageContextDefaultValue.selectedCountry,
   );
+  const [resetFilters, setResetFilters] = useState<boolean>(
+    productsPageContextDefaultValue.resetFilters,
+  );
   const [selectedFlavour, setSelectedFlavour] = useState<string>(
     productsPageContextDefaultValue.selectedFlavour,
   );
@@ -41,20 +44,26 @@ function SelectedCollection() {
   const handleFetch = useCallback(
     (page: number) => {
       const offset = (page - 1) * 9;
-      getProductList(9, offset, collectionType, sortOption, selectedCountry, selectedFlavour).then(
-        (res: ProductProjectionPagedQueryResponse) => {
-          setState({
-            count: res.count,
-            limit: res.limit,
-            offset: res.offset,
-            results: res.results,
-            total: res.total,
-            currentPage: res.offset / res.limit + 1,
-          });
-        },
-      );
+      getProductList(
+        9,
+        offset,
+        collectionType,
+        sortOption,
+        selectedCountry,
+        selectedFlavour,
+        resetFilters,
+      ).then((res: ProductProjectionPagedQueryResponse) => {
+        setState({
+          count: res.count,
+          limit: res.limit,
+          offset: res.offset,
+          results: res.results,
+          total: res.total,
+          currentPage: res.offset / res.limit + 1,
+        });
+      });
     },
-    [collectionType, sortOption, selectedCountry, selectedFlavour],
+    [collectionType, sortOption, selectedCountry, selectedFlavour, resetFilters],
   );
 
   useEffect(() => {
@@ -74,6 +83,8 @@ function SelectedCollection() {
         setSelectedCountry,
         selectedFlavour,
         setSelectedFlavour,
+        resetFilters,
+        setResetFilters,
       }}
     >
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>

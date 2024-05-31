@@ -4,15 +4,17 @@ import { SelectCountryProps } from '../../../../../interfaces/interfaces';
 import { ProductsPageContext } from '../../../context';
 
 function SelectCountry({ selectedCountry, onCountryChange }: SelectCountryProps) {
-  const { handleFetch, setSelectedCountry, setCurrentPage } = useContext(ProductsPageContext);
+  const { setResetFilters, handleFetch, setSelectedCountry, setCurrentPage } =
+    useContext(ProductsPageContext);
   const handleCountryChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      setResetFilters(false);
       onCountryChange(event.target.value);
       setSelectedCountry(event.target.value);
       setCurrentPage(1);
       handleFetch(1);
     },
-    [onCountryChange, setSelectedCountry, setCurrentPage, handleFetch],
+    [setResetFilters, onCountryChange, setSelectedCountry, setCurrentPage, handleFetch],
   );
 
   return (

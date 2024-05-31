@@ -1,18 +1,21 @@
+import './test.scss';
 import { useCallback, useContext } from 'react';
 import MyInput from '../../../../../components/input/input';
 import { SelectFlavourProps } from '../../../../../interfaces/interfaces';
 import { ProductsPageContext } from '../../../context';
 
 function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps) {
-  const { handleFetch, setSelectedFlavour, setCurrentPage } = useContext(ProductsPageContext);
+  const { setResetFilters, handleFetch, setSelectedFlavour, setCurrentPage } =
+    useContext(ProductsPageContext);
   const handleFlavourChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      setResetFilters(false);
       onFlavourChange(event.target.value);
       setSelectedFlavour(event.target.value);
       setCurrentPage(1);
       handleFetch(1);
     },
-    [onFlavourChange, setSelectedFlavour, setCurrentPage, handleFetch],
+    [setResetFilters, onFlavourChange, setSelectedFlavour, setCurrentPage, handleFetch],
   );
   return (
     <ul className="filters-list">
@@ -27,6 +30,7 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
             value="Citrus"
             checked={selectedFlavour === 'Citrus'}
             onChange={handleFlavourChange}
+            className={selectedFlavour === 'Citrus' ? 'radio-button--checked' : ''}
           />
         </label>
       </li>

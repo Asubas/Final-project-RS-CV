@@ -3,25 +3,30 @@ import { useLocation } from 'react-router-dom';
 import { SelectCountry } from './selectCountry/selectCountry';
 import { SelectFlavour } from './selectFlavour/selectFlavour';
 import MyButton from '../../../../components/button/button';
-import { useState } from 'react';
+import { useCallback, useContext } from 'react';
+import { ProductsPageContext } from '../../context';
 
 const Filters = () => {
   const { pathname } = useLocation();
   const pathParts = pathname.split('/');
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [selectedFlavour, setSelectedFlavour] = useState<string | null>(null);
+  const { handleFetch, setResetFilters, setCurrentPage, setSelectedFlavour, setSelectedCountry } =
+    useContext(ProductsPageContext);
+
+  const resetAll = useCallback(() => {
+    setResetFilters(true);
+    setCurrentPage(1);
+    handleFetch(1);
+    setSelectedCountry('');
+    setSelectedFlavour('');
+    // setResetFilters(false);
+  }, [setResetFilters, setCurrentPage, handleFetch, setSelectedFlavour, setSelectedCountry]);
 
   const resetCountry = () => {
-    setSelectedCountry(null);
+    setSelectedCountry('');
   };
 
   const resetFlavour = () => {
-    setSelectedFlavour(null);
-  };
-
-  const resetAll = () => {
-    resetCountry();
-    resetFlavour();
+    setSelectedFlavour('');
   };
 
   const handleCountryChange = (value: string) => {
@@ -36,9 +41,17 @@ const Filters = () => {
     <>
       {pathParts[2] === 'tea' || pathParts[2] === 'coffee' ? (
         <section className="collection-page_content-filters">
-          <SelectCountry selectedCountry={selectedCountry} onCountryChange={handleCountryChange} />
-          <SelectFlavour selectedFlavour={selectedFlavour} onFlavourChange={handleFlavourChange} />
-          <MyButton type="button" className="btn_black" onClick={resetAll}>
+          <SelectCountry onCountryChange={handleCountryChange} selectedCountry={''} />
+          <SelectFlavour onFlavourChange={handleFlavourChange} selectedFlavour={''} />
+          <MyButton
+            type="button"
+            className="btn_black"
+            onClick={() => {
+              resetAll();
+              resetCountry();
+              resetFlavour();
+            }}
+          >
             Reset all
           </MyButton>
         </section>

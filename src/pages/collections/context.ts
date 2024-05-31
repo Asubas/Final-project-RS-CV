@@ -15,12 +15,14 @@ type ProductContentType = {
   sortOption: string;
   selectedCountry: string;
   selectedFlavour: string;
+  resetFilters: boolean;
   state: TState;
   handleFetch: (page: number) => void;
   setSortOption: React.Dispatch<React.SetStateAction<string>>;
   setCurrentPage: (page: number) => void;
   setSelectedCountry: React.Dispatch<React.SetStateAction<string>>;
   setSelectedFlavour: React.Dispatch<React.SetStateAction<string>>;
+  setResetFilters: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const productsPageContextDefaultValue: ProductContentType = {
@@ -39,6 +41,8 @@ export const productsPageContextDefaultValue: ProductContentType = {
   setCurrentPage: () => {},
   selectedCountry: '',
   selectedFlavour: '',
+  setResetFilters: () => {},
+  resetFilters: false,
 };
 
 export const ProductsPageContext = createContext<ProductContentType>(

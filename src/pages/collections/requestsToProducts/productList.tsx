@@ -1,7 +1,4 @@
 import {
-  // CategoryPagedQueryResponse,
-  // CategoryPagedQueryResponse,
-  // CategoryPagedQueryResponse,
   ProductProjectionPagedQueryResponse,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
@@ -35,15 +32,6 @@ const ctpClient = new ClientBuilder()
   .build();
 
 const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
-
-// const getProductListQueryArgs = (count: number = 0, categoryID: string = '') => {
-//   return {
-//     limit: 9,
-//     offset: count,
-//     filter: `categories.id:"${categoryID}"`,
-//   };
-// };
-
 const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
@@ -51,14 +39,14 @@ const getProductList = async (
   sortPriceDesc: string = '',
   country: string = '',
   flavour: string = '',
+  reset: boolean = false,
 ): Promise<ProductProjectionPagedQueryResponse> => {
   const sort = [sortPriceDesc];
   const filters = [`categories.id:"${categoryID}"`];
   if (sortPriceDesc === 'price desc') sort.push('id desc');
-  if (country) filters.push(`variants.attributes.origin:"${country}"`);
-  if (flavour) {
-    // flavour.toLocaleLowerCase();
-    filters.push(`variants.attributes.flavor:"${flavour.toLocaleLowerCase()}"`);
+  if (!reset) {
+    if (country) filters.push(`variants.attributes.origin:"${country}"`);
+    if (flavour) filters.push(`variants.attributes.flavor:"${flavour.toLocaleLowerCase()}"`);
   }
   return request
     .productProjections()
@@ -68,7 +56,6 @@ const getProductList = async (
         limit: limitAtr,
         offset: offsetAtr,
         filter: filters,
-        // filter: `variants.attributes.origin:"China"`,
         sort: sort,
       },
     })
