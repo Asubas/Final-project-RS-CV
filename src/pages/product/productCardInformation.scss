@@ -24,6 +24,9 @@ h3 {
       flex-direction: column;
       gap: 21px;
       max-width: 574px;
+        .price {
+          font-weight: bold;
+        }
       .information-about-the-origin-of-the-goods {
         max-width: 429px;
         width: 100%;
@@ -52,7 +55,8 @@ h3 {
             display: flex;
             flex-direction: column;
           }
-          .variant:hover {
+          .variant:hover,
+          .variant-active {
             border: 1px solid #c3b212;
             cursor: pointer;
           }
@@ -146,7 +150,7 @@ h3 {
       margin-bottom: 48px;
       max-width: 573px;
       width: 100%;
-    
+
       .about-tea__title {
         margin-bottom: 24px;
         font-weight: 300;
@@ -193,9 +197,6 @@ h3 {
   }
 }
 
-
-
-
 .btn_transparent {
   width: 24px;
   height: 24px;
@@ -227,7 +228,7 @@ h3 {
     h3 {
       margin-bottom: 10px;
     }
-    .slideWrapProduct{
+    .slideWrapProduct {
       width: 100%;
       height: 100%;
       display: flex;
@@ -235,15 +236,14 @@ h3 {
       justify-content: center;
       align-items: center;
       margin: 0 auto;
-      .slideImgProduct{
+      .slideImgProduct {
         width: 100%;
         height: 100%;
         object-fit: cover;
-       
       }
     }
     .close {
-      align-self:flex-end;
+      align-self: flex-end;
       // position: absolute;
       // top: 10px;
       // right: 25px;
@@ -262,27 +262,21 @@ h3 {
   }
 }
 
-.react-multi-carousel-item{
+.react-multi-carousel-item {
   padding: 0 5px;
 }
 
-
-
-
-
-
-
 @media (max-width: 922px) {
   .product-card__container {
-   .product-card__block {
+    .product-card__block {
       flex-direction: column;
-       .product-image{
+      .product-image {
         width: 100%;
         height: fit-content;
         margin-bottom: 20px;
-        }
+      }
     }
-   
+
     .steeping-instruction-and-about-tea-block {
       .stepping-instruction__container {
         margin-left: 40px;
@@ -296,8 +290,8 @@ h3 {
     .product-card__block {
       flex-direction: column;
     }
-    .product-image{
-    height: fit-content;
+    .product-image {
+      height: fit-content;
     }
     .steeping-instruction-and-about-tea-block {
       flex-direction: column;

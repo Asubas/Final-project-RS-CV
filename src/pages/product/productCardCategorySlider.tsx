@@ -8,12 +8,12 @@
 // import slide7 from '../../../assets/img/category-7.jpg';
 // import slide8 from '../../../assets/img/category-8.jpg';
 // import slide9 from '../../../assets/img/category-9.jpg';
-import '../homePage/slider/slider.scss'
+import '../homePage/slider/slider.scss';
 import SliderCard from '../homePage/slider/sliderCard';
 import SliderCardProduct from './sliderCardProduct';
 
 export interface SliderItemDataP {
-//   id: number;
+  //   id: number;
   url: string;
   label: string;
 }
@@ -66,14 +66,12 @@ export interface SliderItemDataP {
 //   },
 // ];
 
-function categoryP (imagesSlider: SliderItemDataP[]) {
-    console.log(imagesSlider)
-    if (!imagesSlider || imagesSlider.length === 0) {
-        return null; // или возвращаем другой компонент-заглушку
-      }
-   return  imagesSlider.map((item) => (
-      
-  <SliderCardProduct key={item['label']} img={item['url']}/>
-))}
+function categoryP(imagesSlider: SliderItemDataP[]) {
+  console.log(imagesSlider);
+  if (!imagesSlider || imagesSlider.length === 0) {
+    return null; // или возвращаем другой компонент-заглушку
+  }
+  return imagesSlider.map((item) => <SliderCardProduct key={item['label']} img={item['url']} />);
+}
 
-export default categoryP
+export default categoryP;

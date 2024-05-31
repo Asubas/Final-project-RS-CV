@@ -12,7 +12,7 @@ const ProductCard = () => {
     getProductById(id).then((res) => {
       if (res.statusCode === 200) {
         const currentUrl = location.pathname;
-        const path = res.body.masterData.current.slug['en-GB']
+        const path = res.body.masterData.current.slug['en-GB'];
         navigate(`${currentUrl}/${path}`, { state: res.body });
       }
     });

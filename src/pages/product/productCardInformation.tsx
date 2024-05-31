@@ -11,7 +11,6 @@ import categoryP from './productCardCategorySlider';
 
 let productName: string;
 function DisplayProductInformation() {
- 
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -31,8 +30,13 @@ function DisplayProductInformation() {
       items: 1,
     },
   };
+  const [productPack, setProductPack] = useState<number>(0)
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+
+
+ 
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const buttonType = e.currentTarget.textContent?.trim();
@@ -44,23 +48,52 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
-  console.log(product);
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
-  console.log(product.masterData.current)
   const productImage = product.masterData.current.masterVariant.images[0]?.['url'];
-  const productPriceUs = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
+  const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
+  const productPriceFirstLoad = Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
+  ? `${Number(productPrice50) / 100}.00`
+  : `${(Number(productPrice50) / 100).toFixed(1)}0`;
+  console.log(productPrice50)
+  const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
+  console.log(productPrice100)
+  const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount
+  console.log(productPrice170)
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
-  const productIngredients = product.masterData.current.masterVariant.attributes[1].value
-  const productServingSize = product.masterData.current.masterVariant.attributes[2].value
-  const productWaterTemperature = product.masterData.current.masterVariant.attributes[3].value
-  const productSteepingTime = product.masterData.current.masterVariant.attributes[4].value
-  const productFlavor = product.masterData.current.masterVariant.attributes[7].value
-  const productFullDescription = product.masterData.current.masterVariant.attributes[0].value
+  const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
+  const productServingSize = product.masterData.current.masterVariant.attributes[2].value;
+  const productWaterTemperature = product.masterData.current.masterVariant.attributes[3].value;
+  const productSteepingTime = product.masterData.current.masterVariant.attributes[4].value;
+  const productFlavor = product.masterData.current.masterVariant.attributes[7].value;
+  const productFullDescription = product.masterData.current.masterVariant.attributes[0].value;
 
   const imagesSlider = product.masterData.current.masterVariant.images;
 
-  const productPriceFinal = (productPriceUs / 100) === Math.trunc(productPriceUs / 100 ) ? `${productPriceUs / 100}.00` : `${(productPriceUs / 100).toFixed(1)}0`
+  const productPrice = [productPrice50, productPrice100, productPrice170];
+  const priceField = document.querySelector('.price') as HTMLParagraphElement;
+
+  const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
+   
+    const prodPack = e.currentTarget;
+    const prodPackParent = prodPack.parentNode?.childNodes;
+    const priceField = document.querySelector('.price') as HTMLParagraphElement;
+    const activeProdPack = document.querySelector('.variant-active');
+    activeProdPack?.classList.remove('variant-active')
+    prodPack.classList.add('variant-active');
+    console.log(prodPack);
+    let selectedPrice = 0;
+    prodPackParent?.forEach((el, i) => (el as HTMLElement).classList.contains('variant-active') ? selectedPrice = productPrice[i] : '');
+    const productPriceFinal =
+    Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
+      ? `${Number(selectedPrice) / 100}.00`
+      : `${(Number(selectedPrice) / 100).toFixed(1)}0`;
+
+    if (priceField) {
+      priceField.innerText = `$ ${productPriceFinal}`;
+    }
+  }
+
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -85,20 +118,20 @@ function DisplayProductInformation() {
             </div>
           </div>
           <p className="price">
-            <b>{`$ ${productPriceFinal}`}</b>
+            {`$ ${productPriceFirstLoad}`}
           </p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
-              <div className="variant variant-1">
+              <div className="variant variant-1 variant-active" onClick={handleClickProdPack}>
                 <img src="/src/assets/svg/size-50.svg" alt="size-50" />
                 <p></p>
               </div>
-              <div className="variant variant-2">
+              <div className="variant variant-2" onClick={handleClickProdPack}>
                 <img src="/src/assets/svg/size-100.svg" alt="size-100" />
                 <p></p>
               </div>
-              <div className="variant variant-3">
+              <div className="variant variant-3" onClick={handleClickProdPack}>
                 <img src="/src/assets/svg/size-170.svg" alt="size-170" />
                 <p></p>
               </div>
@@ -155,14 +188,12 @@ function DisplayProductInformation() {
         </div>
         <div className="about-tea__container">
           <h3 className="about-tea__title">About this tea</h3>
-          <div className='about-tea-full-discription'>
+          <div className="about-tea-full-discription">
             <p>{`${productFullDescription}`}</p>
           </div>
           <div className="product-ingredient">
             <h3>Ingredient</h3>
-            <p>
-              {`${productIngredients}`}
-            </p>
+            <p>{`${productIngredients}`}</p>
           </div>
         </div>
       </div>
@@ -177,12 +208,12 @@ function DisplayProductInformation() {
             <span className="close" onClick={closeModal}>
               &times;
             </span>
-            <Carousel 
-             responsive={responsive}
-             infinite={true}
-             removeArrowOnDeviceType={['tablet', 'mobile']}>
-          
-            {categoryP(imagesSlider)}
+            <Carousel
+              responsive={responsive}
+              infinite={true}
+              removeArrowOnDeviceType={['tablet', 'mobile']}
+            >
+              {categoryP(imagesSlider)}
             </Carousel>
             <h3>{productName}</h3>
             <p>{productDescription}</p>
