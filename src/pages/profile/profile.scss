@@ -1,13 +1,16 @@
 @import '../../App.scss';
 
 .profileSection {
-  margin: 0 auto;
+  margin: auto auto;
+}
+
+h3 {
+  padding: 20px 0;
 }
 
 .personalWrap {
   max-width: 1280px;
   padding: 15px;
-  border-top: 1px solid $backgroundVariant;
   border-bottom: 1px solid $backgroundVariant;
 
   .personal {
@@ -23,5 +26,35 @@
     &_value {
       padding: 3px 6px;
     }
+  }
+}
+
+.addressesWrap {
+  padding: 15px;
+
+  .address {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+
+    &_line {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &_label,
+    &_value {
+      padding: 3px 6px;
+    }
+
+    .default_address {
+      font-size: 10px;
+      color: #f31c1c;
+    }
+  }
+
+  .noAddress {
+    text-align: center;
+    font-size: 20px;
   }
 }
