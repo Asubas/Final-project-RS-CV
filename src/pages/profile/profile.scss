@@ -4,8 +4,12 @@
   margin: auto auto;
 }
 
-h3 {
-  padding: 20px 0;
+.profileHead {
+  font-size: 16px;
+}
+
+.profileHead:nth-child(1) {
+  margin-bottom: 10px;
 }
 
 .personalWrap {
@@ -15,7 +19,7 @@ h3 {
 
   .personal {
     display: flex;
-    gap: 15px;
+    justify-content: space-between;
 
     &_label {
       width: 150px;
@@ -45,6 +49,10 @@ h3 {
     &_label,
     &_value {
       padding: 3px 6px;
+    }
+
+    &_label {
+      text-transform: uppercase;
     }
 
     .default_address {

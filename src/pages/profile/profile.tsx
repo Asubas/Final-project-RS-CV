@@ -33,7 +33,7 @@ function Profile() {
     <>
       <section className="profileSection">
         <div className="personalWrap">
-          <h3>Personal information</h3>
+          <h3 className="profileHead">Personal information</h3>
           <div className="personal">
             <p className="personal_label">First name</p>
             <p className="personal_value">{user.firstName || 'no data :('}</p>
@@ -52,7 +52,7 @@ function Profile() {
           </div>
         </div>
         <div className="addressesWrap">
-          <h3>addresses</h3>
+          <h3 className="profileHead">addresses</h3>
           {user.addresses && user.addresses.length > 0 ? (
             user.addresses.map((address) => (
               <div key={address.id} className="address" data-id={address.id}>
