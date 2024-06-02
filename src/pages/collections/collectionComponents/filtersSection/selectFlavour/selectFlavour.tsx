@@ -39,7 +39,7 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
         <li key={index} className="filters-list__item">
           <label
             htmlFor={element}
-            className={checkedFlavour === element ? 'radio-button--checked' : ''}
+            className={`toggler-wrapper style-1 ${checkedFlavour === element ? 'radio-button--checked' : ''}`}
           >
             {element}
             <MyInput
@@ -49,6 +49,9 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
               value={element}
               onChange={handleFlavourChange}
             />
+            <div className="toggler-slider">
+              <div className="toggler-knob"></div>
+            </div>
           </label>
         </li>
       ))}

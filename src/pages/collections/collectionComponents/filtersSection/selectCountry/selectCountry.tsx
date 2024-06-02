@@ -36,7 +36,7 @@ function SelectCountry({ selectedCountry, onCountryChange }: SelectCountryProps)
         <li key={index} className="filters-list__item">
           <label
             htmlFor={element}
-            className={checkedCountry === element ? 'radio-button--checked' : ''}
+            className={`toggler-wrapper style-1 ${checkedCountry === element ? 'radio-button--checked' : ''}`}
           >
             {element}
             <MyInput
@@ -46,6 +46,9 @@ function SelectCountry({ selectedCountry, onCountryChange }: SelectCountryProps)
               value={element}
               onChange={handleCountryChange}
             />
+            <div className="toggler-slider">
+              <div className="toggler-knob"></div>
+            </div>
           </label>
         </li>
       ))}
@@ -54,3 +57,11 @@ function SelectCountry({ selectedCountry, onCountryChange }: SelectCountryProps)
 }
 
 export { SelectCountry };
+{
+  /* <label className="toggler-wrapper style-1">
+  <input type="checkbox" />
+  <div className="toggler-slider">
+    <div className="toggler-knob"></div>
+  </div>
+</label>; */
+}

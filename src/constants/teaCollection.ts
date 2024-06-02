@@ -7,7 +7,7 @@ const subcategoriesTea = [
   'Chai',
   'Oolong',
   'ROOIBOS',
-  'ALL',
+  'All',
 ];
 
 const backgroundImagesTea = [

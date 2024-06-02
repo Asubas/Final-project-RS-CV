@@ -18,11 +18,11 @@ function TeaPage() {
         const urlKey = (teaUrl as TeaUrlType)[Object.keys(teaUrl as TeaUrlType)[index]];
         return (
           <div
-            className={category}
+            className={`${category} tea`}
             key={`${index}-${urlKey}`}
             onClick={() => handleClick(urlKey)}
             style={{
-              background: `url(${backgroundImagesTea[index]}) no-repeat center / contain`,
+              background: `url(${backgroundImagesTea[index]}) no-repeat center / cover`,
             }}
           >
             <span>{category.toUpperCase()}</span>

@@ -34,29 +34,10 @@
           top: 3px;
           visibility: hidden;
         }
-
-        &::before {
-          content: ' ';
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 15px;
-          height: 15px;
-          border: 2px solid $onSecondary;
-          border-radius: 50%;
-        }
-      }
-
-      .radio-button--checked {
-        &::before {
-          border: 2px solid $secondary;
-          background-color: $onSecondary;
-        }
       }
 
       &:hover {
         background-color: $secondary;
-        color: $onSecondary;
       }
     }
 
