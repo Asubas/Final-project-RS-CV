@@ -14,6 +14,8 @@ h3 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 15px;
+    margin-top: 30px;
     .product-image {
       max-width: 456px;
       height: fit-content;
@@ -22,6 +24,7 @@ h3 {
       }
       .additional-images-container {
         margin-top: 20px;
+        margin-bottom: 10px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -71,6 +74,7 @@ h3 {
         .variants {
           display: flex;
           flex-direction: row;
+          gap: 20px;
           .variant {
             width: 84px;
             display: flex;
@@ -210,10 +214,25 @@ h3 {
     }
   }
   .similar-products__container {
-    height: 400px;
+    height: fit-content;
+    margin-bottom: 30px;
     .similar-products__title {
       text-align: center;
       margin-top: 32px;
+      margin-bottom: 40px;
+    }
+    .similar-products__content{
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      .productsCard{
+        width: 300px;
+        cursor: pointer;
+      }
+    
     }
   }
 }

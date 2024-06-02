@@ -1,9 +1,15 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
+import { getProductById } from '../../lib/getProductInfo';
+import { getProductList } from '../collections/requestsToProducts/productList';
+import getSimilarProducts from './getSimilarProducts';
+import { ProductProjection } from '@commercetools/platform-sdk';
+import createSimilarProducts from './createSimilarProducts';
+import { BreadcrumbsComponent } from '../collections/collectionComponents/breadcrumbLinks/breadBackForwComp';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -24,7 +30,7 @@ function DisplayProductInformation() {
       items: 1,
     },
   };
-
+ 
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +45,7 @@ function DisplayProductInformation() {
   const location = useLocation();
   const product = location.state;
   console.log(product);
-
+  
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
   const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
@@ -47,6 +53,8 @@ function DisplayProductInformation() {
     Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
       ? `${Number(productPrice50) / 100}.00`
       : `${(Number(productPrice50) / 100).toFixed(1)}0`;
+  const IDsimilarProducts1 = product.masterData.current.categories[0]['id'];
+  const IDsimilarProducts2 = product.masterData.current.categories[1]['id'];
   const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
   const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount;
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
@@ -81,7 +89,28 @@ function DisplayProductInformation() {
       priceField.innerText = `$ ${productPriceFinal}`;
     }
   };
+  const [productInfo, setProductInfo] = useState(null); // Хранит информацию о текущем продукте
+  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]); // Хранит похожие продукты
+  const [isLoading, setIsLoading] = useState(true); // Флаг для отслеживания загрузки данных
+  useEffect(() => {
+    if (product) {
+      setProductInfo(product);
 
+      // const IDsimilarProducts1 = product.masterData.current.categories[0].id;
+      // const IDsimilarProducts2 = product.masterData.current.categories[1].id;
+
+      getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
+        .then((res) => {
+          setSimilarProducts(res.body.results);
+          console.log(similarProducts)
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching similar products:', error);
+          setIsLoading(false);
+        });
+    }
+  }, [product]);
   const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0]['url']);
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
     let selectImage = e.currentTarget.children[0] as HTMLImageElement;
@@ -89,6 +118,7 @@ function DisplayProductInformation() {
     let tempImgSelUrl = selectImage.src;
     selectImage.setAttribute('src', tempImgCurUrl);
     setCurrentImg(tempImgSelUrl);
+   
   };
 
   const createImagesContainer = (images: SliderItemDataP[], startIndex: number) => {
@@ -104,7 +134,8 @@ function DisplayProductInformation() {
   const closeModal = () => setIsModalOpen(false);
   return (
     <div className="product-card__container">
-      {/* <h2>path to page: {location.pathname}</h2> */}
+            <BreadcrumbsComponent />
+
       <div className="product-card__block">
         <div className="product-image">
           <div className="product-image-main" onClick={openModal}>
@@ -208,6 +239,10 @@ function DisplayProductInformation() {
 
       <div className="similar-products__container">
         <h3 className="similar-products__title">You may also like</h3>
+        <div className="similar-products__content"> 
+        {createSimilarProducts(similarProducts)}
+        </div>
+       
       </div>
 
       {isModalOpen && (
