@@ -18,11 +18,13 @@
       border-radius: 5px;
 
       label {
-        width: 100%;
+        width: max-content;
         height: 100%;
         margin: 5px;
         cursor: pointer;
         display: inline-block;
+        position: relative;
+
         input {
           cursor: pointer;
           width: 18px;
@@ -30,6 +32,24 @@
           margin-left: 10px;
           position: relative;
           top: 3px;
+          visibility: hidden;
+        }
+
+        &::before {
+          content: ' ';
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 15px;
+          height: 15px;
+          border: 2px solid $onSecondary;
+          border-radius: 50%;
+        }
+      }
+
+      .radio-button--checked {
+        &::before {
+          border: 2px solid green;
         }
       }
 

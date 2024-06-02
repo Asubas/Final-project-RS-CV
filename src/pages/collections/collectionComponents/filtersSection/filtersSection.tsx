@@ -39,7 +39,7 @@ const Filters = () => {
 
   return (
     <>
-      {pathParts[2] === 'tea' || pathParts[2] === 'coffee' ? (
+      {pathParts[2] === 'tea' || pathParts[2] === 'coffee' || pathParts[2] === 'cocoa' ? (
         <section className="collection-page_content-filters">
           <SelectCountry onCountryChange={handleCountryChange} selectedCountry={''} />
           <SelectFlavour onFlavourChange={handleFlavourChange} selectedFlavour={''} />
