@@ -44,9 +44,7 @@ function SelectCountry({ selectedCountry, onCountryChange }: SelectCountryProps)
               name="country"
               id={element}
               value={element}
-              checked={selectedCountry === element}
               onChange={handleCountryChange}
-              // className={checkedCountry === element ? 'radio-button--checked' : ''}
             />
           </label>
         </li>

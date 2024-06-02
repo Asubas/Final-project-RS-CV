@@ -5,6 +5,7 @@ import { SelectFlavour } from './selectFlavour/selectFlavour';
 import MyButton from '../../../../components/button/button';
 import { useCallback, useContext } from 'react';
 import { ProductsPageContext } from '../../context';
+import { resetRadio } from './resetStylesForLabel';
 
 const Filters = () => {
   const { pathname } = useLocation();
@@ -18,7 +19,7 @@ const Filters = () => {
     handleFetch(1);
     setSelectedCountry('');
     setSelectedFlavour('');
-    // setResetFilters(false);
+    resetRadio();
   }, [setResetFilters, setCurrentPage, handleFetch, setSelectedFlavour, setSelectedCountry]);
 
   const resetCountry = () => {

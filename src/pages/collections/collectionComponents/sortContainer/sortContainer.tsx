@@ -2,10 +2,10 @@ import './sortContainer.scss';
 import MyButton from '../../../../components/button/button';
 import { useState, useContext, useCallback } from 'react';
 import { ProductsPageContext } from '../../context';
-import { fetchAllCategories } from '../../requestsToProducts/productList';
+// import { fetchAllCategories } from '../../requestsToProducts/productList';
 
 function SortContainer({ mobile }: { mobile: boolean }) {
-  fetchAllCategories();
+  // fetchAllCategories();
   const [open, setOpen] = useState(false);
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [priceDirection, setPriceDirection] = useState<'asc' | 'desc'>('asc');

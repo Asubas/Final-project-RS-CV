@@ -37,16 +37,17 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
       <li>Select Flavour</li>
       {arrSelectedProduct.map((element, index) => (
         <li key={index} className="filters-list__item">
-          <label htmlFor={element}>
+          <label
+            htmlFor={element}
+            className={checkedFlavour === element ? 'radio-button--checked' : ''}
+          >
             {element}
             <MyInput
               type="radio"
               name="flavour"
               id={element}
               value={element}
-              checked={selectedFlavour === element}
               onChange={handleFlavourChange}
-              className={checkedFlavour === 'Citrus' ? 'radio-button--checked' : ''}
             />
           </label>
         </li>
