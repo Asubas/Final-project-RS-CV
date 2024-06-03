@@ -3,11 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getProductById } from '../../lib/getProductInfo';
 
 const createSimilarProducts = (similarProducts: ProductProjection[]) => {
-  if(document.querySelector('.variant-active')){
+  if (document.querySelector('.variant-active')) {
     const activeProdPack = document.querySelector('.variant-active');
     activeProdPack?.classList.remove('variant-active');
     const firstProdPack = document.querySelector('.variant-1');
-   
+
     firstProdPack?.classList.add('variant-active');
   }
   const location = useLocation();

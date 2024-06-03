@@ -42,8 +42,7 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
-  
-   
+
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
   const productName = product.masterData.current.name['en-GB'];
@@ -57,24 +56,27 @@ function DisplayProductInformation() {
   const IDsimilarProducts2 = product.masterData.current.categories[1]['id'];
   const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
   const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount;
-  const productDiscontPrice50 = product.masterData.current.masterVariant.prices[0]?.discounted?.['value'].centAmount;
-  const productDiscontPriceFirstLoad = productDiscontPrice50 ?
-  (Number(productDiscontPrice50) / 100 === Math.trunc(Number(productDiscontPrice50) / 100)
-    ? `$ ${Number(productDiscontPrice50) / 100}.00`
-    : `$ ${(Number(productDiscontPrice50) / 100).toFixed(2)}`) : '';
+  const productDiscontPrice50 =
+    product.masterData.current.masterVariant.prices[0]?.discounted?.['value'].centAmount;
+  const productDiscontPriceFirstLoad = productDiscontPrice50
+    ? Number(productDiscontPrice50) / 100 === Math.trunc(Number(productDiscontPrice50) / 100)
+      ? `$ ${Number(productDiscontPrice50) / 100}.00`
+      : `$ ${(Number(productDiscontPrice50) / 100).toFixed(2)}`
+    : '';
 
-
-    if(productDiscontPriceFirstLoad !== ''){
-      priceField?.classList.add('price-cross-out');
-    } else {
-      if(priceField?.classList.contains('price-cross-out')){
-        priceField?.classList.remove('price-cross-out');
-      }
+  if (productDiscontPriceFirstLoad !== '') {
+    priceField?.classList.add('price-cross-out');
+  } else {
+    if (priceField?.classList.contains('price-cross-out')) {
+      priceField?.classList.remove('price-cross-out');
     }
+  }
 
-  const productDiscontPrice100 = product.masterData.current.variants[0].prices[0]?.discounted?.['value'].centAmount;
+  const productDiscontPrice100 =
+    product.masterData.current.variants[0].prices[0]?.discounted?.['value'].centAmount;
 
-  const productDiscontPrice170 = product.masterData.current.variants[1].prices[0]?.discounted?.['value'].centAmount;
+  const productDiscontPrice170 =
+    product.masterData.current.variants[1].prices[0]?.discounted?.['value'].centAmount;
 
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
   const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
@@ -86,27 +88,28 @@ function DisplayProductInformation() {
   const imagesSlider: SliderItemDataP[] = product.masterData.current.masterVariant.images;
 
   const productPriceArr = [productPrice50, productPrice100, productPrice170];
-  const productDiscontPrice = [productDiscontPrice50, productDiscontPrice100, productDiscontPrice170];
-  
+  const productDiscontPrice = [
+    productDiscontPrice50,
+    productDiscontPrice100,
+    productDiscontPrice170,
+  ];
+
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
     const prodPackParent = prodPack.parentNode?.childNodes;
-   
+
     const activeProdPack = document.querySelector('.variant-active');
-    activeProdPack?.classList.remove('variant-active'); 
+    activeProdPack?.classList.remove('variant-active');
     prodPack.classList.add('variant-active');
 
     let selectedPrice = 0;
     let selectedDiscontPrice = 0;
-    prodPackParent?.forEach((el, i) =>{
-
-      if((el as HTMLElement).classList.contains('variant-active')){
+    prodPackParent?.forEach((el, i) => {
+      if ((el as HTMLElement).classList.contains('variant-active')) {
         selectedPrice = productPriceArr[i];
         selectedDiscontPrice = productDiscontPrice[i];
-       }
-    }
-
-  );
+      }
+    });
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
@@ -116,36 +119,34 @@ function DisplayProductInformation() {
       priceField.innerText = `$ ${productPriceFinal}`;
     }
 
-    const productDiscontPriceFinal = selectedDiscontPrice ?
-      (Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
+    const productDiscontPriceFinal = selectedDiscontPrice
+      ? Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
         ? `$ ${Number(selectedDiscontPrice) / 100}.00`
-        : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`) : '';
+        : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`
+      : '';
 
-
-        if(productDiscontPriceFinal !== ''){
-
-          priceField.classList.add('price-cross-out');
-        } else {
-          if(priceField.classList.contains('price-cross-out')){
-            priceField.classList.remove('price-cross-out');
-          }
-        }
+    if (productDiscontPriceFinal !== '') {
+      priceField.classList.add('price-cross-out');
+    } else {
+      if (priceField.classList.contains('price-cross-out')) {
+        priceField.classList.remove('price-cross-out');
+      }
+    }
 
     if (priceDiscontField) {
       priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
     }
   };
 
-
   const [productInfo, setProductInfo] = useState(null);
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0]['url']);
- 
+
   useEffect(() => {
     if (product) {
       setProductInfo(product);
-      setCurrentImg(product.masterData.current.masterVariant.images[0]['url'])
+      setCurrentImg(product.masterData.current.masterVariant.images[0]['url']);
 
       getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
         .then((res) => {
@@ -204,12 +205,8 @@ function DisplayProductInformation() {
               <p>Flavor: {`${productFlavor}`}</p>
             </div>
           </div>
-          <p className="price">
-            {`$ ${productPriceFirstLoad}`}
-            </p>
-            <p className="price price-discount">
-            {` ${productDiscontPriceFirstLoad}`}
-            </p>
+          <p className="price">{`$ ${productPriceFirstLoad}`}</p>
+          <p className="price price-discount">{` ${productDiscontPriceFirstLoad}`}</p>
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
