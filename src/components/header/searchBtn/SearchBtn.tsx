@@ -75,7 +75,6 @@ function SearchBtn() {
         ) {
           pathCategories = 'cocoa';
         }
-        console.log(res.body.masterData);
         navigate(
           `/collection/${pathCategories}/${res.body?.masterData?.current?.variants?.[0]?.attributes?.[5]?.value}/${path}`,
           {
