@@ -3,6 +3,14 @@ export interface CountryField {
   className: string;
 }
 
+export interface AddressCust {
+  firstName: string;
+  lastName: string;
+  streetName: string;
+  postalCode: string;
+  city: string;
+  country: string;
+}
 export interface SelectCountryProps {
   selectedCountry: string | null;
   onCountryChange: (value: string) => void;

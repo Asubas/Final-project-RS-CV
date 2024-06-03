@@ -1,0 +1,70 @@
+@import '../../App.scss';
+
+.developerWrap {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  .developer:nth-child(2) {
+    flex-direction: row-reverse;
+  }
+}
+
+.developer {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+
+  &_photo {
+    width: 200px;
+    height: 200px;
+
+    &__img {
+      width: 200px;
+      height: 200px;
+      border-radius: 200px;
+    }
+  }
+
+  &_info {
+    padding: 15px;
+    max-width: 60%;
+
+    &__name,
+    &__location,
+    &__about {
+      padding: 3px;
+    }
+
+    &__name {
+      font-family: $fontPrimary;
+      color: $primary;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 143%;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      text-align: left;
+      border: none;
+      background-color: transparent;
+      transition: all 0.2s ease-in;
+      cursor: pointer;
+
+      &:hover {
+        color: $secondary;
+      }
+
+      &:disabled {
+        background-color: inherit;
+        color: $outline;
+        cursor: auto;
+        user-select: none;
+        pointer-events: none;
+      }
+    }
+
+    &__location {
+      font-size: 12px;
+    }
+  }
+}

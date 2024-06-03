@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
-import Profile from './pages/profile/profile';
+import Profile from './pages/profile/profilePage';
 import ProtectedProfile from './lib/protectedRoute';
 import SelectedCollection from './pages/collections/collectionMain';
 import { TeaPage } from './pages/collections/subCollections/teaPage';

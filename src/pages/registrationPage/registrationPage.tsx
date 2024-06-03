@@ -1,20 +1,21 @@
 import './registartionPage.scss';
 import '../accountPage/loginPage.scss';
-import 'react-toastify/dist/ReactToastify.css';
-import MyInput from '../../components/input/input';
+import { useForm } from 'react-hook-form';
 import MyButton from '../../components/button/button';
+import MyInput from '../../components/input/input';
+import validatePassword from '../accountPage/validatePassword';
 import SelectCountry from '../../components/selectCountry/selectCountry';
 import dateCalculation from '../../components/dateCalculation/dateCalculation';
-import registerCustomer from '../../lib/userRegistartionFlow';
-import validatePassword from '../accountPage/validatePassword';
-import AccordanceCountryToPostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
 import { Inputs } from '../../types/typeRegistrationPage';
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { loginRef } from '../../components/header/navBar/navBar';
 import { useNavigate } from 'react-router-dom';
+import { loginRef } from '../../components/header/navBar/navBar';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
+import validatePostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
+import registerUser from '../../lib/registerUser';
+
 function RegistrationPage() {
   const navigate = useNavigate();
   const {
@@ -22,22 +23,35 @@ function RegistrationPage() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const submitForm = async () => {
-    await registerCustomer()
-      .then((res) => {
-        if (res === null) {
-          toast.error(
-            'Registration error. Perhaps a user with this email already exists!',
-            errorRegister,
-          );
-          return;
-        } else if (res && res !== null) {
-          const emailUser = localStorage.getItem('email');
-          if (emailUser) localStorage.setItem('userId', emailUser);
-          navigate('/');
-          if (loginRef.current) loginRef.current.textContent = 'Log out';
-          toast.success('🔥 You have successfully registered and logged in!', successRegister);
-        }
+    if (!isValid) {
+      return;
+    }
+
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await registerUser();
+
+      if (res === null) {
+        toast.error(
+          'Registration error. Perhaps a user with this email already exists!',
+          errorRegister,
+        );
+        setIsSubmitting(false);
+        return;
+      } else if (res) {
+        const emailUser = localStorage.getItem('email');
+        if (emailUser) localStorage.setItem('userId', emailUser);
+        navigate('/');
+        if (loginRef.current) loginRef.current.textContent = 'Log out';
+        toast.success('🔥 You have successfully registered and logged in!', successRegister);
 
         const keyToKeep = 'userId';
         const keys = Object.keys(localStorage);
@@ -46,19 +60,27 @@ function RegistrationPage() {
             localStorage.removeItem(key);
           }
         });
-      })
-      .catch(() => {
-        toast.error(
-          'Registration error. Perhaps a user with this email already exists!',
-          errorRegister,
-        );
-      });
+      }
+    } catch (error) {
+      toast.error(
+        'Registration error. Perhaps a user with this email already exists!',
+        errorRegister,
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // const navigate = useNavigate();
   const navigateToLogin = () => navigate('/login');
+  const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
   const [isCheckedBilling, setIsCheckedBilling] = useState(false);
+  const [isCheckedSameAddress, setIsCheckedSameAddress] = useState(false);
+  const [isDisabledCityBilling, setIsDisabledCityBilling] = useState(false);
+  const [isDisabledStreetBilling, setIsDisabledStreetBilling] = useState(false);
+  const [isDisabledPostalCodeBilling, setIsDisabledPostalCodeBilling] = useState(false);
+
   const handleCheckboxShippingChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedShipping(event.target.checked);
     localStorage.setItem('setDefaultShippingAddress', String(event.target.checked));
@@ -68,6 +90,24 @@ function RegistrationPage() {
     setIsCheckedBilling(event.target.checked);
     localStorage.setItem('setDefaultBillingAddress', String(event.target.checked));
   };
+
+  const handleCheckboxSameAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckedSameAddress(event.target.checked);
+    localStorage.setItem('setSameAddress', String(event.target.checked));
+
+    if (event.target.checked === true) {
+      setIsDisabledCityBilling(true);
+      setIsDisabledStreetBilling(true);
+      setIsDisabledPostalCodeBilling(true);
+      setIsSecondSelectDisabled(true);
+    } else {
+      setIsDisabledCityBilling(false);
+      setIsDisabledStreetBilling(false);
+      setIsDisabledPostalCodeBilling(false);
+      setIsSecondSelectDisabled(false);
+    }
+  };
+
   return (
     <div className="registration-field">
       <form
@@ -163,7 +203,7 @@ function RegistrationPage() {
                   {...register('dateOfBirth', {
                     required: 'This field must be completed',
                   })}
-                  required={true}
+                  // required={true}
                   onChange={dateCalculation}
                   maxLength={10}
                 />
@@ -173,7 +213,7 @@ function RegistrationPage() {
             </div>
             <h3>Shipping Address</h3>
             <div className="registration-form_shipping-address-block">
-              <SelectCountry />
+              <SelectCountry isDisabled={false} />
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
@@ -221,7 +261,7 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeShipping', {
                     required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
+                    validate: validatePostalCode(localStorage.getItem('patternShipping') as string),
                   })}
                   style={{
                     border: errors.postalCodeShipping ? '1px solid red' : '',
@@ -232,42 +272,69 @@ function RegistrationPage() {
               </div>
             </div>
 
-            <label className="registration-form_defaultAddress-Label" htmlFor="remShippingAddress">
-              {' '}
-              Set as default shipping address
-              <MyInput
-                className="registration-form_defaultAddress-Input"
-                autoComplete="current-password"
-                name="shipping"
-                type="checkbox"
-                id="remShippingAddress"
-                checked={isCheckedShipping}
-                onChange={handleCheckboxShippingChange}
-              />
-            </label>
+            <div className="labels-block">
+              <label
+                className="registration-form_defaultAddress-Label"
+                htmlFor="remShippingAddress"
+              >
+                {' '}
+                Set as default shipping address
+                <MyInput
+                  className="registration-form_defaultAddress-Input"
+                  autoComplete="current-password"
+                  name="shipping"
+                  type="checkbox"
+                  id="remShippingAddress"
+                  checked={isCheckedShipping}
+                  onChange={handleCheckboxShippingChange}
+                />
+              </label>
+
+              <label className="registration-form_defaultAddress-Label" htmlFor="remSameAddress">
+                {' '}
+                Use as billing address
+                <MyInput
+                  className="registration-form_defaultAddress-Input"
+                  autoComplete="current-password"
+                  type="checkbox"
+                  name="sameAddress"
+                  id="remSameAddress"
+                  checked={isCheckedSameAddress}
+                  onChange={handleCheckboxSameAddressChange}
+                />
+              </label>
+            </div>
 
             <h3>Billing Address</h3>
             <div className="registration-form_billing-address-block">
-              <SelectCountry />
+              <SelectCountry isDisabled={isSecondSelectDisabled} />
               <div className="registration-form_city-input-container">
                 <MyInput
                   className="registration__input registration-form_city-input"
                   autoComplete="current-password"
                   type={'text'}
                   placeholder="City: "
-                  {...register('cityBilling', {
-                    required: 'This field must be completed',
-                    pattern: {
-                      value: /^[a-zA-Z]+$/,
-                      message:
-                        'Must contain at least one latin character and no special characters or numbers',
-                    },
-                  })}
+                  {...register(
+                    'cityBilling',
+                    isDisabledCityBilling
+                      ? {}
+                      : {
+                          required: 'This field must be completed',
+                          pattern: {
+                            value: /^[a-zA-Z]+$/,
+                            message:
+                              'Must contain at least one latin character and no special characters or numbers',
+                          },
+                        },
+                  )}
                   style={{
-                    border: errors.cityBilling ? '1px solid red' : '',
+                    border: !isDisabledCityBilling && errors.cityBilling ? '1px solid red' : '',
                   }}
+                  disabled={isDisabledCityBilling}
                 />
-                {errors.cityBilling && <span>{errors.cityBilling.message}</span>}
+                {!isDisabledCityBilling && errors.cityBilling && (
+                  <span>{errors.cityBilling.message}</span>
+                )}
               </div>
               <div className="registration-form_street-input-container">
                 <MyInput
@@ -283,10 +350,13 @@ function RegistrationPage() {
                     },
                   })}
                   style={{
-                    border: errors.streetBilling ? '1px solid red' : '',
+                    border: !isDisabledStreetBilling && errors.streetBilling ? '1px solid red' : '',
                   }}
+                  disabled={isDisabledStreetBilling}
                 />
-                {errors.streetBilling && <span>{errors.streetBilling.message}</span>}
+                {!isDisabledStreetBilling && errors.streetBilling && (
+                  <span>{errors.streetBilling.message}</span>
+                )}
               </div>
               <div className="registration-form_postal-code-input-container">
                 <MyInput
@@ -296,31 +366,39 @@ function RegistrationPage() {
                   placeholder="Postal code: "
                   {...register('postalCodeBilling', {
                     required: 'This field must be completed',
-                    validate: { AccordanceCountryToPostalCode },
+                    validate: validatePostalCode(localStorage.getItem('patternBilling') as string),
                   })}
                   style={{
-                    border: errors.postalCodeBilling ? '1px solid red' : '',
+                    border:
+                      !isDisabledPostalCodeBilling && errors.postalCodeBilling
+                        ? '1px solid red'
+                        : '',
                   }}
+                  disabled={isDisabledPostalCodeBilling}
                 />
                 <span></span>
-                {errors.postalCodeBilling && <span>{errors.postalCodeBilling.message}</span>}
+                {!isDisabledPostalCodeBilling && errors.postalCodeBilling && (
+                  <span>{errors.postalCodeBilling.message}</span>
+                )}
               </div>
             </div>
 
-            <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
-              {' '}
-              Set as default billing address
-              <MyInput
-                className="registration-form_defaultAddress-Input"
-                autoComplete="current-password"
-                type="checkbox"
-                name="billing"
-                id="remBillingAddress"
-                checked={isCheckedBilling}
-                onChange={handleCheckboxBillingChange}
-              />
-            </label>
-            <span className="error-message"></span>
+            <div className="labels-block">
+              <label className="registration-form_defaultAddress-Label" htmlFor="remBillingAddress">
+                {' '}
+                Set as default billing address
+                <MyInput
+                  className="registration-form_defaultAddress-Input"
+                  autoComplete="current-password"
+                  type="checkbox"
+                  name="billing"
+                  id="remBillingAddress"
+                  checked={isCheckedBilling}
+                  onChange={handleCheckboxBillingChange}
+                />
+              </label>
+            </div>
+
             <MyButton className="btn_white " type="submit" onClick={submitForm}>
               {' '}
               Sign in
