@@ -42,7 +42,7 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
-  console.log(product)
+  console.log(product);
 
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
@@ -63,7 +63,7 @@ function DisplayProductInformation() {
   const productFlavor = product.masterData.current.masterVariant.attributes[7].value;
   const productFullDescription = product.masterData.current.masterVariant.attributes[0].value;
   const imagesSlider: SliderItemDataP[] = product.masterData.current.masterVariant.images;
-  console.log(imagesSlider)
+  console.log(imagesSlider);
   const productPriceArr = [productPrice50, productPrice100, productPrice170];
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
@@ -106,7 +106,7 @@ function DisplayProductInformation() {
     }
   }, [product]);
   const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0]['url']);
-  console.log(currentImg)
+  console.log(currentImg);
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
     let selectImage = e.currentTarget.children[0] as HTMLImageElement;
     let tempImgCurUrl = currentImg;
