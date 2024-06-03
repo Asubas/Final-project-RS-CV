@@ -51,12 +51,19 @@ h3 {
       .price {
         font-weight: bold;
       }
+      .price-discount {
+        color: red;
+      }
+      .price-cross-out {
+        text-decoration: line-through;
+      }
       .information-about-the-origin-of-the-goods {
         max-width: 429px;
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+
         .information {
           display: flex;
           flex-direction: row;
@@ -350,6 +357,9 @@ h3 {
 
 @media (max-width: 405px) {
   .product-card__container {
+    .collection-page_breadcrumbLinks {
+      font-size: 12px;
+    }
     .product-card__block {
       .product-parameters {
         .product-quntity-and-add-to-bag__block {
