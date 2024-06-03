@@ -97,8 +97,8 @@ function SearchBtn() {
       </div>
       {isSearchVisible && (
         <div className="searchProductList">
-          {searchResults.map((product, index) => (
-            <div key={index}>
+          {searchResults.map((product) => (
+            <div key={product.id}>
               <p>{getProductName(product)}</p>
             </div>
           ))}

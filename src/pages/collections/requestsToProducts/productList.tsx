@@ -8,7 +8,7 @@ import {
   ClientBuilder,
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
-import { projectKey } from '../../../lib/authorization/projectImports';
+import { projectKey } from '../../../lib/anonymFlow';
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',
