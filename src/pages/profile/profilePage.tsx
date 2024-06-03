@@ -1,33 +1,51 @@
 import { useEffect, useState } from 'react';
-import './profile.scss';
-import { getUserById } from '../../lib/getUserById';
+import './profilePage.scss';
+import { client } from '../../lib/getUserById';
 import { useNavigate } from 'react-router-dom';
-import { User } from '../../interfaces/customer';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
-
+import ChangePasswordForm from './changePasswordForm';
+import { Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { projectKey } from '../../lib/anonymFlow';
 function Profile() {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User | null>(null);
-
+  let [user, setUser] = useState<Customer | null>(null);
   if (!localStorage.getItem('userId')) {
     navigate('/');
   }
-
+  const userId = localStorage.getItem('userId');
+  if (!userId) {
+    throw new Error('User ID is not available');
+  }
   useEffect(() => {
     const fetchUser = async () => {
-      const userData = await getUserById();
-      setUser(userData);
+      try {
+        const res = await createApiBuilderFromCtpClient(client)
+          .withProjectKey({ projectKey })
+          .customers()
+          .withId({ ID: userId })
+          .get()
+          .execute();
+        user = res.body;
+        setUser(user);
+      } catch (err) {
+        console.log(err);
+      }
     };
-
     fetchUser();
   }, []);
+  // }, 500);
+  // };
+  // },[]);
+
+  // fetchUser();
+  // }, []);
 
   if (!user) {
     return <LoadingSnippet />;
   }
 
-  const defaultBilAd = user.defaultBillingAddressId;
-  const defaultShipAd = user.defaultShippingAddressId;
+  const defaultBilAd = 'user.defaultBillingAddressId';
+  const defaultShipAd = 'user.defaultShippingAddressId';
 
   return (
     <>
@@ -51,6 +69,8 @@ function Profile() {
             <p className="personal_value">{user.dateOfBirth || 'no data :('}</p>
           </div>
         </div>
+        <button className="btn_blank">change password</button>
+        <ChangePasswordForm />
         <div className="addressesWrap">
           <h3 className="profileHead">addresses</h3>
           {user.addresses && user.addresses.length > 0 ? (
