@@ -17,24 +17,53 @@
   padding: 15px;
   border-bottom: 1px solid $backgroundVariant;
 
-  .personal {
+  @media (max-width: 450px) {
+    padding: 3px;
+  }
+
+  .personalForm {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
 
-    &_label {
-      width: 150px;
-      padding: 3px 6px;
-      text-transform: uppercase;
-    }
+    .personal {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-    &_value {
-      padding: 3px 6px;
+      &_label {
+        width: 150px;
+        padding: 3px 6px;
+        text-transform: uppercase;
+      }
+
+      &_value {
+        padding: 3px 6px;
+        max-width: 195px;
+
+        @media (max-width: 410px) {
+          width: 150px;
+        }
+
+        &:disabled {
+          border: 1px solid transparent;
+          background-color: transparent;
+        }
+      }
     }
   }
 }
 
+.btn_save {
+  width: 100%;
+}
+
 .addressesWrap {
   padding: 15px;
+
+  @media (max-width: 450px) {
+    padding: 3px;
+  }
 
   .address {
     margin: 10px auto;

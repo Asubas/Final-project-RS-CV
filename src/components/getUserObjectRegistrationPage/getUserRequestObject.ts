@@ -8,7 +8,7 @@ function getUserRequestObject() {
     lastName: localStorage.getItem('lastName') || '',
     streetName: localStorage.getItem('streetShipping') || '',
     postalCode: localStorage.getItem('postalCodeShipping') || '',
-    city: localStorage.getItem('countryShipping') || '',
+    city: localStorage.getItem('cityShipping') || '',
     country: localStorage.getItem('countryCodeShipping') || '',
   };
 
@@ -17,7 +17,7 @@ function getUserRequestObject() {
     lastName: localStorage.getItem('lastName') || '',
     streetName: localStorage.getItem('streetBilling') || '',
     postalCode: localStorage.getItem('postalCodeBilling') || '',
-    city: localStorage.getItem('countryBilling') || '',
+    city: localStorage.getItem('cityBilling') || '',
     country: localStorage.getItem('countryCodeBilling') || '',
   };
 
@@ -34,6 +34,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping],
       defaultShippingAddress: 0,
       defaultBillingAddress: 0,
@@ -48,6 +49,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping],
       defaultShippingAddress: 0,
     };
@@ -61,6 +63,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping],
     };
   } else if (
@@ -73,6 +76,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping, addressesBilling],
     };
   } else if (
@@ -85,6 +89,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping, addressesBilling],
       defaultShippingAddress: 0,
       defaultBillingAddress: 1,
@@ -99,6 +104,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping, addressesBilling],
       defaultShippingAddress: 0,
     };
@@ -112,6 +118,7 @@ function getUserRequestObject() {
       firstName: localStorage.getItem('firstName') || '',
       lastName: localStorage.getItem('lastName') || '',
       password: localStorage.getItem('password') || '',
+      dateOfBirth: localStorage.getItem('date') || '',
       addresses: [addressesShipping, addressesBilling],
       defaultBillingAddress: 1,
     };

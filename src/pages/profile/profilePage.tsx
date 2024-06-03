@@ -3,19 +3,35 @@ import './profilePage.scss';
 import { client } from '../../lib/getUserById';
 import { useNavigate } from 'react-router-dom';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
-import ChangePasswordForm from './changePasswordForm';
+// import ChangePasswordForm from './changePasswordForm';
 import { Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import { projectKey } from '../../lib/anonymFlow';
+import { useForm } from 'react-hook-form';
+
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
+  const [isEditable, setIsEditable] = useState({
+    firstName: false,
+    lastName: false,
+    dateOfBirth: false,
+  });
+
   if (!localStorage.getItem('userId')) {
     navigate('/');
   }
+
   const userId = localStorage.getItem('userId');
   if (!userId) {
     throw new Error('User ID is not available');
   }
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -27,18 +43,37 @@ function Profile() {
           .execute();
         user = res.body;
         setUser(user);
+
+        setValue('firstName', user.firstName || '');
+        setValue('lastName', user.lastName || '');
+        setValue('dateOfBirth', user.dateOfBirth || '');
       } catch (err) {
         console.log(err);
       }
     };
     fetchUser();
-  }, []);
+  }, [userId, setValue]);
   // }, 500);
   // };
   // },[]);
 
   // fetchUser();
   // }, []);
+
+  const toggleEdit = (field: keyof typeof isEditable) => {
+    setIsEditable((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
+
+  const onSubmit = (data: any) => {
+    // Logic to update user data on the server
+    console.log('Updated user data:', data);
+    // After updating on the server, set fields back to non-editable
+    setIsEditable({
+      firstName: false,
+      lastName: false,
+      dateOfBirth: false,
+    });
+  };
 
   if (!user) {
     return <LoadingSnippet />;
@@ -52,25 +87,49 @@ function Profile() {
       <section className="profileSection">
         <div className="personalWrap">
           <h3 className="profileHead">Personal information</h3>
-          <div className="personal">
-            <p className="personal_label">First name</p>
-            <p className="personal_value">{user.firstName || 'no data :('}</p>
-          </div>
-          <div className="personal">
-            <p className="personal_label">Last name</p>
-            <p className="personal_value">{user.lastName || 'no data :('}</p>
-          </div>
-          <div className="personal">
-            <p className="personal_label">e-mail</p>
-            <p className="personal_value">{user.email || 'no data :('}</p>
-          </div>
-          <div className="personal">
-            <p className="personal_label">Date of birth</p>
-            <p className="personal_value">{user.dateOfBirth || 'no data :('}</p>
-          </div>
+          <form className="personalForm" onSubmit={handleSubmit(onSubmit)}>
+            <div className="personal">
+              <p className="personal_label">First name</p>
+              <input
+                className="personal_value"
+                {...register('firstName')}
+                disabled={!isEditable.firstName}
+              />
+              <button type="button" onClick={() => toggleEdit('firstName')}>
+                {isEditable.firstName ? '✔️ ' : '🖊️'}
+              </button>
+            </div>
+            <div className="personal">
+              <p className="personal_label">Last name</p>
+              <input
+                className="personal_value"
+                {...register('lastName')}
+                disabled={!isEditable.lastName}
+              />
+              <button type="button" onClick={() => toggleEdit('lastName')}>
+                {isEditable.lastName ? '✔️ ' : '🖊️'}
+              </button>
+            </div>
+            <div className="personal">
+              <p className="personal_label">Date of birth</p>
+              <input
+                className="personal_value"
+                type="date"
+                {...register('dateOfBirth')}
+                disabled={!isEditable.dateOfBirth}
+              />
+              <button type="button" onClick={() => toggleEdit('dateOfBirth')}>
+                {isEditable.dateOfBirth ? '✔️ ' : '🖊️'}
+              </button>
+            </div>
+            {Object.values(isEditable).some((editable) => editable) && (
+              <button type="submit" className="btn_save btn_white">
+                Save Changes
+              </button>
+            )}
+          </form>
         </div>
-        <button className="btn_blank">change password</button>
-        <ChangePasswordForm />
+        {/* <ChangePasswordForm /> */}
         <div className="addressesWrap">
           <h3 className="profileHead">addresses</h3>
           {user.addresses && user.addresses.length > 0 ? (
