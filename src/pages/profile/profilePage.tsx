@@ -4,24 +4,24 @@ import { client } from '../../lib/getUserById';
 import { useNavigate } from 'react-router-dom';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
 // import ChangePasswordForm from './changePasswordForm';
-import { Customer, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import {
+  Customer,
+  createApiBuilderFromCtpClient,
+  CustomerUpdateAction,
+} from '@commercetools/platform-sdk';
 import { projectKey } from '../../lib/anonymFlow';
 import { useForm } from 'react-hook-form';
 
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, setValue, getValues } = useForm();
   const [isEditable, setIsEditable] = useState({
     firstName: false,
     lastName: false,
     dateOfBirth: false,
   });
+  const [changes, setChanges] = useState<CustomerUpdateAction[]>([]);
 
   if (!localStorage.getItem('userId')) {
     navigate('/');
@@ -64,15 +64,52 @@ function Profile() {
     setIsEditable((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  const onSubmit = (data: any) => {
-    // Logic to update user data on the server
-    console.log('Updated user data:', data);
-    // After updating on the server, set fields back to non-editable
-    setIsEditable({
-      firstName: false,
-      lastName: false,
-      dateOfBirth: false,
-    });
+  function getCustomerUpdateAction(field: string, value: any): CustomerUpdateAction | null {
+    switch (field) {
+      case 'firstName':
+        return { action: 'setFirstName', firstName: value };
+      case 'lastName':
+        return { action: 'setLastName', lastName: value };
+      case 'dateOfBirth':
+        return { action: 'setDateOfBirth', dateOfBirth: value };
+      default:
+        return null;
+    }
+  }
+
+  const onChange = (field: string, value: any) => {
+    const updateAction = getCustomerUpdateAction(field, value);
+    if (updateAction) {
+      setChanges((prev) => {
+        const existingIndex = prev.findIndex((action) => action.action === updateAction.action);
+        if (existingIndex >= 0) {
+          const updatedActions = [...prev];
+          updatedActions[existingIndex] = updateAction;
+          return updatedActions;
+        } else {
+          return [...prev, updateAction];
+        }
+      });
+    }
+  };
+
+  const onSubmit = async () => {
+    try {
+      await createApiBuilderFromCtpClient(client)
+        .withProjectKey({ projectKey })
+        .customers()
+        .withId({ ID: userId })
+        .post({
+          body: {
+            version: user?.version ?? 0,
+            actions: changes,
+          },
+        })
+        .execute();
+      console.log('User updated successfully');
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
   };
 
   if (!user) {
@@ -94,6 +131,7 @@ function Profile() {
                 className="personal_value"
                 {...register('firstName')}
                 disabled={!isEditable.firstName}
+                onChange={(e) => onChange('firstName', e.target.value)}
               />
               <button type="button" onClick={() => toggleEdit('firstName')}>
                 {isEditable.firstName ? '✔️ ' : '🖊️'}
@@ -105,6 +143,7 @@ function Profile() {
                 className="personal_value"
                 {...register('lastName')}
                 disabled={!isEditable.lastName}
+                onChange={(e) => onChange('lastName', e.target.value)}
               />
               <button type="button" onClick={() => toggleEdit('lastName')}>
                 {isEditable.lastName ? '✔️ ' : '🖊️'}
@@ -117,6 +156,7 @@ function Profile() {
                 type="date"
                 {...register('dateOfBirth')}
                 disabled={!isEditable.dateOfBirth}
+                onChange={(e) => onChange('dateOfBirth', e.target.value)}
               />
               <button type="button" onClick={() => toggleEdit('dateOfBirth')}>
                 {isEditable.dateOfBirth ? '✔️ ' : '🖊️'}
