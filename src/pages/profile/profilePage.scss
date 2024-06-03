@@ -24,7 +24,7 @@
   .personalForm {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 25px;
 
     .personal {
       display: flex;
@@ -37,17 +37,26 @@
         text-transform: uppercase;
       }
 
-      &_value {
-        padding: 3px 6px;
-        max-width: 195px;
+      .personal_cont {
+        position: relative;
 
-        @media (max-width: 410px) {
-          width: 150px;
+        .personal_value {
+          padding: 3px 6px;
+          max-width: 195px;
+
+          @media (max-width: 410px) {
+            width: 150px;
+          }
+
+          &:disabled {
+            border: 1px solid transparent;
+            background-color: transparent;
+          }
         }
 
-        &:disabled {
-          border: 1px solid transparent;
-          background-color: transparent;
+        .input_error_message {
+          position: absolute;
+          font-size: 10px;
         }
       }
     }

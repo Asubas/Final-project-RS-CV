@@ -15,7 +15,12 @@ import { useForm } from 'react-hook-form';
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
-  const { register, handleSubmit, setValue } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isValid },
+  } = useForm();
   const [isEditable, setIsEditable] = useState({
     firstName: false,
     lastName: false,
@@ -94,36 +99,53 @@ function Profile() {
     }
   };
 
+  // Функция для вычисления возраста
+  const calculateAge = (birthDate: string) => {
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDateObj.getDate())
+    ) {
+      age--;
+    }
+    return age;
+  };
+
   // отправка изменений
   // попутно мы обновляем user для доступа текущей версии
   const onSubmit = async () => {
     if (!user) return;
 
-    try {
-      const res = await createApiBuilderFromCtpClient(client)
-        .withProjectKey({ projectKey })
-        .customers()
-        .withId({ ID: userId })
-        .post({
-          body: {
-            version: user?.version ?? 0,
-            actions: changes,
-          },
-        })
-        .execute();
+    if (isValid) {
+      try {
+        const res = await createApiBuilderFromCtpClient(client)
+          .withProjectKey({ projectKey })
+          .customers()
+          .withId({ ID: userId })
+          .post({
+            body: {
+              version: user?.version ?? 0,
+              actions: changes,
+            },
+          })
+          .execute();
 
-      const updatedUser = res.body;
-      setUser(updatedUser); // обновление
-      setChanges([]);
-      setIsEditable({
-        firstName: false,
-        lastName: false,
-        dateOfBirth: false,
-        email: false,
-      });
-      console.log('User updated successfully');
-    } catch (error) {
-      console.error('Error updating user:', error);
+        const updatedUser = res.body;
+        setUser(updatedUser); // обновление
+        setChanges([]);
+        setIsEditable({
+          firstName: false,
+          lastName: false,
+          dateOfBirth: false,
+          email: false,
+        });
+        console.log('User updated successfully');
+      } catch (error) {
+        console.error('Error updating user:', error);
+      }
     }
   };
 
@@ -142,49 +164,93 @@ function Profile() {
           <form className="personalForm" onSubmit={handleSubmit(onSubmit)}>
             <div className="personal">
               <p className="personal_label">First name</p>
-              <input
-                className="personal_value"
-                {...register('firstName')}
-                disabled={!isEditable.firstName}
-                onChange={(e) => onChange('firstName', e.target.value)}
-              />
+              <div className="personal_cont">
+                <input
+                  className="personal_value"
+                  {...register('firstName', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message: 'Invalid format. Please write in Latin letters',
+                    },
+                  })}
+                  disabled={!isEditable.firstName}
+                  onChange={(e) => onChange('firstName', e.target.value)}
+                />
+                {errors.firstName && (
+                  <p className="input_error_message">{errors.firstName.message as string}</p>
+                )}
+              </div>
               <button type="button" onClick={() => toggleEdit('firstName')}>
                 {isEditable.firstName ? '✔️ ' : '🖊️'}
               </button>
             </div>
             <div className="personal">
               <p className="personal_label">Last name</p>
-              <input
-                className="personal_value"
-                {...register('lastName')}
-                disabled={!isEditable.lastName}
-                onChange={(e) => onChange('lastName', e.target.value)}
-              />
+              <div className="personal_cont">
+                <input
+                  className="personal_value"
+                  {...register('lastName', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /^[a-zA-Z]+$/,
+                      message: 'Invalid format. Please write in Latin letters',
+                    },
+                  })}
+                  disabled={!isEditable.lastName}
+                  onChange={(e) => onChange('lastName', e.target.value)}
+                />
+                {errors.lastName && (
+                  <p className="input_error_message">{errors.lastName.message as string}</p>
+                )}
+              </div>
               <button type="button" onClick={() => toggleEdit('lastName')}>
                 {isEditable.lastName ? '✔️ ' : '🖊️'}
               </button>
             </div>
             <div className="personal">
               <p className="personal_label">email</p>
-              <input
-                className="personal_value"
-                {...register('email')}
-                disabled={!isEditable.email}
-                onChange={(e) => onChange('email', e.target.value)}
-              />
+              <div className="personal_cont">
+                <input
+                  className="personal_value"
+                  {...register('email', {
+                    required: 'This field must be completed',
+                    pattern: {
+                      value: /^\S+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: 'Please write an email in the format user@example.com/ru',
+                    },
+                  })}
+                  disabled={!isEditable.email}
+                  onChange={(e) => onChange('email', e.target.value)}
+                />
+                {errors.email && (
+                  <p className="input_error_message">{errors.email.message as string}</p>
+                )}
+              </div>
               <button type="button" onClick={() => toggleEdit('email')}>
                 {isEditable.email ? '✔️ ' : '🖊️'}
               </button>
             </div>
             <div className="personal">
               <p className="personal_label">Date of birth</p>
-              <input
-                className="personal_value"
-                type="date"
-                {...register('dateOfBirth')}
-                disabled={!isEditable.dateOfBirth}
-                onChange={(e) => onChange('dateOfBirth', e.target.value)}
-              />
+              <div className="personal_cont">
+                <input
+                  className="personal_value"
+                  type="date"
+                  {...register('dateOfBirth', {
+                    required: 'This field must be completed',
+                    validate: (value) => {
+                      const age = calculateAge(value);
+                      return age >= 16 || 'You must be at least 16 years old';
+                    },
+                  })}
+                  disabled={!isEditable.dateOfBirth}
+                  onChange={(e) => onChange('dateOfBirth', e.target.value)}
+                />
+                {errors.dateOfBirth && (
+                  <p className="input_error_message">{errors.dateOfBirth.message as string}</p>
+                )}
+              </div>
               <button type="button" onClick={() => toggleEdit('dateOfBirth')}>
                 {isEditable.dateOfBirth ? '✔️ ' : '🖊️'}
               </button>
