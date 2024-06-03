@@ -46,9 +46,6 @@ function dateCalculation() {
   } else {
     localStorage.removeItem('date');
   }
-
-  const tt = localStorage.getItem('date');
-  console.log(tt);
 }
 
 export default dateCalculation;

@@ -8,7 +8,6 @@ import { IContentProps } from '../../../interfaces/contentProps';
 import { BreadcrumbsComponent } from './breadcrumbLinks/breadBackForwComp';
 
 const showFilter = () => {
-  console.log('тут будет выпадать поле c фильтрами и чекбоксами');
   return;
 };
 

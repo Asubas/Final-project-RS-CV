@@ -27,7 +27,6 @@ function AccountPage() {
 
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     const { login, password } = data;
     if (isValid) {
       const loggedUser = await apiRoot()

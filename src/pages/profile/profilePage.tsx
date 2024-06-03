@@ -99,7 +99,7 @@ function Profile() {
     }
   };
 
-  // Функция для вычисления возраста
+  // проверка возраста
   const calculateAge = (birthDate: string) => {
     const today = new Date();
     const birthDateObj = new Date(birthDate);
@@ -142,7 +142,6 @@ function Profile() {
           dateOfBirth: false,
           email: false,
         });
-        console.log('User updated successfully');
       } catch (error) {
         console.error('Error updating user:', error);
       }

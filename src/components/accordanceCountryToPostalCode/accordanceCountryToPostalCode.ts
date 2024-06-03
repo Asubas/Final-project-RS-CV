@@ -5,10 +5,8 @@ import { useCallback, useState } from 'react';
 import { countries } from '../../constants/constantsRegistrationPage';
 
 const validatePostalCode = (countryCode: string) => {
-  //  console.log(countryCode)
   return (postalCode: string) => {
     const country = countries.find((country) => country.pattern === countryCode);
-    // console.log(country)
     if (!country) {
       return 'Invalid country code';
     }
