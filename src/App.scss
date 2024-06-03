@@ -245,18 +245,18 @@ $hSlide: 13px;
   position: relative;
 }
 
-.toggler-wrapper input[type='checkbox'] {
+.toggler-wrapper input[type='radio'] {
   display: none;
 }
 
 .toggler-wrapper .toggler-slider {
   position: absolute;
   border-radius: 100px;
-  border: 1px solid $primary;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  border: 1px solid $onSecondary;
+  top: 3px;
+  left: 110%;
+  height: 14px;
+  width: 30px;
   -webkit-transition: all 300ms ease;
   transition: all 300ms ease;
 }
@@ -267,24 +267,24 @@ $hSlide: 13px;
   transition: all 300ms ease;
 }
 //----
-.toggler-wrapper.style-1 input[type='checkbox']:checked + .toggler-slider .toggler-knob {
-  left: calc(100% - 6px - 3px);
+.radio-button--checked input[type='radio']:checked + .toggler-slider .toggler-knob {
+  left: calc(100% - 6px - 6px);
 }
 
-.toggler-wrapper input[type='checkbox']:disabled + .toggler-slider {
+.toggler-wrapper input[type='radio']:disabled + .toggler-slider {
   border: 1px solid $outline;
 }
 
 .toggler-wrapper.style-1 .toggler-knob {
-  width: calc($hSlide - 6px);
-  height: calc($hSlide - 6px);
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   left: 2px;
-  top: 2px;
+  top: 1px;
   background-color: $primary;
 }
 
-.toggler-wrapper input[type='checkbox']:disabled + .toggler-slider .toggler-knob {
+.toggler-wrapper input[type='radio']:disabled + .toggler-slider .toggler-knob {
   background-color: $outline;
 }
 

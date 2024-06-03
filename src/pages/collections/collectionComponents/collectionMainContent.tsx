@@ -1,6 +1,6 @@
 import './collectionMainContent.scss';
 import { useEffect, useState } from 'react';
-import Filters from './filtersSection/filtersSection';
+import { Filters } from './filtersSection/filtersSection';
 import { PaginationContainer } from './pagination/pagination';
 import Products from './productsSection/productsSection';
 import MyButton from '../../../components/button/button';

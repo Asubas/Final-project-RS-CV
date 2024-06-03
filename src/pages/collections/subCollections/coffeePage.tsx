@@ -22,7 +22,7 @@ function CoffeePage() {
         const urlKey = (coffeeUrl as TeaUrlType)[Object.keys(coffeeUrl as TeaUrlType)[index]];
         return (
           <div
-            className={category}
+            className={`${category} coffee`}
             key={`${index}-${urlKey}`}
             onClick={() => handleClick(urlKey)}
             style={{
