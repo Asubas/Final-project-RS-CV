@@ -4,8 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
-import { getProductById } from '../../lib/getProductInfo';
-import { getProductList } from '../collections/requestsToProducts/productList';
 import getSimilarProducts from './getSimilarProducts';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import createSimilarProducts from './createSimilarProducts';
@@ -30,7 +28,7 @@ function DisplayProductInformation() {
       items: 1,
     },
   };
- 
+
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -44,8 +42,7 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
-  console.log(product);
-  
+
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
   const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
@@ -73,7 +70,6 @@ function DisplayProductInformation() {
     const activeProdPack = document.querySelector('.variant-active');
     activeProdPack?.classList.remove('variant-active');
     prodPack.classList.add('variant-active');
-    console.log(prodPack);
     let selectedPrice = 0;
     prodPackParent?.forEach((el, i) =>
       (el as HTMLElement).classList.contains('variant-active')
@@ -89,20 +85,16 @@ function DisplayProductInformation() {
       priceField.innerText = `$ ${productPriceFinal}`;
     }
   };
-  const [productInfo, setProductInfo] = useState(null); // Хранит информацию о текущем продукте
-  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]); // Хранит похожие продукты
-  const [isLoading, setIsLoading] = useState(true); // Флаг для отслеживания загрузки данных
+  const [productInfo, setProductInfo] = useState(null);
+  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     if (product) {
       setProductInfo(product);
 
-      // const IDsimilarProducts1 = product.masterData.current.categories[0].id;
-      // const IDsimilarProducts2 = product.masterData.current.categories[1].id;
-
       getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
         .then((res) => {
           setSimilarProducts(res.body.results);
-          console.log(similarProducts)
           setIsLoading(false);
         })
         .catch((error) => {
@@ -118,7 +110,6 @@ function DisplayProductInformation() {
     let tempImgSelUrl = selectImage.src;
     selectImage.setAttribute('src', tempImgCurUrl);
     setCurrentImg(tempImgSelUrl);
-   
   };
 
   const createImagesContainer = (images: SliderItemDataP[], startIndex: number) => {
@@ -134,7 +125,7 @@ function DisplayProductInformation() {
   const closeModal = () => setIsModalOpen(false);
   return (
     <div className="product-card__container">
-            <BreadcrumbsComponent />
+      <BreadcrumbsComponent />
 
       <div className="product-card__block">
         <div className="product-image">
@@ -239,10 +230,7 @@ function DisplayProductInformation() {
 
       <div className="similar-products__container">
         <h3 className="similar-products__title">You may also like</h3>
-        <div className="similar-products__content"> 
-        {createSimilarProducts(similarProducts)}
-        </div>
-       
+        <div className="similar-products__content">{createSimilarProducts(similarProducts)}</div>
       </div>
 
       {isModalOpen && (

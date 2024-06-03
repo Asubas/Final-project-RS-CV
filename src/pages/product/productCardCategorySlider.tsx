@@ -7,7 +7,6 @@ export interface SliderItemDataP {
 }
 
 function categoryP(imagesSlider: SliderItemDataP[]) {
-  console.log(imagesSlider);
   if (!imagesSlider || imagesSlider.length === 0) {
     return null;
   }
