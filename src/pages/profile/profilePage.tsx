@@ -15,11 +15,12 @@ import { useForm } from 'react-hook-form';
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
-  const { register, handleSubmit, setValue, getValues } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const [isEditable, setIsEditable] = useState({
     firstName: false,
     lastName: false,
     dateOfBirth: false,
+    email: false,
   });
   const [changes, setChanges] = useState<CustomerUpdateAction[]>([]);
 
@@ -48,6 +49,7 @@ function Profile() {
         setValue('firstName', user.firstName || '');
         setValue('lastName', user.lastName || '');
         setValue('dateOfBirth', user.dateOfBirth || '');
+        setValue('email', user.email || '');
       } catch (err) {
         console.log(err);
       }
@@ -68,6 +70,8 @@ function Profile() {
         return { action: 'setLastName', lastName: value };
       case 'dateOfBirth':
         return { action: 'setDateOfBirth', dateOfBirth: value };
+      case 'email':
+        return { action: 'changeEmail', email: value };
       default:
         return null;
     }
@@ -115,6 +119,7 @@ function Profile() {
         firstName: false,
         lastName: false,
         dateOfBirth: false,
+        email: false,
       });
       console.log('User updated successfully');
     } catch (error) {
@@ -157,6 +162,18 @@ function Profile() {
               />
               <button type="button" onClick={() => toggleEdit('lastName')}>
                 {isEditable.lastName ? '✔️ ' : '🖊️'}
+              </button>
+            </div>
+            <div className="personal">
+              <p className="personal_label">email</p>
+              <input
+                className="personal_value"
+                {...register('email')}
+                disabled={!isEditable.email}
+                onChange={(e) => onChange('email', e.target.value)}
+              />
+              <button type="button" onClick={() => toggleEdit('email')}>
+                {isEditable.email ? '✔️ ' : '🖊️'}
               </button>
             </div>
             <div className="personal">
