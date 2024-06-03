@@ -50,6 +50,7 @@ export const countries: InewValue[] = [
 export const customStyles: StylesConfig<InewValue> = {
   container: (provided) => ({
     ...provided,
+
     width: 230,
     '@media (max-width: 620px)': {
       ...provided,
@@ -73,7 +74,10 @@ export const customStyles: StylesConfig<InewValue> = {
     borderRadius: 0,
     boxShadow: state.isFocused ? 'none' : 'none',
     border: '1px solid rgb(118, 118, 118)',
-    cursor: 'text',
+    backgroundColor: state.isDisabled ? '#f0f0f0' : '#fff',
+    borderColor: state.isDisabled ? '#ccc' : '#007bff',
+    cursor: state.isDisabled ? 'default' : 'text',
+    opacity: state.isDisabled ? 0.5 : 1,
     boxSizing: 'border-box',
     '&:hover': {
       border: '1px solid rgb(118, 118, 118)',
