@@ -32,6 +32,7 @@ function Profile() {
     throw new Error('User ID is not available');
   }
 
+  // получение customer для рендера
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -53,18 +54,13 @@ function Profile() {
     };
     fetchUser();
   }, [userId, setValue]);
-  // }, 500);
-  // };
-  // },[]);
-
-  // fetchUser();
-  // }, []);
 
   const toggleEdit = (field: keyof typeof isEditable) => {
     setIsEditable((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
-  function getCustomerUpdateAction(field: string, value: any): CustomerUpdateAction | null {
+  // проверка полей изменений для объекта с изменениями
+  function getCustomerUpdateAction(field: string, value: string): CustomerUpdateAction | null {
     switch (field) {
       case 'firstName':
         return { action: 'setFirstName', firstName: value };
@@ -77,7 +73,8 @@ function Profile() {
     }
   }
 
-  const onChange = (field: string, value: any) => {
+  // собираем объект изменений для отправки
+  const onChange = (field: string, value: string) => {
     const updateAction = getCustomerUpdateAction(field, value);
     if (updateAction) {
       setChanges((prev) => {
@@ -93,9 +90,13 @@ function Profile() {
     }
   };
 
+  // отправка изменений
+  // попутно мы обновляем user для доступа текущей версии
   const onSubmit = async () => {
+    if (!user) return;
+
     try {
-      await createApiBuilderFromCtpClient(client)
+      const res = await createApiBuilderFromCtpClient(client)
         .withProjectKey({ projectKey })
         .customers()
         .withId({ ID: userId })
@@ -106,6 +107,15 @@ function Profile() {
           },
         })
         .execute();
+
+      const updatedUser = res.body;
+      setUser(updatedUser); // обновление
+      setChanges([]);
+      setIsEditable({
+        firstName: false,
+        lastName: false,
+        dateOfBirth: false,
+      });
       console.log('User updated successfully');
     } catch (error) {
       console.error('Error updating user:', error);
