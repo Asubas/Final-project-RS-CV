@@ -33,20 +33,28 @@ const ctpClient = new ClientBuilder()
   .build();
 
 const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
-
-// const getProductListQueryArgs = (count: number = 0, categoryID: string = '') => {
-//   return {
-//     limit: 9,
-//     offset: count,
-//     filter: `categories.id:"${categoryID}"`,
-//   };
-// };
-
 const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
-  categoryID: string,
+  categoryID: string | string[],
+  sortPriceDesc: string = '',
+  country: string = '',
+  flavour: string = '',
+  reset: boolean = false,
+  valueText: string = '',
+  fuzzySelected: boolean = false,
 ): Promise<ProductProjectionPagedQueryResponse> => {
+  const sort = [sortPriceDesc];
+  let filters = [`categories.id:"${categoryID}"`];
+  if (sortPriceDesc === 'price desc') sort.push('id desc');
+  if (!reset) {
+    if (country) filters.push(`variants.attributes.origin:"${country}"`);
+    if (flavour) filters.push(`variants.attributes.flavor:"${flavour.toLocaleLowerCase()}"`);
+    if (valueText) {
+      fuzzySelected = true;
+      filters = [''];
+    }
+  }
   return request
     .productProjections()
     .search()
@@ -54,7 +62,10 @@ const getProductList = async (
       queryArgs: {
         limit: limitAtr,
         offset: offsetAtr,
-        filter: `categories.id:"${categoryID}"`,
+        filter: filters,
+        sort: sort,
+        'text.en-GB': valueText,
+        fuzzy: fuzzySelected,
       },
     })
     .execute()

@@ -22,7 +22,7 @@ function CocoaPage() {
         const urlKey = (cocoaUrl as TeaUrlType)[Object.keys(cocoaUrl as TeaUrlType)[index]];
         return (
           <div
-            className={category}
+            className={`${category} cocoa`}
             key={`${index}-${urlKey}`}
             onClick={() => handleClick(urlKey)}
             style={{

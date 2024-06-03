@@ -11,3 +11,12 @@ export interface AddressCust {
   city: string;
   country: string;
 }
+export interface SelectCountryProps {
+  selectedCountry: string | null;
+  onCountryChange: (value: string) => void;
+}
+
+export interface SelectFlavourProps {
+  selectedFlavour: string | null;
+  onFlavourChange: (value: string) => void;
+}

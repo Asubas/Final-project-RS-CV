@@ -4,14 +4,25 @@ import { createContext } from 'react';
 export type TState = {
   count: number;
   limit: number;
-  offset: number;
+  offset?: number;
   results: ProductProjection[];
   total?: number;
+  sort?: string;
+  currentPage?: number;
 };
 
 type ProductContentType = {
+  sortOption: string;
+  selectedCountry: string;
+  selectedFlavour: string;
+  resetFilters: boolean;
   state: TState;
   handleFetch: (page: number) => void;
+  setSortOption: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentPage: (page: number) => void;
+  setSelectedCountry: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedFlavour: React.Dispatch<React.SetStateAction<string>>;
+  setResetFilters: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const productsPageContextDefaultValue: ProductContentType = {
@@ -22,7 +33,16 @@ export const productsPageContextDefaultValue: ProductContentType = {
     total: 0,
     offset: 0,
   },
+  setSortOption: () => {},
   handleFetch: () => {},
+  sortOption: '',
+  setSelectedCountry: () => {},
+  setSelectedFlavour: () => {},
+  setCurrentPage: () => {},
+  selectedCountry: '',
+  selectedFlavour: '',
+  setResetFilters: () => {},
+  resetFilters: false,
 };
 
 export const ProductsPageContext = createContext<ProductContentType>(

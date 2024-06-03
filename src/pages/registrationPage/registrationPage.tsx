@@ -71,6 +71,7 @@ function RegistrationPage() {
     }
   };
 
+  // const navigate = useNavigate();
   const navigateToLogin = () => navigate('/login');
   const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
