@@ -9,6 +9,7 @@ import { coffeeUrl } from '../../constants/coffeeCollections';
 import { cocoaUrl } from '../../constants/cocaCollections';
 function SelectedCollection() {
   const { pathname } = useLocation();
+  const [sortOption, setSortOption] = useState<string>(productsPageContextDefaultValue.sortOption);
   const pathParts = pathname.split('/');
   const collectionTypeUrl: string = pathParts[pathParts.length - 1] || '';
   let selectorName = '';
@@ -32,9 +33,10 @@ function SelectedCollection() {
 
   const handleFetch = useCallback(
     (offset: number) => {
-      getProductList(9, offset, collectionType).then((res) => setState(res));
+      if (sortOption === 'price desc') offset = 0;
+      getProductList(9, offset, collectionType, sortOption).then((res) => setState(res));
     },
-    [collectionType],
+    [collectionType, sortOption],
   );
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function SelectedCollection() {
 
   const currentCollectionType = collectionType;
   return (
-    <ProductsPageContext.Provider value={{ handleFetch, state }}>
+    <ProductsPageContext.Provider value={{ handleFetch, state, sortOption, setSortOption }}>
       <div className={`collection-page collection-page_top-img ${selectorName}`}></div>
       <MainContent collectionType={currentCollectionType} />
     </ProductsPageContext.Provider>
