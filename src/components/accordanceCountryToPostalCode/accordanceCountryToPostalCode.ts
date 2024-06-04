@@ -1,12 +1,8 @@
-import { PropsValue, SingleValue } from 'react-select';
-import { cont } from '../selectCountry/selectCountry';
-import { InewValue } from '../../types/typeRegistrationPage';
-import { useCallback, useState } from 'react';
 import { countries } from '../../constants/constantsRegistrationPage';
 
 const validatePostalCode = (countryCode: string) => {
   return (postalCode: string) => {
-    const country = countries.find((country) => country.pattern === countryCode);
+    const country = countries.find((countryF) => countryF.pattern === countryCode);
     if (!country) {
       return 'Invalid country code';
     }

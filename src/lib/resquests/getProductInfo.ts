@@ -1,6 +1,6 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
-import { projectKey } from './anonymFlow';
 import { ApiRoot, createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { projectKey } from '../exports/exportsContants';
 
 async function getProductById(id: string) {
   const authUrl = 'https://auth.europe-west1.gcp.commercetools.com';

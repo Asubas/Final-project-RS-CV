@@ -8,6 +8,14 @@ import getSimilarProducts from './getSimilarProducts';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import createSimilarProducts from './createSimilarProducts';
 import { BreadcrumbsComponent } from '../collections/collectionComponents/breadcrumbLinks/breadBackForwComp';
+import iconEco from '../../assets/svg/icon-eco.svg';
+import size50 from '../../assets/svg/size-50.svg';
+import size100 from '../../assets/svg/size-100.svg';
+import size170 from '../../assets/svg/size-170.svg';
+import iconKettle from '../../assets/svg/icon-kettle.svg';
+import iconWaterVoc from '../../assets/svg/icon-water_voc.svg';
+import iconAlarm from '../../assets/svg/icon-alarm.svg';
+import iconLanguage from '../../assets/svg/icon-language.svg';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -47,17 +55,17 @@ function DisplayProductInformation() {
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
   const productName = product.masterData.current.name['en-GB'];
   const productDescription = product.masterData.current.description?.['en-GB'];
-  const productPrice50 = product.masterData.current.masterVariant.prices[0]?.['value'].centAmount;
+  const productPrice50 = product.masterData.current.masterVariant.prices[0]?.value.centAmount;
   const productPriceFirstLoad =
     Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
       ? `${Number(productPrice50) / 100}.00`
       : `${(Number(productPrice50) / 100).toFixed(1)}0`;
-  const IDsimilarProducts1 = product.masterData.current.categories[0]['id'];
-  const IDsimilarProducts2 = product.masterData.current.categories[1]['id'];
-  const productPrice100 = product.masterData.current.variants[0].prices[0]?.['value'].centAmount;
-  const productPrice170 = product.masterData.current.variants[1].prices[0]?.['value'].centAmount;
+  const IDsimilarProducts1 = product.masterData.current.categories[0].id;
+  const IDsimilarProducts2 = product.masterData.current.categories[1].id;
+  const productPrice100 = product.masterData.current.variants[0].prices[0]?.value.centAmount;
+  const productPrice170 = product.masterData.current.variants[1].prices[0]?.value.centAmount;
   const productDiscontPrice50 =
-    product.masterData.current.masterVariant.prices[0]?.discounted?.['value'].centAmount;
+    product.masterData.current.masterVariant.prices[0]?.discounted?.value.centAmount;
   const productDiscontPriceFirstLoad = productDiscontPrice50
     ? Number(productDiscontPrice50) / 100 === Math.trunc(Number(productDiscontPrice50) / 100)
       ? `$ ${Number(productDiscontPrice50) / 100}.00`
@@ -73,10 +81,10 @@ function DisplayProductInformation() {
   }
 
   const productDiscontPrice100 =
-    product.masterData.current.variants[0].prices[0]?.discounted?.['value'].centAmount;
+    product.masterData.current.variants[0].prices[0]?.discounted?.value.centAmount;
 
   const productDiscontPrice170 =
-    product.masterData.current.variants[1].prices[0]?.discounted?.['value'].centAmount;
+    product.masterData.current.variants[1].prices[0]?.discounted?.value.centAmount;
 
   const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
   const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
@@ -138,15 +146,15 @@ function DisplayProductInformation() {
     }
   };
 
-  const [productInfo, setProductInfo] = useState(null);
+  const [, setProductInfo] = useState(null);
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0]['url']);
+  const [, setIsLoading] = useState(true);
+  const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0].url);
 
   useEffect(() => {
     if (product) {
       setProductInfo(product);
-      setCurrentImg(product.masterData.current.masterVariant.images[0]['url']);
+      setCurrentImg(product.masterData.current.masterVariant.images[0].url);
 
       getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
         .then((res) => {
@@ -158,12 +166,13 @@ function DisplayProductInformation() {
           setIsLoading(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
-    let selectImage = e.currentTarget.children[0] as HTMLImageElement;
-    let tempImgCurUrl = currentImg;
-    let tempImgSelUrl = selectImage.src;
+    const selectImage = e.currentTarget.children[0] as HTMLImageElement;
+    const tempImgCurUrl = currentImg;
+    const tempImgSelUrl = selectImage.src;
     selectImage.setAttribute('src', tempImgCurUrl);
     setCurrentImg(tempImgSelUrl);
   };
@@ -197,11 +206,11 @@ function DisplayProductInformation() {
           <p>{`${productDescription}`}</p>
           <div className="information-about-the-origin-of-the-goods">
             <div className="information information-country">
-              <img src="/src/assets/svg/icon-language.svg" alt="icon-language" />
+              <img src={iconLanguage} alt="icon-language" />
               <p>{`Origin: ${productOrigin}`}</p>
             </div>
             <div className="information information-flavor">
-              <img src="/src/assets/svg/icon-eco.svg" alt="icon-eco" />
+              <img src={iconEco} alt="icon-eco" />
               <p>Flavor: {`${productFlavor}`}</p>
             </div>
           </div>
@@ -211,15 +220,15 @@ function DisplayProductInformation() {
             <p>Variants</p>
             <div className="variants">
               <div className="variant variant-1 variant-active" onClick={handleClickProdPack}>
-                <img src="/src/assets/svg/size-50.svg" alt="size-50" />
+                <img src={size50} alt="size-50" />
                 <p></p>
               </div>
               <div className="variant variant-2" onClick={handleClickProdPack}>
-                <img src="/src/assets/svg/size-100.svg" alt="size-100" />
+                <img src={size100} alt="size-100" />
                 <p></p>
               </div>
               <div className="variant variant-3" onClick={handleClickProdPack}>
-                <img src="/src/assets/svg/size-170.svg" alt="size-170" />
+                <img src={size170} alt="size-170" />
                 <p></p>
               </div>
             </div>
@@ -249,7 +258,7 @@ function DisplayProductInformation() {
           <h3 className="stepping-instruction__title">Steeping instruction</h3>
           <ul className="steeping-instruction__list">
             <li className="list-point">
-              <img src="/src/assets/svg/icon-kettle.svg" alt="icon-kettle" />
+              <img src={iconKettle} alt="icon-kettle" />
               <p className="list-point__text">
                 {' '}
                 <b>SERVING SIZE:</b> {`${productServingSize}`}
@@ -257,7 +266,7 @@ function DisplayProductInformation() {
             </li>
             <hr className="separator" />
             <li className="list-point">
-              <img src="/src/assets/svg/icon-water_voc.svg" alt="icon-water-voc" />
+              <img src={iconWaterVoc} alt="icon-water-voc" />
               <p className="list-point__text">
                 {' '}
                 <b>WATER TEMPERATURE:</b> {`${productWaterTemperature}`}
@@ -265,7 +274,7 @@ function DisplayProductInformation() {
             </li>
             <hr className="separator" />
             <li className="list-point">
-              <img src="/src/assets/svg/icon-alarm.svg" alt="icon-alarm" />
+              <img src={iconAlarm} alt="icon-alarm" />
               <p className="list-point__text">
                 {' '}
                 <b>STEEPING TIME:</b> {`${productSteepingTime}`}
@@ -274,7 +283,7 @@ function DisplayProductInformation() {
           </ul>
         </div>
         <div className="about-tea__container">
-          <h3 className="about-tea__title">About this tea</h3>
+          <h3 className="about-tea__title">About this product</h3>
           <div className="about-tea-full-discription">
             <p>{`${productFullDescription}`}</p>
           </div>

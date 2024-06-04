@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './profilePage.scss';
-import { client } from '../../lib/getUserById';
+import { client } from '../../lib/resquests/getUserById';
 import { useNavigate } from 'react-router-dom';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
 // import ChangePasswordForm from './changePasswordForm';
@@ -9,9 +9,8 @@ import {
   createApiBuilderFromCtpClient,
   CustomerUpdateAction,
 } from '@commercetools/platform-sdk';
-import { projectKey } from '../../lib/anonymFlow';
 import { useForm } from 'react-hook-form';
-
+import { projectKey } from '../../lib/exports/exportsContants';
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
@@ -152,8 +151,8 @@ function Profile() {
     return <LoadingSnippet />;
   }
 
-  const defaultBilAd = 'user.defaultBillingAddressId';
-  const defaultShipAd = 'user.defaultShippingAddressId';
+  const defaultBilAd = user.defaultBillingAddressId;
+  const defaultShipAd = user.defaultShippingAddressId;
 
   return (
     <>

@@ -36,7 +36,7 @@ function ChangePasswordForm() {
     setType(type === 'password' ? 'text' : 'password');
   };
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<Inputs> = async () => {
     // const userId = localStorage.getItem('userId') || '';
     // const { passwordCur, password } = data;
 

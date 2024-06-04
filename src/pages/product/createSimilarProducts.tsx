@@ -1,6 +1,6 @@
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getProductById } from '../../lib/getProductInfo';
+import { getProductById } from '../../lib/resquests/getProductInfo';
 
 const createSimilarProducts = (similarProducts: ProductProjection[]) => {
   if (document.querySelector('.variant-active')) {

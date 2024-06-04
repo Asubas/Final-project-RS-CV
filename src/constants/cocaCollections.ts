@@ -1,10 +1,10 @@
+import subCoca1 from '../assets/img/subCocoa-1.jpg';
+import subCoca2 from '../assets/img/subCocoa-2.jpg';
+import subCoca3 from '../assets/img/subCocoa-3.jpg';
+import subCoca4 from '../assets/img/subCocoa-4.jpg';
+
 const subcategoriesCococa = ['Forastero', 'TRINITARIO', 'Criollo', 'All'];
-const backgroundImagesCocoa = [
-  '/src/assets/img/subCocoa-1.jpg',
-  '/src/assets/img/subCocoa-2.jpg',
-  '/src/assets/img/subCocoa-3.jpg',
-  '/src/assets/img/subCocoa-4.jpg',
-];
+const backgroundImagesCocoa = [subCoca1, subCoca2, subCoca3, subCoca4];
 
 const cocoaUrl = {
   'e633814a-6201-411d-9747-96efa44f7cb7': 'Forastero',

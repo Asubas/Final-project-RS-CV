@@ -4,8 +4,8 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 //   AuthMiddlewareOptions,
 //   HttpMiddlewareOptions,
 // } from '@commercetools/sdk-client-v2';
-import { projectKey } from './anonymFlow';
 import { client } from './getUserById';
+import { projectKey } from '../exports/exportsContants';
 // import { Customer } from '@commercetools/platform-sdk/dist/declarations/src/generated/models/customer';
 
 // const authMiddlewareOptions: AuthMiddlewareOptions = {

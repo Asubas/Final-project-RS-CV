@@ -9,12 +9,9 @@ import dateCalculation from '../../components/dateCalculation/dateCalculation';
 import { Inputs } from '../../types/typeRegistrationPage';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginRef } from '../../components/header/navBar/navBar';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 import validatePostalCode from '../../components/accordanceCountryToPostalCode/accordanceCountryToPostalCode';
-import registerUser from '../../lib/registerUser';
+import { registerUser } from '../../lib/resquests/registerUser';
 
 function RegistrationPage() {
   const navigate = useNavigate();
@@ -23,55 +20,11 @@ function RegistrationPage() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<Inputs>({ mode: 'onChange' });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const submitForm = async () => {
-    if (!isValid) {
-      return;
-    }
-
-    if (isSubmitting) {
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    try {
-      const res = await registerUser();
-
-      if (res === null) {
-        toast.error(
-          'Registration error. Perhaps a user with this email already exists!',
-          errorRegister,
-        );
-        setIsSubmitting(false);
-        return;
-      } else if (res) {
-        const emailUser = localStorage.getItem('email');
-        if (emailUser) localStorage.setItem('userId', emailUser);
-        navigate('/');
-        if (loginRef.current) loginRef.current.textContent = 'Log out';
-        toast.success('🔥 You have successfully registered and logged in!', successRegister);
-
-        const keyToKeep = 'userId';
-        const keys = Object.keys(localStorage);
-        keys.forEach((key) => {
-          if (key !== keyToKeep) {
-            localStorage.removeItem(key);
-          }
-        });
-      }
-    } catch (error) {
-      toast.error(
-        'Registration error. Perhaps a user with this email already exists!',
-        errorRegister,
-      );
-    } finally {
-      setIsSubmitting(false);
+    if (isValid) {
+      registerUser(navigate);
     }
   };
-
-  // const navigate = useNavigate();
   const navigateToLogin = () => navigate('/login');
   const [isSecondSelectDisabled, setIsSecondSelectDisabled] = useState<boolean>(false);
   const [isCheckedShipping, setIsCheckedShipping] = useState(false);
@@ -399,7 +352,7 @@ function RegistrationPage() {
               </label>
             </div>
 
-            <MyButton className="btn_white " type="submit" onClick={submitForm}>
+            <MyButton className="btn_white " type="submit">
               {' '}
               Sign in
             </MyButton>

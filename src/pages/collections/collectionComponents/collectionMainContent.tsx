@@ -11,6 +11,7 @@ import { SortContainer } from './sortContainer/sortContainer';
 const MainContent = ({ collectionType }: IContentProps) => {
   const [open, setOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  sessionStorage.setItem('type', collectionType);
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);

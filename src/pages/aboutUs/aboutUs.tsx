@@ -4,7 +4,7 @@ interface Developer {
   name: string;
   location: string;
   about: string;
-  img: string;
+  img: string | '';
   gitUrl: string;
 }
 
@@ -14,7 +14,7 @@ const developerData: Developer[] = [
     location: 'Russia, Yaroslavl',
     about:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas aperiam ea quasi repellendus, inventore numquam ex laboriosam perferendis rerum facilis eaque tenetur expedita. Voluptatem illum, consequuntur laboriosam possimus ipsa officia!',
-    img: 'blob:https://web.telegram.org/5ebd0f0f-281f-4d95-bc38-a9b2255fa859',
+    img: '',
     gitUrl: 'https://github.com/Asubas',
   },
   {
@@ -30,7 +30,7 @@ const developerData: Developer[] = [
     location: 'Poland, Wrocław',
     about:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas aperiam ea quasi repellendus, inventore numquam ex laboriosam perferendis rerum facilis eaque tenetur expedita. Voluptatem illum, consequuntur laboriosam possimus ipsa officia!',
-    img: 'blob:https://web.telegram.org/41409682-18f0-47f8-9f77-5bd72428eaf8',
+    img: '',
     gitUrl: 'https://github.com/DzmitryAlekseev',
   },
 ];
@@ -49,7 +49,12 @@ function AboutUs() {
               />
             </div>
             <div className="developer_info">
-              <a href={developer.gitUrl} target="_blank" className="developer_info__name">
+              <a
+                href={developer.gitUrl}
+                target="_blank"
+                className="developer_info__name"
+                rel="noreferrer"
+              >
                 {developer.name}
               </a>
               <p className="developer_info__location">{developer.location}</p>

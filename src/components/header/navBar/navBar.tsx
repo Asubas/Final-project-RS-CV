@@ -4,6 +4,7 @@ import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
+import { createAnonymUser } from '../../../lib/authorization/createAnonumUser';
 
 let loginRef: RefObject<HTMLAnchorElement>;
 let reqRef: RefObject<HTMLAnchorElement>;
@@ -15,6 +16,7 @@ function NavBar() {
   const menuRef = useRef<HTMLDivElement>(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   loginRef = useRef<HTMLAnchorElement>(null);
+  reqRef = useRef<HTMLAnchorElement>(null);
   const checkIsUserLoggedIn = () => {
     const userId = localStorage.getItem('userId');
     setIsUserLoggedIn(!!userId);
@@ -26,10 +28,14 @@ function NavBar() {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem('userId');
+    localStorage.removeItem('userVersion');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('accessToken');
     setIsUserLoggedIn(false);
     if (loginRef.current?.textContent === 'Log out') {
       toast.info('🎈 You are logged out of your account!', infoLogout);
       navigate('/');
+      createAnonymUser();
     }
     if (loginRef.current) loginRef.current.textContent = 'Sign in';
   };

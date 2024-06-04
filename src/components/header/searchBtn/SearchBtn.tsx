@@ -4,7 +4,7 @@ import logoSearch from '../../../assets/svg/icon-search.svg';
 import MyInput from '../../input/input';
 import { getProductList } from '../../../pages/collections/requestsToProducts/productList';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { getProductById } from '../../../lib/getProductInfo';
+import { getProductById } from '../../../lib/resquests/getProductInfo';
 import { useNavigate } from 'react-router-dom';
 
 function SearchBtn() {
@@ -75,6 +75,7 @@ function SearchBtn() {
         ) {
           pathCategories = 'cocoa';
         }
+        toggleSearchVisibility();
         navigate(
           `/collection/${pathCategories}/${res.body?.masterData?.current?.variants?.[0]?.attributes?.[5]?.value}/${path}`,
           {

@@ -1,3 +1,13 @@
+import category1 from '../assets/img/category-1.jpg';
+import category2 from '../assets/img/category-2.jpg';
+import category3 from '../assets/img/category-3.jpg';
+import category4 from '../assets/img/category-4.jpg';
+import category5 from '../assets/img/category-5.jpg';
+import category6 from '../assets/img/category-6.jpg';
+import category7 from '../assets/img/category-7.jpg';
+import category8 from '../assets/img/category-8.jpg';
+import category9 from '../assets/img/category-9.jpg';
+
 const subcategoriesTea = [
   'Black tea',
   'Green tea',
@@ -11,15 +21,15 @@ const subcategoriesTea = [
 ];
 
 const backgroundImagesTea = [
-  '/src/assets/img/category-1.jpg',
-  '/src/assets/img/category-2.jpg',
-  '/src/assets/img/category-3.jpg',
-  '/src/assets/img/category-4.jpg',
-  '/src/assets/img/category-5.jpg',
-  '/src/assets/img/category-6.jpg',
-  '/src/assets/img/category-7.jpg',
-  '/src/assets/img/category-8.jpg',
-  '/src/assets/img/category-9.jpg',
+  category1,
+  category2,
+  category3,
+  category4,
+  category5,
+  category6,
+  category7,
+  category8,
+  category9,
 ];
 
 const teaUrl = {

@@ -1,3 +1,11 @@
+import subCoffe1 from '../assets/img/subCoffee-1.jpg';
+import subCoffe2 from '../assets/img/subCoffee-2.jpg';
+import subCoffe3 from '../assets/img/subCoffee-3.jpg';
+import subCoffe4 from '../assets/img/subCoffee-4.jpg';
+import subCoffe5 from '../assets/img/subCoffee-5.jpg';
+import subCoffe6 from '../assets/img/subCoffee-6.jpg';
+import subCoffe7 from '../assets/img/subCoffee-7.jpg';
+
 const subcategoriesCoffee = [
   'Brazilia',
   'Colombia',
@@ -8,13 +16,13 @@ const subcategoriesCoffee = [
   'All',
 ];
 const backgroundImagesCoffee = [
-  '/src/assets/img/subCoffee-1.jpg',
-  '/src/assets/img/subCoffee-2.jpg',
-  '/src/assets/img/subCoffee-3.jpg',
-  '/src/assets/img/subCoffee-4.jpg',
-  '/src/assets/img/subCoffee-5.jpg',
-  '/src/assets/img/subCoffee-6.jpg',
-  '/src/assets/img/subCoffee-7.jpg',
+  subCoffe1,
+  subCoffe2,
+  subCoffe3,
+  subCoffe4,
+  subCoffe5,
+  subCoffe6,
+  subCoffe7,
 ];
 
 const coffeeUrl = {
