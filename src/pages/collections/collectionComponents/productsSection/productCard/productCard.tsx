@@ -1,21 +1,33 @@
 import './productCart.scss';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import { ProductsPageContext } from '../../../context';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductById } from '../../../../../lib/resquests/getProductInfo';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
+  const buttonBug = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const handleClick = (id: string) => {
-    getProductById(id).then((res) => {
-      if (res.statusCode === 200) {
-        const currentUrl = location.pathname;
-        const path = res.body.masterData.current.slug['en-GB'];
-        navigate(`${currentUrl}/${path}`, { state: res.body });
-      }
-    });
+  const handleClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
+    if (!(e.target as Node).contains(buttonBug.current)) {
+      getProductById(id).then((res) => {
+        if (res.statusCode === 200) {
+          const currentUrl = location.pathname;
+          const path = res.body.masterData.current.slug['en-GB'];
+          navigate(`${currentUrl}/${path}`, { state: res.body });
+        }
+      });
+    }
+  };
+
+  const handleClickBug = (event: React.MouseEvent<HTMLElement>) => {
+    console.log('клик на кнопку');
+    if (buttonBug.current && buttonBug.current.contains(event.target as Node)) {
+      return;
+    } else {
+      event.stopPropagation();
+    }
   };
   return (
     <>
@@ -23,7 +35,17 @@ const ProductCard = () => {
         const { id, name, masterVariant, description } = product;
         const { images, prices } = masterVariant;
         return (
-          <div className="productsCard" key={id} onClick={() => handleClick(id)}>
+          <div
+            className="productsCard"
+            key={id}
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClick(id, e)}
+          >
+            <button
+              className="productsCard_button-add"
+              type="button"
+              ref={buttonBug}
+              onClick={handleClickBug}
+            />
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
                 <img src={images?.[0]?.url} width="264px" alt={name['en-GB']} />
