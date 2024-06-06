@@ -57,7 +57,6 @@ function SearchBtn() {
   const handleClick = (id: string) => {
     getProductById(id).then((res) => {
       if (res.statusCode === 200) {
-        // const path = res.body.masterData.current.slug['en-GB'];
         let pathCategories = '';
         if (
           `${res.body.masterData.current.categories[0].id}` ===

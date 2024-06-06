@@ -1,6 +1,6 @@
 import './pagination.scss';
 import { useState, useCallback, useContext, useEffect } from 'react';
-import PaginationComponent from '../../../../components/paginationComponent';
+import { PaginationComponent } from '../../../../components/paginationComponent';
 import { ProductsPageContext } from '../../context';
 import { useLocation } from 'react-router-dom';
 

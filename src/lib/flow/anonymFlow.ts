@@ -23,7 +23,6 @@ const anonymousAuthMiddlewareOptions = (): ApiRoot => {
     .withProjectKey(projectKey)
     .withAnonymousSessionFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
-    // .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(anonymClient);

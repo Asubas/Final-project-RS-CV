@@ -14,7 +14,7 @@ import { projectKey } from '../../lib/exports/exportsContants';
 import { AddressField } from './editAddresses/adressField';
 function Profile() {
   const navigate = useNavigate();
-  let [user, setUser] = useState<Customer | null>(null);
+  const [user, setUser] = useState<Customer | null>(null);
   const {
     register,
     handleSubmit,
@@ -42,19 +42,19 @@ function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await createApiBuilderFromCtpClient(client)
+        await createApiBuilderFromCtpClient(client)
           .withProjectKey({ projectKey })
           .customers()
           .withId({ ID: userId })
           .get()
-          .execute();
-        user = res.body;
-        setUser(user);
-
-        setValue('firstName', user.firstName || '');
-        setValue('lastName', user.lastName || '');
-        setValue('dateOfBirth', user.dateOfBirth || '');
-        setValue('email', user.email || '');
+          .execute()
+          .then((resp) => {
+            setUser(resp.body);
+            setValue('firstName', resp.body.firstName || '');
+            setValue('lastName', resp.body.lastName || '');
+            setValue('dateOfBirth', resp.body.dateOfBirth || '');
+            setValue('email', resp.body.email || '');
+          });
       } catch (err) {
         console.log(err);
       }
@@ -270,14 +270,12 @@ function Profile() {
                 variant={user.addresses[0]}
                 defaultBilAd={defaultBilAd || ''}
                 defaultShipAd={defaultShipAd || ''}
-                // addressKey="shippingAddress"
               ></AddressField>
               <span className="addressesWrap_type">Billing</span>
               <AddressField
                 variant={user.addresses[1]}
                 defaultBilAd={defaultBilAd || ''}
                 defaultShipAd={defaultShipAd || ''}
-                // addressKey="billingAddress"
               ></AddressField>
             </>
           ) : (

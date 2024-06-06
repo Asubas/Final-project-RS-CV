@@ -156,7 +156,6 @@ function RegistrationPage() {
                   {...register('dateOfBirth', {
                     required: 'This field must be completed',
                   })}
-                  // required={true}
                   onChange={dateCalculation}
                   maxLength={10}
                 />

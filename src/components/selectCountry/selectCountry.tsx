@@ -4,8 +4,6 @@ import { InewValue } from '../../types/typeRegistrationPage';
 import { countries, customStyles } from '../../constants/constantsRegistrationPage';
 import getShippingOrBillingContainer from '../accordanceCountryToPostalCode/getShippingOrBillingContainer';
 
-export let cont: string;
-
 interface SelectCountryProps {
   isDisabled: boolean;
 }
@@ -32,7 +30,7 @@ const SelectCountry: React.FC<SelectCountryProps> = ({ isDisabled }) => {
 
     if (element) {
       const className = element.className;
-      cont = getShippingOrBillingContainer(className);
+      getShippingOrBillingContainer(className);
       setCurrentContainer(element);
     }
   }, []);
@@ -98,5 +96,4 @@ const SelectCountry: React.FC<SelectCountryProps> = ({ isDisabled }) => {
     />
   );
 };
-
 export default SelectCountry;

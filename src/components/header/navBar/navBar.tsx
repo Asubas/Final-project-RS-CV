@@ -14,7 +14,7 @@ function NavBar() {
   const [menuClass, setMenuClass] = useState('menu hidden');
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const burderRef = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLDivElement>(null);
   const pageLinksRef = useRef<HTMLDivElement>(null);
   const userBtnRef = useRef<HTMLDivElement>(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
@@ -67,7 +67,7 @@ function NavBar() {
     if (
       (menuRef.current &&
         !menuRef.current.contains(event.target as Node) &&
-        !(event.target as Node).contains(burderRef.current)) ||
+        !(event.target as Node).contains(burgerRef.current)) ||
       (pageLinksRef.current as HTMLDivElement).contains(event.target as Node) ||
       (userBtnRef.current as HTMLDivElement).contains(event.target as Node)
     ) {
@@ -125,7 +125,7 @@ function NavBar() {
           </Link>
         </div>
       </nav>
-      <div className="burger-menu" ref={burderRef} onClick={updateMenu}>
+      <div className="burger-menu" ref={burgerRef} onClick={updateMenu}>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>

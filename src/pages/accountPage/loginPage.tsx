@@ -49,7 +49,6 @@ function AccountPage() {
         })
         .catch(() => {
           toast.error('Invalid email or password or such user does not exist!', errorLogin);
-          // return loggedUser;
         });
     }
   };

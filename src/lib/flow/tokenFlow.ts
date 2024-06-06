@@ -5,7 +5,7 @@ export class LocalStorageTokenCache implements TokenCache {
     if (cachedToken) {
       return {
         token: cachedToken,
-        expirationTime: Date.now() + 3600000, // 1 час
+        expirationTime: Date.now() + 3600000,
         refreshToken: localStorage.getItem('refreshToken') || undefined,
       };
     }

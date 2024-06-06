@@ -6,7 +6,6 @@ import { NavigateFunction } from 'react-router-dom';
 import { loginRef } from '../../components/header/navBar/navBar';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 import { toast } from 'react-toastify';
-// import createAuthorizedClient from '../flow/userLoginFlow';
 
 function registerUser(navigate: NavigateFunction) {
   const bodyRequest = getUserRequestObject();

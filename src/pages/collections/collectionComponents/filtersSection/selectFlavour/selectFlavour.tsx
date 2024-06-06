@@ -57,6 +57,5 @@ function SelectFlavour({ selectedFlavour, onFlavourChange }: SelectFlavourProps)
       ))}
     </ul>
   );
-  // className={checkedFlavour === 'Citrus' ? 'radio-button--checked' : ''}
 }
 export { SelectFlavour };

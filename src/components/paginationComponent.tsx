@@ -1,7 +1,6 @@
-import React from 'react';
 import { PaginationProps } from '../interfaces/pagination';
 
-const PaginationComponent = (props: PaginationProps) => {
+export const PaginationComponent = (props: PaginationProps) => {
   const { nav = null, disable, onNextPageClick, onPrevPageClick } = props;
 
   const handleNextPageClick = () => {
@@ -33,5 +32,3 @@ const PaginationComponent = (props: PaginationProps) => {
     );
   }
 };
-
-export default React.memo(PaginationComponent);

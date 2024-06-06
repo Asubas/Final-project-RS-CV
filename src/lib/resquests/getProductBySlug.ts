@@ -25,33 +25,17 @@ function getProductBySlug(slug: string) {
 
   const apiRoot: ApiRoot = createApiBuilderFromCtpClient(client);
 
-  return (
-    apiRoot
-      .withProjectKey({ projectKey })
-      .productProjections()
-      .search()
-      .get({
-        queryArgs: {
-          filter: [`slug.en-GB:"${slug}"`],
-        },
-      })
-      .execute()
-      // .then((res) => res.body.results[0]);
-      .then((res) => res)
-  );
-
-  // const apiRoot: ApiRoot = createApiBuilderFromCtpClient(client);
-
-  // try {
-  //   const response = await apiRoot.withProjectKey({ projectKey })
-  //     .productProjections()
-  //     .search()
-  //     .get({
-  //       queryArgs: {
-  //         filter: [`slug.en-GB:"${slug}"`],
-  //       },
-  //     })
-  //     .execute();
+  return apiRoot
+    .withProjectKey({ projectKey })
+    .productProjections()
+    .search()
+    .get({
+      queryArgs: {
+        filter: [`slug.en-GB:"${slug}"`],
+      },
+    })
+    .execute()
+    .then((res) => res);
 }
 
 export default getProductBySlug;

@@ -2,7 +2,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getProductById } from '../../lib/resquests/getProductInfo';
 
-const createSimilarProducts = (similarProducts: ProductProjection[]) => {
+const CreateSimilarProducts = (similarProducts: ProductProjection[]) => {
   if (document.querySelector('.variant-active')) {
     const activeProdPack = document.querySelector('.variant-active');
     activeProdPack?.classList.remove('variant-active');
@@ -49,4 +49,4 @@ const createSimilarProducts = (similarProducts: ProductProjection[]) => {
     );
   });
 };
-export default createSimilarProducts;
+export default CreateSimilarProducts;

@@ -3,19 +3,15 @@ import { Address } from '@commercetools/platform-sdk';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import MyInput from '../../../components/input/input';
-// import { projectKey } from '../../../lib/exports/exportsContants';
-// import { client } from '../../../lib/resquests/getUserById';
 
 function AddressField({
   variant,
   defaultBilAd = '',
   defaultShipAd = '',
-  // addressKey = '',
 }: {
   variant: Address;
   defaultBilAd: string;
   defaultShipAd: string;
-  // addressKey: string;
 }) {
   const {
     control,
@@ -40,42 +36,12 @@ function AddressField({
     streetName: variant.streetName,
     postalCode: variant.postalCode,
   });
-  // const userId = localStorage.getItem('userId');
   const updateAddressOnServer = async (data: Address) => {
-    // createApiBuilderFromCtpClient(client)
-    //   .withProjectKey({ projectKey })
-    //   .customers()
-    //   .withId({ ID: userId as string })
-    //   .get()
-    //   .execute()
-    //   .then((res) => {
-    //     const userVersion = res.body.version;
-    //     createApiBuilderFromCtpClient(client)
-    //       .withProjectKey({ projectKey })
-    //       .customers()
-    //       .withId({ ID: userId as string })
-    //       .post({
-    //         body: {
-    //           version: Number(userVersion),
-    //           actions: [
-    //             {
-    //               action: 'changeAddress',
-    //               address: data,
-    //               addressKey: addressKey,
-    //             },
-    //           ],
-    //         },
-    //       })
-    //       .execute();
-    //   });
-
     return { data: data };
   };
 
   const onSubmit = async (data: Address) => {
     try {
-      // Здесь вы можете отправить запрос на сервер для обновления адреса
-      // и получить обновленный адрес в ответе
       const response = await updateAddressOnServer(data);
       setUpdatedAddress(response.data);
       setIsEditing(false);

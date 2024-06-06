@@ -4,7 +4,6 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
 import MyButton from '../../components/button/button';
 import MyInput from '../../components/input/input';
-// import { getUser, changeCustomerPassword } from '../../lib/changePassword';
 
 type Inputs = {
   passwordCur: string;
@@ -37,15 +36,6 @@ function ChangePasswordForm() {
   };
 
   const onSubmit: SubmitHandler<Inputs> = async () => {
-    // const userId = localStorage.getItem('userId') || '';
-    // const { passwordCur, password } = data;
-
-    // const userData = await getUser();
-    // if (userData) {
-    //   const version = userData.version;
-
-    //   changeCustomerPassword({version, currentPassword: passwordCur, newPassword: password})
-    // }
     return;
   };
 

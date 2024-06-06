@@ -6,7 +6,7 @@ import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 import getSimilarProducts from './getSimilarProducts';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import createSimilarProducts from './createSimilarProducts';
+import CreateSimilarProducts from './createSimilarProducts';
 import { BreadcrumbsComponent } from '../collections/collectionComponents/breadcrumbLinks/breadBackForwComp';
 import iconEco from '../../assets/svg/icon-eco.svg';
 import size50 from '../../assets/svg/size-50.svg';
@@ -100,8 +100,7 @@ function DisplayProductInformation() {
           setIsLoading(false);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product, slug]);
+  }, [IDsimilarProducts1, IDsimilarProducts2, product, slug]);
 
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
@@ -345,7 +344,7 @@ function DisplayProductInformation() {
 
       <div className="similar-products__container">
         <h3 className="similar-products__title">You may also like</h3>
-        <div className="similar-products__content">{createSimilarProducts(similarProducts)}</div>
+        <div className="similar-products__content">{CreateSimilarProducts(similarProducts)}</div>
       </div>
 
       {isModalOpen && (

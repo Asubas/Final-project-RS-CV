@@ -10,7 +10,7 @@ function categoryP(imagesSlider: SliderItemDataP[]) {
   if (!imagesSlider || imagesSlider.length === 0) {
     return null;
   }
-  return imagesSlider.map((item) => <SliderCardProduct key={item['label']} img={item['url']} />);
+  return imagesSlider.map((item) => <SliderCardProduct key={item.label} img={item.url} />);
 }
 
 export default categoryP;
