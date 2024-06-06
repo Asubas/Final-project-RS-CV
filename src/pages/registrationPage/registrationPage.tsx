@@ -242,11 +242,14 @@ function RegistrationPage() {
                 />
               </label>
 
-              <label className="registration-form_defaultAddress-Label" htmlFor="remSameAddress">
+              <label
+                className="registration-form_defaultAddress-Label disableThisSelector"
+                htmlFor="remSameAddress"
+              >
                 {' '}
                 Use as billing address
                 <MyInput
-                  className="registration-form_defaultAddress-Input"
+                  className="registration-form_defaultAddress-Input disableThisSelector"
                   autoComplete="current-password"
                   type="checkbox"
                   name="sameAddress"
