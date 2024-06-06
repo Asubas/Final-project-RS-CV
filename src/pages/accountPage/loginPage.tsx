@@ -5,11 +5,12 @@ import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import createAuthorizedClient from '../../lib/userLoginFlow';
-import apiRoot, { projectKey } from '../../lib/anonymFlow';
-import { Bounce, toast } from 'react-toastify';
+import createAuthorizedClient from '../../lib/flow/userLoginFlow';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRef } from '../../components/header/navBar/navBar';
+import { loginRef, reqRef } from '../../components/header/navBar/navBar';
+import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
+import { projectKey } from '../../lib/exports/exportsContants';
 
 type Inputs = {
   login: string;
@@ -25,54 +26,30 @@ function AccountPage() {
   } = useForm<Inputs>({ mode: 'onChange' });
 
   const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      const loggedUser = await apiRoot()
+      createAuthorizedClient(login, password)
         .withProjectKey({ projectKey })
-        .login()
-        .post({
-          body: {
-            email: login,
-            password: password,
-          },
-        })
+        .me()
+        .get()
         .execute()
         .then((res) => {
           if (res.statusCode === 200) {
-            localStorage.setItem('userId', `${res.body.customer.id}`);
+            localStorage.setItem('userId', `${res.body.id}`);
+            localStorage.setItem('userVersion', `${res.body.version}`);
             navigate('/');
-            if (loginRef.current) loginRef.current.textContent = 'log out';
-            toast.success('🦄 You have successfully logged in', {
-              position: 'top-right',
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'light',
-              transition: Bounce,
-            });
-            createAuthorizedClient(login, password).withProjectKey({ projectKey }).get().execute();
-            return res.body.customer;
+            if (loginRef.current && reqRef.current) {
+              loginRef.current.textContent = 'log out';
+              reqRef.current.textContent = 'profile';
+            }
+            toast.success('🎉 You have successfully logged in', successLogin);
+            return;
           }
         })
         .catch(() => {
-          toast.error('Invalid email or password or such user does not exist!', {
-            position: 'bottom-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-            transition: Bounce,
-          });
+          toast.error('Invalid email or password or such user does not exist!', errorLogin);
         });
-      return loggedUser;
     }
   };
 
@@ -137,7 +114,7 @@ function AccountPage() {
             {' '}
             Sign in
           </MyButton>
-          <Link to="/" className="btn_black">
+          <Link to="/registration" className="btn_black">
             SIGN UP
           </Link>
         </fieldset>

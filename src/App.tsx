@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import HomePage from './pages/homePage/homePage';
 import AboutUs from './pages/aboutUs/aboutUs';
-import Collection from './pages/collections/collection';
+import { Collection } from './pages/collections/collectionPage';
 import MyBag from './pages/myBag/myBag';
 import LoginPage from './pages/accountPage/loginPage';
 import ProtectedRoute from './pages/protectedRouter';
@@ -11,10 +11,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notFound/notFound';
 import RegistrationForm from './pages/registrationPage/registrationPage';
 import Layout from './components/mainLayout/layout';
-import apiRoot, { projectKey } from './lib/anonymFlow';
-
+import Profile from './pages/profile/profilePage';
+import ProtectedProfile from './lib/protectedRoute';
+import SelectedCollection from './pages/collections/collectionMain';
+import { TeaPage } from './pages/collections/subCollections/teaPage';
+import { CoffeePage } from './pages/collections/subCollections/coffeePage';
+import { CocoaPage } from './pages/collections/subCollections/cocoaPage';
+import { DisplayProductInformation } from './pages/product/productCardInformation';
 function App() {
-  apiRoot().withProjectKey({ projectKey }).get().execute();
   return (
     <>
       <Routes>
@@ -22,6 +26,17 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="about" element={<AboutUs />} />
           <Route path="collection" element={<Collection />} />
+          <Route path="/collection/tea" element={<TeaPage />} />
+          <Route path="/collection/coffee" element={<CoffeePage />} />
+          <Route path="/collection/cocoa" element={<CocoaPage />} />
+          <Route
+            path="collection/:collectionType/:collectionSubcategories"
+            element={<SelectedCollection />}
+          />
+          <Route
+            path="collection/:collectionType/:collectionSubcategories/:productId"
+            element={<DisplayProductInformation />}
+          />
           <Route
             path="login"
             element={
@@ -31,8 +46,23 @@ function App() {
             }
           />
           <Route path="bag" element={<MyBag />} />
-          <Route path="registration" element={<RegistrationForm />} />
+          <Route
+            path="registration"
+            element={
+              <ProtectedRoute redirectTo="/">
+                <RegistrationForm />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<NotFound />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedProfile redirectTo="/">
+                <Profile />
+              </ProtectedProfile>
+            }
+          />
         </Route>
       </Routes>
       <ToastContainer

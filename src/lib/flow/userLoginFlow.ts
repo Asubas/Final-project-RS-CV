@@ -1,11 +1,9 @@
-import {
-  PasswordAuthMiddlewareOptions,
-  ClientBuilder,
-  HttpMiddlewareOptions,
-} from '@commercetools/sdk-client-v2';
+import { PasswordAuthMiddlewareOptions, ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-sdk';
-import { projectKey } from './anonymFlow';
+import { LocalStorageTokenCache } from './tokenFlow';
+import { httpMiddlewareOptions, projectKey } from '../exports/exportsContants';
 
+const tokens = new LocalStorageTokenCache();
 const createAuthorizedClient = (email: string, password: string): ApiRoot => {
   const options: PasswordAuthMiddlewareOptions = {
     host: 'https://auth.europe-west1.gcp.commercetools.com',
@@ -18,20 +16,15 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
         password: password,
       },
     },
+    tokenCache: tokens,
     scopes: [`manage_project:${projectKey}`],
     fetch: fetch,
-  };
-
-  const httpMiddlewareOptions: HttpMiddlewareOptions = {
-    host: 'https://api.europe-west1.gcp.commercetools.com',
-    fetch,
   };
 
   const userAuthorized = new ClientBuilder()
     .withProjectKey(projectKey)
     .withPasswordFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
-    // .withLoggerMiddleware()
     .build();
   return createApiBuilderFromCtpClient(userAuthorized);
 };

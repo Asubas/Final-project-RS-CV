@@ -1,0 +1,89 @@
+@import url('../../../../App.scss');
+
+.collection-page_pagination {
+  display: flex;
+  grid-column-start: 2;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 17.6px;
+  ul {
+    display: flex;
+    order: 1;
+    gap: 5px;
+
+    li {
+      cursor: pointer;
+
+      &:hover {
+        color: #b7b7b7;
+      }
+    }
+    li.currentPage {
+      color: #b7b7b7;
+      cursor: auto;
+      user-select: none;
+    }
+  }
+
+  .collection-page_pagination-buttonPrev {
+    order: 0;
+  }
+
+  .collection-page_pagination-buttonPrev,
+  .collection-page_pagination-buttonNext {
+    position: relative;
+    &::after {
+      content: ' ';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: -15px;
+      width: 15px;
+      height: 15px;
+      background: url('/src/assets/svg/left-arrow.svg') no-repeat center / contain;
+    }
+
+    &:hover::after {
+      background: url('/src/assets/svg/left-arrow-disabled.svg') no-repeat center / contain;
+    }
+
+    &:hover {
+      color: #b7b7b7;
+    }
+
+    &:disabled::after {
+      background: url('/src/assets/svg/left-arrow-disabled.svg') no-repeat center / contain;
+      cursor: auto;
+      user-select: none;
+    }
+
+    &:disabled {
+      cursor: auto;
+      user-select: none;
+    }
+  }
+
+  .collection-page_pagination-buttonNext {
+    order: 2;
+    &::after {
+      background: url('/src/assets/svg/right-arrow.svg') no-repeat center / contain;
+      left: 25px;
+    }
+
+    &:hover::after {
+      background: url('/src/assets/svg/right-arrow-disabled.svg') no-repeat center / contain;
+    }
+
+    &:disabled::after {
+      background: url('/src/assets/svg/right-arrow-disabled.svg') no-repeat center / contain;
+      cursor: auto;
+      user-select: none;
+    }
+  }
+
+  @media (max-width: 980px) {
+    grid-row: 3;
+    grid-column: 1 / -1;
+  }
+}

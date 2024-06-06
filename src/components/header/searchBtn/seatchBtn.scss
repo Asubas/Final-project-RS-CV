@@ -1,0 +1,24 @@
+@import '../../../App.scss';
+.searchProductList {
+  position: absolute;
+  background-color: azure;
+  padding: 5px;
+  right: 600px;
+  top: 60px;
+
+  @media (max-width: 870px) {
+    right: 15px;
+    top: 40px;
+  }
+
+  div {
+    &:hover {
+      background-color: $secondary;
+    }
+    p {
+      z-index: 200;
+      cursor: pointer;
+      padding: 5px;
+    }
+  }
+}
