@@ -6,6 +6,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { loginRef } from '../../components/header/navBar/navBar';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 import { toast } from 'react-toastify';
+// import createAuthorizedClient from '../flow/userLoginFlow';
 
 function registerUser(navigate: NavigateFunction) {
   const bodyRequest = getUserRequestObject();
@@ -30,6 +31,28 @@ function registerUser(navigate: NavigateFunction) {
           keysToDelete.forEach((key) => {
             localStorage.removeItem(key);
           });
+          const userId = localStorage.getItem('userId') as string;
+          const userVersion = localStorage.getItem('userVersion');
+          createApiBuilderFromCtpClient(registerClient)
+            .withProjectKey({ projectKey })
+            .customers()
+            .withId({ ID: userId })
+            .post({
+              body: {
+                version: Number(userVersion),
+                actions: [
+                  {
+                    action: 'addShippingAddressId',
+                    addressId: res.body.customer.addresses[0].id,
+                  },
+                  {
+                    action: 'addBillingAddressId',
+                    addressId: res.body.customer.addresses[1].id,
+                  },
+                ],
+              },
+            })
+            .execute();
         }
       })
       .catch(() => {

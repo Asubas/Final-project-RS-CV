@@ -14,6 +14,9 @@ function NavBar() {
   const [menuClass, setMenuClass] = useState('menu hidden');
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const burderRef = useRef<HTMLDivElement>(null);
+  const pageLinksRef = useRef<HTMLDivElement>(null);
+  const userBtnRef = useRef<HTMLDivElement>(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   loginRef = useRef<HTMLAnchorElement>(null);
   reqRef = useRef<HTMLAnchorElement>(null);
@@ -61,7 +64,13 @@ function NavBar() {
   };
 
   const handleOutsideClick = (event: MouseEvent) => {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+    if (
+      (menuRef.current &&
+        !menuRef.current.contains(event.target as Node) &&
+        !(event.target as Node).contains(burderRef.current)) ||
+      (pageLinksRef.current as HTMLDivElement).contains(event.target as Node) ||
+      (userBtnRef.current as HTMLDivElement).contains(event.target as Node)
+    ) {
       setBurgerClass('burger-bar unclicked');
       setMenuClass('menu hidden');
       setIsMenuClicked(false);
@@ -87,7 +96,7 @@ function NavBar() {
       </Link>
       <SearchBtn />
       <nav className={menuClass} ref={menuRef}>
-        <div className="page-links">
+        <div className="page-links" ref={pageLinksRef}>
           <Link className="nav_link btn_blank" to="/collection">
             collection
           </Link>
@@ -95,7 +104,7 @@ function NavBar() {
             about us
           </Link>
         </div>
-        <div className="user-btns">
+        <div className="user-btns" ref={userBtnRef}>
           <Link className="user-btns_btn" to="bag">
             <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
           </Link>
@@ -116,7 +125,7 @@ function NavBar() {
           </Link>
         </div>
       </nav>
-      <div className="burger-menu" onClick={updateMenu}>
+      <div className="burger-menu" ref={burderRef} onClick={updateMenu}>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>
         <div className={burgerClass}></div>

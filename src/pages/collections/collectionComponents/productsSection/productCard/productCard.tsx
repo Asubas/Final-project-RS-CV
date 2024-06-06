@@ -20,7 +20,7 @@ const ProductCard = () => {
   return (
     <>
       {state.results.map((product) => {
-        const { id, name, masterVariant } = product;
+        const { id, name, masterVariant, description } = product;
         const { images, prices } = masterVariant;
         return (
           <div className="productsCard" key={id} onClick={() => handleClick(id)}>
@@ -45,6 +45,11 @@ const ProductCard = () => {
                 ) : null}
               </li>
             </ul>
+            {description && (
+              <div className="description_product">
+                <p>{description['en-GB']}</p>
+              </div>
+            )}
           </div>
         );
       })}

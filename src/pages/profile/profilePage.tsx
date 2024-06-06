@@ -11,6 +11,7 @@ import {
 } from '@commercetools/platform-sdk';
 import { useForm } from 'react-hook-form';
 import { projectKey } from '../../lib/exports/exportsContants';
+import { AddressField } from './editAddresses/adressField';
 function Profile() {
   const navigate = useNavigate();
   let [user, setUser] = useState<Customer | null>(null);
@@ -153,7 +154,6 @@ function Profile() {
 
   const defaultBilAd = user.defaultBillingAddressId;
   const defaultShipAd = user.defaultShippingAddressId;
-
   return (
     <>
       <section className="profileSection">
@@ -264,32 +264,22 @@ function Profile() {
         <div className="addressesWrap">
           <h3 className="profileHead">addresses</h3>
           {user.addresses && user.addresses.length > 0 ? (
-            user.addresses.map((address) => (
-              <div key={address.id} className="address" data-id={address.id}>
-                {address.id === defaultBilAd && (
-                  <span className="default_address">Default billing address</span>
-                )}
-                {address.id === defaultShipAd && (
-                  <span className="default_address">Default shipping address</span>
-                )}
-                <div className="address_line">
-                  <p className="address_label">Country:</p>
-                  <span className="address_value">{address.country}</span>
-                </div>
-                <div className="address_line">
-                  <p className="address_label">City:</p>
-                  <span className="address_value">{address.city}</span>
-                </div>
-                <div className="address_line">
-                  <p className="address_label">Street:</p>
-                  <span className="address_value">{address.streetName}</span>
-                </div>
-                <div className="address_line">
-                  <p className="address_label">Postal Code:</p>
-                  <span className="address_value">{address.postalCode}</span>
-                </div>
-              </div>
-            ))
+            <>
+              <span className="addressesWrap_type">Shipping</span>
+              <AddressField
+                variant={user.addresses[0]}
+                defaultBilAd={defaultBilAd || ''}
+                defaultShipAd={defaultShipAd || ''}
+                // addressKey="shippingAddress"
+              ></AddressField>
+              <span className="addressesWrap_type">Billing</span>
+              <AddressField
+                variant={user.addresses[1]}
+                defaultBilAd={defaultBilAd || ''}
+                defaultShipAd={defaultShipAd || ''}
+                // addressKey="billingAddress"
+              ></AddressField>
+            </>
           ) : (
             <p className="noAddress">Something wrong, can not see any address :(</p>
           )}

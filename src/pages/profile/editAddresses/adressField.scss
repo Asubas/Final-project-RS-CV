@@ -1,0 +1,49 @@
+.addressField {
+  position: relative;
+  .address_actions {
+    position: absolute;
+    top: -27px;
+    left: 80%;
+    display: flex;
+    .editButton {
+      position: relative;
+      left: 120%;
+    }
+  }
+
+  .addressForm {
+    .address {
+      .address_line {
+        height: auto;
+
+        p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        input {
+          width: 40%;
+          order: 1;
+        }
+
+        span {
+          margin: 0 10px 0 10px;
+          text-align: center;
+          display: block;
+          max-width: 150px;
+          overflow: auto;
+        }
+      }
+    }
+  }
+}
+
+.addressField {
+  .address_line {
+    span {
+      max-width: 150px;
+      overflow: auto;
+    }
+  }
+}

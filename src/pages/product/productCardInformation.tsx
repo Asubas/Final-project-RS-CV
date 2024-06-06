@@ -16,6 +16,7 @@ import iconKettle from '../../assets/svg/icon-kettle.svg';
 import iconWaterVoc from '../../assets/svg/icon-water_voc.svg';
 import iconAlarm from '../../assets/svg/icon-alarm.svg';
 import iconLanguage from '../../assets/svg/icon-language.svg';
+import getProductBySlug from '../../lib/resquests/getProductBySlug';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -50,22 +51,80 @@ function DisplayProductInformation() {
   };
   const location = useLocation();
   const product = location.state;
+  const currentURL = window.location.href;
+  const indexLastSep = currentURL.lastIndexOf('/');
+  const slug = currentURL.slice(indexLastSep + 1);
+  const [productInfo, setProductInfo] = useState<ProductProjection | null>(null);
+  const imagesSlider: SliderItemDataP[] = product?.masterData?.current.masterVariant.images;
+  const [currentImg, setCurrentImg] = useState<string>(imagesSlider?.[0].url);
+  const [, setIsLoading] = useState(true);
+  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
+  const IDsimilarProducts1 = product?.masterData?.current.categories[0].id;
+  const IDsimilarProducts2 = product?.masterData?.current.categories[1].id;
+  useEffect(() => {
+    if (!product && slug) {
+      getProductBySlug(slug)
+        .then((p) => {
+          const productResult = p.body.results?.[0];
+          setProductInfo(productResult);
+          setCurrentImg(productResult?.masterVariant?.images?.[0]?.url || '');
+
+          const IDsimilarProducts11 = productResult?.categories[0].id;
+          const IDsimilarProducts21 = productResult?.categories[1].id;
+
+          getSimilarProducts(IDsimilarProducts11, IDsimilarProducts21)
+            .then((res) => {
+              setSimilarProducts(res.body.results);
+              setIsLoading(false);
+            })
+            .catch((error) => {
+              console.error('Error fetching similar products:', error);
+              setIsLoading(false);
+            });
+        })
+        .catch((error) => {
+          console.error('Error fetching product by slug:', error);
+        });
+    }
+    if (product) {
+      setProductInfo(product);
+      setCurrentImg(product.masterData.current.masterVariant.images[0].url);
+
+      getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
+        .then((res) => {
+          setSimilarProducts(res.body.results);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error('Error fetching similar products:', error);
+          setIsLoading(false);
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product, slug]);
 
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
-  const productName = product.masterData.current.name['en-GB'];
-  const productDescription = product.masterData.current.description?.['en-GB'];
-  const productPrice50 = product.masterData.current.masterVariant.prices[0]?.value.centAmount;
+  const productName = product?.masterData?.current?.name?.['en-GB'] || productInfo?.name['en-GB'];
+  const productDescription =
+    product?.masterData?.current?.description?.['en-GB'] || productInfo?.description?.['en-GB'];
+  const productPrice50 =
+    product?.masterData?.current?.masterVariant?.prices?.[0]?.value.centAmount ||
+    productInfo?.masterVariant?.prices?.[0]?.value.centAmount;
   const productPriceFirstLoad =
     Number(productPrice50) / 100 === Math.trunc(Number(productPrice50) / 100)
       ? `${Number(productPrice50) / 100}.00`
       : `${(Number(productPrice50) / 100).toFixed(1)}0`;
-  const IDsimilarProducts1 = product.masterData.current.categories[0].id;
-  const IDsimilarProducts2 = product.masterData.current.categories[1].id;
-  const productPrice100 = product.masterData.current.variants[0].prices[0]?.value.centAmount;
-  const productPrice170 = product.masterData.current.variants[1].prices[0]?.value.centAmount;
+
+  const productPrice100 =
+    product?.masterData?.current.variants[0].prices[0]?.value.centAmount ||
+    productInfo?.variants?.[0].prices?.[0]?.value.centAmount;
+  const productPrice170 =
+    product?.masterData?.current.variants[1].prices[0]?.value.centAmount ||
+    productInfo?.variants?.[1].prices?.[0]?.value.centAmount;
   const productDiscontPrice50 =
-    product.masterData.current.masterVariant.prices[0]?.discounted?.value.centAmount;
+    product?.masterData?.current.masterVariant.prices[0]?.discounted?.value.centAmount ||
+    productInfo?.masterVariant?.prices?.[0]?.discounted?.value.centAmount;
   const productDiscontPriceFirstLoad = productDiscontPrice50
     ? Number(productDiscontPrice50) / 100 === Math.trunc(Number(productDiscontPrice50) / 100)
       ? `$ ${Number(productDiscontPrice50) / 100}.00`
@@ -81,20 +140,34 @@ function DisplayProductInformation() {
   }
 
   const productDiscontPrice100 =
-    product.masterData.current.variants[0].prices[0]?.discounted?.value.centAmount;
+    product?.masterData?.current.variants[0].prices[0]?.discounted?.value.centAmount ||
+    productInfo?.variants?.[0].prices?.[0]?.discounted?.value?.centAmount;
 
   const productDiscontPrice170 =
-    product.masterData.current.variants[1].prices[0]?.discounted?.value.centAmount;
+    product?.masterData?.current.variants[1].prices[0]?.discounted?.value.centAmount ||
+    productInfo?.variants?.[1].prices?.[0]?.discounted?.value?.centAmount;
 
-  const productOrigin = product.masterData.current.masterVariant.attributes[6].value;
-  const productIngredients = product.masterData.current.masterVariant.attributes[1].value;
-  const productServingSize = product.masterData.current.masterVariant.attributes[2].value;
-  const productWaterTemperature = product.masterData.current.masterVariant.attributes[3].value;
-  const productSteepingTime = product.masterData.current.masterVariant.attributes[4].value;
-  const productFlavor = product.masterData.current.masterVariant.attributes[7].value;
-  const productFullDescription = product.masterData.current.masterVariant.attributes[0].value;
-  const imagesSlider: SliderItemDataP[] = product.masterData.current.masterVariant.images;
-
+  const productOrigin =
+    product?.masterData?.current.masterVariant.attributes[6].value ||
+    productInfo?.masterVariant?.attributes?.[6]?.value;
+  const productIngredients =
+    product?.masterData?.current.masterVariant.attributes[1].value ||
+    productInfo?.masterVariant?.attributes?.[1]?.value;
+  const productServingSize =
+    product?.masterData?.current.masterVariant.attributes[2].value ||
+    productInfo?.masterVariant?.attributes?.[2]?.value;
+  const productWaterTemperature =
+    product?.masterData?.current.masterVariant.attributes[3].value ||
+    productInfo?.masterVariant?.attributes?.[3]?.value;
+  const productSteepingTime =
+    product?.masterData?.current.masterVariant.attributes[4].value ||
+    productInfo?.masterVariant?.attributes?.[4]?.value;
+  const productFlavor =
+    product?.masterData?.current.masterVariant.attributes[7].value ||
+    productInfo?.masterVariant?.attributes?.[7]?.value;
+  const productFullDescription =
+    product?.masterData?.current.masterVariant.attributes[0].value ||
+    productInfo?.masterVariant?.attributes?.[0]?.value;
   const productPriceArr = [productPrice50, productPrice100, productPrice170];
   const productDiscontPrice = [
     productDiscontPrice50,
@@ -145,30 +218,6 @@ function DisplayProductInformation() {
       priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
     }
   };
-
-  const [, setProductInfo] = useState(null);
-  const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
-  const [, setIsLoading] = useState(true);
-  const [currentImg, setCurrentImg] = useState<string>(imagesSlider[0].url);
-
-  useEffect(() => {
-    if (product) {
-      setProductInfo(product);
-      setCurrentImg(product.masterData.current.masterVariant.images[0].url);
-
-      getSimilarProducts(IDsimilarProducts1, IDsimilarProducts2)
-        .then((res) => {
-          setSimilarProducts(res.body.results);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error('Error fetching similar products:', error);
-          setIsLoading(false);
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product]);
-
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
     const selectImage = e.currentTarget.children[0] as HTMLImageElement;
     const tempImgCurUrl = currentImg;
@@ -178,8 +227,8 @@ function DisplayProductInformation() {
   };
 
   const createImagesContainer = (images: SliderItemDataP[], startIndex: number) => {
-    const slicedImages = images.slice(startIndex);
-    return slicedImages.map((image, index) => (
+    const slicedImages = images?.slice(startIndex);
+    return slicedImages?.map((image, index) => (
       <div key={index} className="additional-image-block" onClick={handleClickChangeImage}>
         <img className="additional-img" src={image.url} alt={`product-image-${image.label}`} />
       </div>
