@@ -1,0 +1,54 @@
+@import '../../App.scss';
+
+.notFoundSection {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.notFoundWrap {
+  display: flex;
+  flex-direction: row;
+  gap: 80px;
+  justify-content: center;
+  padding: 32px 0px;
+
+  @media (max-width: 550px) {
+    gap: 0;
+  }
+}
+
+.notFoundCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px;
+
+  .notFoundHead {
+    font-size: 72px;
+  }
+
+  .notFoundText {
+    font-size: 24px;
+
+    @media (max-width: 678px) {
+      font-size: 18px;
+    }
+
+    @media (max-width: 550px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.notFoundImg {
+  width: 182px;
+  padding: 0 16px;
+
+  @media (max-width: 550px) {
+    width: 125px;
+  }
+}

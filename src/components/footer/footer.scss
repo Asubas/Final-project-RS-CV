@@ -1,0 +1,134 @@
+@import '../../App.scss';
+
+.footer {
+  background-color: $backgroundVariant;
+}
+
+.footerWrap {
+  max-width: 1280px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 30px 76px;
+  margin: 0 auto;
+
+  @media (max-width: 980px) {
+    flex-wrap: wrap;
+    padding: 8px 16px;
+  }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.footer_block {
+  max-width: 262px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  gap: 24px;
+
+  @media (max-width: 540px) {
+    justify-content: center;
+    width: 100vw;
+    margin-bottom: 15px;
+  }
+
+  .only-head {
+    cursor: default;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  &__head {
+    font-size: 16px;
+  }
+
+  &__tab {
+    max-width: 272px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+
+    .member-list {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 0 12px;
+
+      .git-link {
+        padding: 0;
+        text-align: left;
+      }
+
+      .git-logo {
+        width: 16px;
+        height: 16px;
+        background: url('../../assets/svg/github.svg');
+      }
+
+      .location {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-location.svg') no-repeat center / contain;
+      }
+
+      .mail-to {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-mail.svg') no-repeat center / contain;
+      }
+
+      .call-to {
+        width: 20px;
+        height: 20px;
+        background: url('../../assets/svg/icon-call.svg') no-repeat center / contain;
+      }
+    }
+  }
+
+  &__item {
+    .rs-link {
+      display: block;
+      width: 200px;
+      transition: all 0.2s ease-out;
+      padding: 10px 12px;
+
+      &:hover {
+        transform: rotate(5deg) translate(10px);
+      }
+    }
+  }
+
+  &__link {
+    font-family: $fontPrimary;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    letter-spacing: 0.02em;
+    color: $primary;
+    text-transform: none;
+    text-align-last: left;
+  }
+}
+
+.contact {
+  width: 320px;
+
+  .member-list {
+    padding: 0 0 0 12px;
+  }
+
+  @media (max-width: 870px) {
+    margin: 0 auto;
+  }
+
+  @media (max-width: 540px) {
+    margin: 0;
+  }
+}
