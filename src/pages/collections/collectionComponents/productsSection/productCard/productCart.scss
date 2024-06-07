@@ -59,8 +59,19 @@
   }
 
   .productsCard_button-add.productAdded {
+    cursor: auto;
+    user-select: none;
+    pointer-events: none;
     &::before {
+      cursor: auto;
+      user-select: none;
+      pointer-events: none;
       background: url('/src/assets/svg/add-to-cart\ \(1\).png') no-repeat center / contain;
+    }
+
+    &:hover {
+      background-color: inherit;
+      border: none;
     }
   }
 }
