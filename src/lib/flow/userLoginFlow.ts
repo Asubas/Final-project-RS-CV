@@ -28,5 +28,4 @@ const createAuthorizedClient = (email: string, password: string): ApiRoot => {
     .build();
   return createApiBuilderFromCtpClient(userAuthorized);
 };
-
 export default createAuthorizedClient;

@@ -1,3 +1,5 @@
+import { MyCustomerSignin } from '@commercetools/platform-sdk';
+
 export interface CountryField {
   value: string;
   className: string;
@@ -19,4 +21,11 @@ export interface SelectCountryProps {
 export interface SelectFlavourProps {
   selectedFlavour: string | null;
   onFlavourChange: (value: string) => void;
+}
+
+export interface ExtendedMyCustomerSignin extends MyCustomerSignin {
+  anonymousCartId: string | null;
+  anonymousId: string | null;
+  activeCartSignInMode: 'MergeWithExistingCustomerCart';
+  updateProductData: boolean;
 }

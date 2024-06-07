@@ -1,8 +1,8 @@
 import { projectKey } from '../exports/exportsContants';
-import anonymousAuthMiddlewareOptions from '../flow/anonymFlow';
+import apiRoot from '../flow/anonymFlow';
 
 function createAnonymUser() {
-  anonymousAuthMiddlewareOptions().withProjectKey({ projectKey }).get().execute();
+  return apiRoot.withProjectKey({ projectKey }).get().execute();
 }
 
 export { createAnonymUser };

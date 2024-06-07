@@ -5,9 +5,9 @@ import {
 } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient, ApiRoot } from '@commercetools/platform-sdk';
 import { httpMiddlewareOptions, projectKey } from '../exports/exportsContants';
-import { LocalStorageTokenCache } from './tokenFlow';
+// import { LocalStorageTokenCache } from './tokenFlow';
 
-const tokens = new LocalStorageTokenCache();
+// const tokens = new LocalStorageTokenCache();
 const anonymousAuthMiddlewareOptions = (): ApiRoot => {
   const anonymClientId = crypto.randomUUID();
   const options: AnonymousAuthMiddlewareOptions = {
@@ -20,7 +20,7 @@ const anonymousAuthMiddlewareOptions = (): ApiRoot => {
     },
     scopes: [`manage_project:${projectKey}`],
     fetch,
-    tokenCache: tokens,
+    // tokenCache: tokens,
   };
 
   const anonymClient: Client = new ClientBuilder()
@@ -31,5 +31,5 @@ const anonymousAuthMiddlewareOptions = (): ApiRoot => {
   localStorage.setItem('anonymousId', `${anonymClientId}`);
   return createApiBuilderFromCtpClient(anonymClient);
 };
-
-export default anonymousAuthMiddlewareOptions;
+const apiRoot = anonymousAuthMiddlewareOptions();
+export default apiRoot;

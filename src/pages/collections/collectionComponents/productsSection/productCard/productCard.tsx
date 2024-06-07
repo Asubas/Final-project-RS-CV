@@ -15,12 +15,14 @@ const ProductCard = () => {
   const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
   // const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
   useEffect(() => {
-    getCart().then((response) => {
-      if (response.statusCode === 200) {
-        // setArrActiveCarts(response.body.lineItems);
-        setAddedProductIds(response.body.lineItems.map((item) => item.productId));
-      }
-    });
+    setTimeout(() => {
+      getCart().then((response) => {
+        if (response.statusCode === 200) {
+          // setArrActiveCarts(response.body.lineItems);
+          setAddedProductIds(response.body.lineItems.map((item) => item.productId));
+        }
+      });
+    }, 500);
   }, []);
 
   const handleClick = (id: string) => {

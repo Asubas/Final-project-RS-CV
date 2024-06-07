@@ -1,13 +1,14 @@
+import { ApiRoot } from '@commercetools/platform-sdk';
 import { loginUser } from '../../pages/accountPage/loginPage';
 import { projectKey } from '../exports/exportsContants';
-import anonymousAuthMiddlewareOptions from './anonymFlow';
+import apiRoot from './anonymFlow';
 import { getCart } from './getCart';
 
 const addProductToCart = async (id: string = '') => {
   const result = await getCart().then((res) => {
     if (res.statusCode === 200) {
-      let client = anonymousAuthMiddlewareOptions();
-      if (localStorage.getItem('userId')) client = loginUser;
+      let client: ApiRoot = apiRoot;
+      if (localStorage.getItem('userId')) client = loginUser as ApiRoot;
 
       return client
         .withProjectKey({ projectKey })

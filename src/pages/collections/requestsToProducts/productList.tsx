@@ -1,39 +1,39 @@
 import {
   ProductProjectionPagedQueryResponse,
-  createApiBuilderFromCtpClient,
+  // createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
-import {
-  AuthMiddlewareOptions,
-  ClientBuilder,
-  HttpMiddlewareOptions,
-} from '@commercetools/sdk-client-v2';
+import {} from // AuthMiddlewareOptions,
+// ClientBuilder,
+// HttpMiddlewareOptions,
+'@commercetools/sdk-client-v2';
 import { projectKey } from '../../../lib/exports/exportsContants';
-import { LocalStorageTokenCache } from '../../../lib/flow/tokenFlow';
+// import { LocalStorageTokenCache } from '../../../lib/flow/tokenFlow';
+import apiRoot from '../../../lib/flow/anonymFlow';
 
-const tokens = new LocalStorageTokenCache();
-const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: 'https://auth.europe-west1.gcp.commercetools.com',
-  projectKey: projectKey,
-  credentials: {
-    clientId: process.env.VITE_CTP_CLIENT_ID || '',
-    clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
-  },
-  scopes: [`manage_project:${projectKey}`],
-  fetch,
-  tokenCache: tokens,
-};
+// const tokens = new LocalStorageTokenCache();
+// const authMiddlewareOptions: AuthMiddlewareOptions = {
+//   host: 'https://auth.europe-west1.gcp.commercetools.com',
+//   projectKey: projectKey,
+//   credentials: {
+//     clientId: process.env.VITE_CTP_CLIENT_ID || '',
+//     clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
+//   },
+//   scopes: [`manage_project:${projectKey}`],
+//   fetch,
+//   tokenCache: tokens,
+// };
 
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: 'https://api.europe-west1.gcp.commercetools.com',
-  fetch,
-};
-const ctpClient = new ClientBuilder()
-  .withProjectKey(projectKey)
-  .withClientCredentialsFlow(authMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  .build();
+// const httpMiddlewareOptions: HttpMiddlewareOptions = {
+//   host: 'https://api.europe-west1.gcp.commercetools.com',
+//   fetch,
+// };
+// const ctpClient = new ClientBuilder()
+//   .withProjectKey(projectKey)
+//   .withClientCredentialsFlow(authMiddlewareOptions)
+//   .withHttpMiddleware(httpMiddlewareOptions)
+//   .build();
 
-const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
+// const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
@@ -56,7 +56,8 @@ const getProductList = async (
       filters = [''];
     }
   }
-  return request
+  return apiRoot
+    .withProjectKey({ projectKey })
     .productProjections()
     .search()
     .get({
