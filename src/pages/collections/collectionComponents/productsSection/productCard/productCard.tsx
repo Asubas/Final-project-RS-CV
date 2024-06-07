@@ -13,13 +13,12 @@ const ProductCard = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
-  const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
-
+  // const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
   useEffect(() => {
     getCart().then((response) => {
       if (response.statusCode === 200) {
-        setArrActiveCarts(response.body.lineItems);
-        setAddedProductIds(response.body.lineItems.map((item) => item.id));
+        // setArrActiveCarts(response.body.lineItems);
+        setAddedProductIds(response.body.lineItems.map((item) => item.productId));
       }
     });
   }, []);
@@ -39,24 +38,22 @@ const ProductCard = () => {
     event.stopPropagation();
     addProductToCart(id).then((res: ClientResponse<Cart> | undefined) => {
       if (res && res.statusCode === 200) {
-        setArrActiveCarts((prevCarts) => [...prevCarts, res.body.lineItems[0]]);
+        // setArrActiveCarts((prevCarts) => [...prevCarts, res.body.lineItems[0]]);
         setAddedProductIds((prevIds) => [...prevIds, id]);
       }
     });
   };
-  console.log(arrActiveCarts);
 
   return (
     <>
       {state.results.map((product) => {
         const { id, name, masterVariant, description } = product;
         const { images, prices } = masterVariant;
-        const isProductAddedToCart = addedProductIds.includes(id);
         return (
           <div className="productsCard" key={id} onClick={() => handleClick(id)}>
             <button
               key={id}
-              className={`productsCard_button-add ${isProductAddedToCart ? 'productAdded' : ''}`}
+              className={`productsCard_button-add ${addedProductIds.includes(id) ? 'productAdded' : ''}`}
               type="button"
               ref={buttonBug}
               onClick={(event: React.MouseEvent<HTMLElement>) => handleClickBug(event, id)}

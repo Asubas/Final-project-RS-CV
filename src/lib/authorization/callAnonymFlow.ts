@@ -17,9 +17,8 @@ if (localStorage.getItem('anonymousCartId')) {
     .then((res) => {
       if (res.statusCode === 200) {
         if (res.body.anonymousId === localStorage.getItem('anonymousId')) {
-          console.log('аноним тот же');
+          return;
         } else {
-          console.log('меняем');
           const cartId = localStorage.getItem('anonymousCartId');
           anonymousAuthMiddlewareOptions()
             .withProjectKey({ projectKey })
