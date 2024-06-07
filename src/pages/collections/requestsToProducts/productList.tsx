@@ -8,7 +8,9 @@ import {
   HttpMiddlewareOptions,
 } from '@commercetools/sdk-client-v2';
 import { projectKey } from '../../../lib/exports/exportsContants';
+import { LocalStorageTokenCache } from '../../../lib/flow/tokenFlow';
 
+const tokens = new LocalStorageTokenCache();
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',
   projectKey: projectKey,
@@ -18,6 +20,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes: [`manage_project:${projectKey}`],
   fetch,
+  tokenCache: tokens,
 };
 
 const httpMiddlewareOptions: HttpMiddlewareOptions = {

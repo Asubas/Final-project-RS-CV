@@ -1,8 +1,8 @@
 import { AuthMiddlewareOptions, Client, ClientBuilder } from '@commercetools/sdk-client-v2';
 import { httpMiddlewareOptions, projectKey } from '../exports/exportsContants';
-// import { LocalStorageTokenCache } from './tokenFlow';
+import { LocalStorageTokenCache } from './tokenFlow';
 
-// const tokens = new LocalStorageTokenCache();
+const tokens = new LocalStorageTokenCache();
 const options: AuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',
   projectKey: process.env.VITE_CTP_PROJECT_KEY || '',
@@ -10,7 +10,7 @@ const options: AuthMiddlewareOptions = {
     clientId: process.env.VITE_CTP_CLIENT_ID || '',
     clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
   },
-  // tokenCache: tokens,
+  tokenCache: tokens,
   scopes: [`manage_project:${projectKey}`],
   fetch,
 };

@@ -11,12 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
+import { ApiRoot } from '@commercetools/platform-sdk';
 
 type Inputs = {
   login: string;
   password: string;
 };
-
+let loginUser: ApiRoot;
 function AccountPage() {
   const {
     watch,
@@ -29,6 +30,8 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
+      loginUser = createAuthorizedClient(login, password);
+
       createAuthorizedClient(login, password)
         .withProjectKey({ projectKey })
         .me()
@@ -124,3 +127,4 @@ function AccountPage() {
 }
 
 export default AccountPage;
+export { loginUser };

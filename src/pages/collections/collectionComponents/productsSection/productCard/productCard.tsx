@@ -1,50 +1,65 @@
 import './productCart.scss';
-import { useContext, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ProductsPageContext } from '../../../context';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getProductById } from '../../../../../lib/resquests/getProductInfo';
+import { addProductToCart } from '../../../../../lib/flow/createCart';
+import { Cart, ClientResponse } from '@commercetools/platform-sdk';
+import { getCart } from '../../../../../lib/flow/getCart';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
   const buttonBug = useRef<HTMLButtonElement>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const handleClick = (id: string, e: React.MouseEvent<HTMLDivElement>) => {
-    if (!(e.target as Node).contains(buttonBug.current)) {
-      getProductById(id).then((res) => {
-        if (res.statusCode === 200) {
-          const currentUrl = location.pathname;
-          const path = res.body.masterData.current.slug['en-GB'];
-          navigate(`${currentUrl}/${path}`, { state: res.body });
-        }
-      });
-    }
+  const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
+  const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
+
+  useEffect(() => {
+    getCart().then((response) => {
+      if (response.statusCode === 200) {
+        setArrActiveCarts(response.body.lineItems);
+        setAddedProductIds(response.body.lineItems.map((item) => item.id));
+      }
+    });
+  }, []);
+
+  const handleClick = (id: string) => {
+    getProductById(id).then((res) => {
+      if (res.statusCode === 200) {
+        const currentUrl = location.pathname;
+        const path = res.body.masterData.current.slug['en-GB'];
+        navigate(`${currentUrl}/${path}`, { state: res.body });
+      }
+    });
   };
 
-  const handleClickBug = (event: React.MouseEvent<HTMLElement>) => {
-    console.log('клик на кнопку');
-    if (buttonBug.current && buttonBug.current.contains(event.target as Node)) {
-      return;
-    } else {
-      event.stopPropagation();
-    }
+  const handleClickBug = (event: React.MouseEvent<HTMLElement>, id: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    addProductToCart(id).then((res: ClientResponse<Cart> | undefined) => {
+      if (res && res.statusCode === 200) {
+        setArrActiveCarts((prevCarts) => [...prevCarts, res.body.lineItems[0]]);
+        setAddedProductIds((prevIds) => [...prevIds, id]);
+      }
+    });
   };
+  console.log(arrActiveCarts);
+
   return (
     <>
       {state.results.map((product) => {
         const { id, name, masterVariant, description } = product;
         const { images, prices } = masterVariant;
+        const isProductAddedToCart = addedProductIds.includes(id);
         return (
-          <div
-            className="productsCard"
-            key={id}
-            onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClick(id, e)}
-          >
+          <div className="productsCard" key={id} onClick={() => handleClick(id)}>
             <button
-              className="productsCard_button-add"
+              key={id}
+              className={`productsCard_button-add ${isProductAddedToCart ? 'productAdded' : ''}`}
               type="button"
               ref={buttonBug}
-              onClick={handleClickBug}
+              onClick={(event: React.MouseEvent<HTMLElement>) => handleClickBug(event, id)}
             />
             <ul className="productsCard-list">
               <li className="productsCard-item productsCard-item_img">
