@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
-import { ApiRoot } from '@commercetools/platform-sdk';
+// import { ApiRoot } from '@commercetools/platform-sdk';
 import apiRoot from '../../lib/flow/anonymFlow';
 import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
 
@@ -20,7 +20,7 @@ type Inputs = {
   password: string;
 };
 
-let loginUser: ApiRoot;
+// let loginUser: ApiRoot;
 function AccountPage() {
   const {
     watch,
@@ -33,7 +33,7 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      loginUser = await apiRoot
+      apiRoot
         .withProjectKey({ projectKey })
         .login()
         .post({ body: { email: login, password: password } })
@@ -152,4 +152,4 @@ function AccountPage() {
 }
 
 export default AccountPage;
-export { loginUser };
+// export { loginUser };

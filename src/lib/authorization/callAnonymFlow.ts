@@ -1,9 +1,8 @@
 import { projectKey } from '../exports/exportsContants';
 import apiRoot from '../flow/anonymFlow';
-import createAuthorizedClient from '../flow/userLoginFlow';
 import { createAnonymUser } from './createAnonumUser';
 
-if (!localStorage.getItem('userId')) {
+if (!localStorage.getItem('userId') && !localStorage.getItem('accessToken')) {
   createAnonymUser().then((response) => {
     //сразу создаем анонимную корзину
     if (response.statusCode === 200) {
@@ -57,4 +56,7 @@ if (!localStorage.getItem('userId')) {
       }
     }
   });
+} else {
+  //иначе восстанавливаем через рефрешь сессию
+  createAnonymUser();
 }
