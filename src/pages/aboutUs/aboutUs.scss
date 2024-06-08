@@ -18,7 +18,7 @@
       transition: all 0.2s ease-in;
 
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.2) rotate(16deg);
       }
     }
   }
@@ -100,8 +100,53 @@
       }
     }
 
-    &__location {
+    &__subText {
       font-size: 12px;
+      position: relative;
+      transform: translate(15px);
     }
+
+    .subText_location::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      top: 0;
+      left: -14px;
+      background: url('../../assets/svg/icon-location.svg') center / contain no-repeat;
+    }
+
+    .subText_role::after {
+      content: '';
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      top: 0;
+      left: -14px;
+      background: url('../../assets/svg/icon-person.svg') center / contain no-repeat;
+    }
+  }
+}
+
+.contribution {
+  max-width: 1280px;
+  padding: 16px;
+  margin: 32px auto;
+  background-color: $backgroundVariant;
+  border-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+
+  .contribution_img {
+    width: 200px;
+    height: 200px;
+    background: url('../../assets/svg/rs_school_contr.svg') center / contain no-repeat;
+  }
+
+  .contribution_block {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
