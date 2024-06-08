@@ -1,5 +1,42 @@
 @import '../../App.scss';
 
+.rssWrap {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  max-width: 1280px;
+  margin: 30px auto;
+  background-color: #ffda1f;
+  border-radius: 25px;
+
+  .rssLogo {
+    &_link {
+      display: block;
+      width: 150px;
+      height: 150px;
+      background: url('../../assets/svg/rs_school_js.svg') center / contain no-repeat;
+      transition: all 0.2s ease-in;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .rssDisc {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px;
+    max-width: 450px;
+  }
+
+  .rssTeam {
+    width: 278px;
+    height: 250px;
+    background: url('../../assets/svg/rs_school_team.svg') center / contain no-repeat;
+  }
+}
+
 .developerWrap {
   width: 100%;
   max-width: 1280px;
