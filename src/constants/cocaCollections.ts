@@ -3,7 +3,7 @@ import subCoca2 from '../assets/img/subCocoa-2.jpg';
 import subCoca3 from '../assets/img/subCocoa-3.jpg';
 import subCoca4 from '../assets/img/subCocoa-4.jpg';
 
-const subcategoriesCococa = ['Forastero', 'TRINITARIO', 'Criollo', 'All'];
+const subcategoriesCococa = ['Forastero', 'TRINITARIO', 'Criollo', 'all'];
 const backgroundImagesCocoa = [subCoca1, subCoca2, subCoca3, subCoca4];
 
 const cocoaUrl = {
