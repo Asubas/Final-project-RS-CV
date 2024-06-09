@@ -6,20 +6,21 @@ import { getProductById } from '../../../../../lib/resquests/getProductInfo';
 import { addProductToCart } from '../../../../../lib/flow/createCart';
 import { Cart, ClientResponse } from '@commercetools/platform-sdk';
 import { getCart } from '../../../../../lib/flow/getCart';
+import { LoadingModal } from '../../../../../components/loadingSnippet/loadingFetchProduct/loadingModal';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
   const buttonBug = useRef<HTMLButtonElement>(null);
+  const [loadingState, setLoadingState] = useState<{ [key: string]: boolean }>({});
+
   const location = useLocation();
   const navigate = useNavigate();
   const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
-  // const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
   useEffect(() => {
     setTimeout(() => {
       setTimeout(async () => {
         await getCart().then((response) => {
           if (response.statusCode === 200) {
-            // setArrActiveCarts(response.body.lineItems);
             setAddedProductIds(response.body.lineItems.map((item) => item.productId));
           }
         });
@@ -40,12 +41,24 @@ const ProductCard = () => {
   const handleClickBug = (event: React.MouseEvent<HTMLElement>, id: string) => {
     event.preventDefault();
     event.stopPropagation();
-    addProductToCart(id).then((res: ClientResponse<Cart> | undefined) => {
-      if (res && res.statusCode === 200) {
-        // setArrActiveCarts((prevCarts) => [...prevCarts, res.body.lineItems[0]]);
-        setAddedProductIds((prevIds) => [...prevIds, id]);
-      }
-    });
+    setLoadingState((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+    addProductToCart(id)
+      .then((res: ClientResponse<Cart> | undefined) => {
+        if (res && res.statusCode === 200) {
+          setAddedProductIds((prevIds) => [...prevIds, id]);
+        }
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoadingState((prevState) => ({
+            ...prevState,
+            [id]: false,
+          }));
+        }, 1500);
+      });
   };
 
   return (
@@ -55,6 +68,7 @@ const ProductCard = () => {
         const { images, prices } = masterVariant;
         return (
           <div className="productsCard" key={id} onClick={() => handleClick(id)}>
+            {loadingState[id] && <LoadingModal />}
             <button
               key={id}
               className={`productsCard_button-add ${addedProductIds.includes(id) ? 'productAdded' : ''}`}
