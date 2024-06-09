@@ -5,7 +5,6 @@ import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import createAuthorizedClient from '../../lib/flow/userLoginFlow';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { loginRef, reqRef } from '../../components/header/navBar/navBar';
@@ -35,31 +34,31 @@ function AccountPage() {
     if (isValid) {
       checkUser()
         .withProjectKey({ projectKey })
+        .me()
         .login()
-        .post({ body: { email: login, password: password } })
+        .post({
+          body: {
+            email: login,
+            password: password,
+            anonymousCartId: localStorage.getItem('anonymousCartId'),
+            anonymousId: localStorage.getItem('anonymousId'),
+            activeCartSignInMode: 'MergeWithExistingCustomerCart',
+            updateProductData: true,
+          } as ExtendedMyCustomerSignin,
+        })
         .execute()
         .then((response) => {
           if (response.statusCode === 200) {
-            return createAuthorizedClient(login, password)
+            checkUser({ email: login, password }, true)
               .withProjectKey({ projectKey })
               .me()
-              .login()
-              .post({
-                body: {
-                  email: login,
-                  password: password,
-                  anonymousCartId: localStorage.getItem('anonymousCartId'),
-                  anonymousId: localStorage.getItem('anonymousId'),
-                  activeCartSignInMode: 'MergeWithExistingCustomerCart',
-                  updateProductData: true,
-                } as ExtendedMyCustomerSignin,
-              })
+              .get()
               .execute()
               .then((res) => {
                 if (res.statusCode === 200) {
                   console.log('ds');
-                  localStorage.setItem('userId', `${res.body.customer.id}`);
-                  localStorage.setItem('userVersion', `${res.body.customer.version}`);
+                  localStorage.setItem('userId', `${res.body.id}`);
+                  localStorage.setItem('userVersion', `${res.body.version}`);
                   localStorage.removeItem('anonymousId');
                   navigate('/');
                   if (loginRef.current && reqRef.current) {
