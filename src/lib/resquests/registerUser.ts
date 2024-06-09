@@ -3,9 +3,11 @@ import getUserRequestObject from '../../components/getUserObjectRegistrationPage
 import { projectKey } from '../exports/exportsContants';
 import { registerClient } from '../flow/registerFlow';
 import { NavigateFunction } from 'react-router-dom';
-import { loginRef } from '../../components/header/navBar/navBar';
+import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorRegister, successRegister } from '../../components/toastyOption/toastyOptions';
 import { toast } from 'react-toastify';
+import { checkUser } from '../flow/anonymFlow';
+import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
 
 function registerUser(navigate: NavigateFunction) {
   const bodyRequest = getUserRequestObject();
@@ -21,10 +23,9 @@ function registerUser(navigate: NavigateFunction) {
         if (res.statusCode === 201) {
           localStorage.setItem('userId', `${res.body.customer.id}`);
           localStorage.setItem('userVersion', `${res.body.customer.version}`);
-          navigate('/');
           if (loginRef.current) loginRef.current.textContent = 'Log out';
           toast.success('🔥 You have successfully registered and logged in!', successRegister);
-          const keyToKeep = ['userId', 'accessToken', 'refreshToken', 'userVersion'];
+          const keyToKeep = ['anonymousId', 'anonymousCartId', 'userId', 'userVersion'];
           const keys = Object.keys(localStorage);
           const keysToDelete = keys.filter((key) => !keyToKeep.includes(key));
           keysToDelete.forEach((key) => {
@@ -51,7 +52,50 @@ function registerUser(navigate: NavigateFunction) {
                 ],
               },
             })
-            .execute();
+            .execute()
+            .then((resAddress) => {
+              localStorage.removeItem('userId');
+              localStorage.removeItem('userVersion');
+              if (resAddress.statusCode === 200) {
+                checkUser()
+                  .withProjectKey({ projectKey })
+                  .me()
+                  .login()
+                  .post({
+                    body: {
+                      email: bodyRequest.email,
+                      password: bodyRequest.password,
+                      anonymousCartId: localStorage.getItem('anonymousCartId'),
+                      anonymousId: localStorage.getItem('anonymousId'),
+                      activeCartSignInMode: 'MergeWithExistingCustomerCart',
+                      updateProductData: true,
+                    } as ExtendedMyCustomerSignin,
+                  })
+                  .execute()
+                  .then((response) => {
+                    if (response.statusCode === 200) {
+                      checkUser({ email: bodyRequest.email, password: bodyRequest.password }, true)
+                        .withProjectKey({ projectKey })
+                        .me()
+                        .get()
+                        .execute()
+                        .then((resp) => {
+                          if (resp.statusCode === 200) {
+                            localStorage.setItem('userId', `${resp.body.id}`);
+                            localStorage.setItem('userVersion', `${resp.body.version}`);
+                            localStorage.removeItem('anonymousId');
+                            navigate('/');
+                            if (loginRef.current && reqRef.current) {
+                              loginRef.current.textContent = 'log out';
+                              reqRef.current.textContent = 'profile';
+                            }
+                          }
+                        });
+                      navigate('/');
+                    }
+                  });
+              }
+            });
         }
       })
       .catch(() => {

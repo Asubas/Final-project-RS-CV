@@ -56,7 +56,6 @@ function AccountPage() {
               .execute()
               .then((res) => {
                 if (res.statusCode === 200) {
-                  console.log('ds');
                   localStorage.setItem('userId', `${res.body.id}`);
                   localStorage.setItem('userVersion', `${res.body.version}`);
                   localStorage.removeItem('anonymousId');
@@ -66,16 +65,16 @@ function AccountPage() {
                     reqRef.current.textContent = 'profile';
                   }
                   toast.success('🎉 You have successfully logged in', successLogin);
-                  return checkUser(); // Return the ApiRoot instance
+                  return checkUser();
                 }
-                return checkUser(); // Return the ApiRoot instance on error
+                return checkUser();
               })
               .catch(() => {
                 toast.error('Invalid email or password or such user does not exist!', errorLogin);
-                return checkUser(); // Return the ApiRoot instance on error
+                return checkUser();
               });
           }
-          return checkUser(); // Return the ApiRoot instance on error
+          return checkUser();
         });
     }
   };

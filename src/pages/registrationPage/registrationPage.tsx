@@ -356,7 +356,7 @@ function RegistrationPage() {
 
             <MyButton className="btn_white " type="submit">
               {' '}
-              Sign in
+              Sign up
             </MyButton>
             <MyButton className="btn_black " type="button" onClick={navigateToLogin}>
               {' '}
