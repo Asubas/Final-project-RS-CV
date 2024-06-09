@@ -1,39 +1,7 @@
-import {
-  ProductProjectionPagedQueryResponse,
-  // createApiBuilderFromCtpClient,
-} from '@commercetools/platform-sdk';
-import {} from // AuthMiddlewareOptions,
-// ClientBuilder,
-// HttpMiddlewareOptions,
-'@commercetools/sdk-client-v2';
+import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+
 import { projectKey } from '../../../lib/exports/exportsContants';
-// import { LocalStorageTokenCache } from '../../../lib/flow/tokenFlow';
 import { checkUser } from '../../../lib/flow/anonymFlow';
-
-// const tokens = new LocalStorageTokenCache();
-// const authMiddlewareOptions: AuthMiddlewareOptions = {
-//   host: 'https://auth.europe-west1.gcp.commercetools.com',
-//   projectKey: projectKey,
-//   credentials: {
-//     clientId: process.env.VITE_CTP_CLIENT_ID || '',
-//     clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
-//   },
-//   scopes: [`manage_project:${projectKey}`],
-//   fetch,
-//   tokenCache: tokens,
-// };
-
-// const httpMiddlewareOptions: HttpMiddlewareOptions = {
-//   host: 'https://api.europe-west1.gcp.commercetools.com',
-//   fetch,
-// };
-// const ctpClient = new ClientBuilder()
-//   .withProjectKey(projectKey)
-//   .withClientCredentialsFlow(authMiddlewareOptions)
-//   .withHttpMiddleware(httpMiddlewareOptions)
-//   .build();
-
-// const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
 const getProductList = async (
   limitAtr: number,
   offsetAtr: number,

@@ -11,15 +11,6 @@ export const getCart = async () => {
       .get()
       .execute();
   } else {
-    return (
-      checkUser()
-        .withProjectKey({ projectKey })
-        .me()
-        .activeCart()
-        // .carts()
-        // .withId({ ID: localStorage.getItem('anonymousCartId') as string })
-        .get()
-        .execute()
-    );
+    return checkUser().withProjectKey({ projectKey }).me().activeCart().get().execute();
   }
 };
