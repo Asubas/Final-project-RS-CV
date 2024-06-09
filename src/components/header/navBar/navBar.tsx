@@ -4,7 +4,8 @@ import logoCart from '../../../assets/svg/icon-local_mall.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
-import { createAnonymUser } from '../../../lib/authorization/createAnonumUser';
+// import { createAnonymUser } from '../../../lib/authorization/createAnonumUser';
+import { startApp } from '../../../lib/authorization/callAnonymFlow';
 
 let loginRef: RefObject<HTMLAnchorElement>;
 let reqRef: RefObject<HTMLAnchorElement>;
@@ -30,15 +31,18 @@ function NavBar() {
   };
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userVersion');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('accessToken');
     setIsUserLoggedIn(false);
     if (loginRef.current?.textContent === 'Log out') {
+      localStorage.removeItem('userId');
+      localStorage.removeItem('userVersion');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('anonymousCartId');
       toast.info('🎈 You are logged out of your account!', infoLogout);
       navigate('/');
-      createAnonymUser();
+      setTimeout(() => {
+        startApp();
+      }, 300);
     }
     if (loginRef.current) loginRef.current.textContent = 'Sign in';
   };
