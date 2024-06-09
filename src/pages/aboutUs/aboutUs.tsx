@@ -18,7 +18,7 @@ const developerData: Developer[] = [
     about: `My name is Alexey, I am 30 years old. I live in Yaroslavl and graduated from Yaroslavl State Technical University with a degree in Technical Systems Management. I have a bachelor's degree. Currently, I work in the field of industrial electronics. I've been looking at programming my whole life and was afraid to start. But at some point, I decided it was time (at 30 years old, yes). This course is my first significant experience in programming, and I hope it won't be my last. So far, I like everything, it's very interesting, and I constantly want to improve my skills. I wish everyone good luck, don't give up, and you will succeed!`,
     img: photoAlexey,
     gitUrl: 'https://github.com/Asubas',
-    role: 'teamlid, capitan',
+    role: 'teamlead, developer, capitan',
   },
   {
     name: 'lipan48',
@@ -27,7 +27,7 @@ const developerData: Developer[] = [
       'My name is Anton, and I’m that guy who always seeks new challenges and is ready to learning something new. I’m 35 years old and have experience in sales and logistics, but I realized that I`m in search of myself. I see myself in front-end development. I’m self-motivated and always willing to learn new technologies and development procedures.',
     img: 'https://avatars.githubusercontent.com/u/120409900?s=400&u=bcd265e18b819ee7aa8f65a4a1aaa7428fd34b68&v=4',
     gitUrl: 'https://github.com/lipan4836',
-    role: 'jira-technic, solder',
+    role: 'jira-technic, developer, soldier',
   },
   {
     name: 'DzmitryAlekseev',
@@ -36,7 +36,7 @@ const developerData: Developer[] = [
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas aperiam ea quasi repellendus, inventore numquam ex laboriosam perferendis rerum facilis eaque tenetur expedita. Voluptatem illum, consequuntur laboriosam possimus ipsa officia!',
     img: photoDima,
     gitUrl: 'https://github.com/DzmitryAlekseev',
-    role: 'solder',
+    role: 'developer, soldier',
   },
 ];
 
@@ -84,7 +84,7 @@ function AboutUs() {
         <div className="contribution_block">
           <p className="contribution_block__text">
             Alexey set up the project and implemented the user login page, product catalog pages,
-            search, and filters. He also quickly fixed bugs.
+            cart page, search, and filters, heplers functions. He also quickly fixed bugs.
           </p>
           <p className="contribution_block__text">
             Anton was responsible for implementing the main page, user page, "About Us" page, cart
@@ -92,8 +92,36 @@ function AboutUs() {
             uploading the product matrix to Commerce Tools.
           </p>
           <p className="contribution_block__text">
-            ChatGPT Dmitry implemented the registration page and the detailed product page. From
-            beginning, he worked with Alexey on setting up Commerce Tools.
+            Dmitry implemented the registration page and the detailed product page. From beginning,
+            he worked with Alexey on setting up Commerce Tools.
+          </p>
+        </div>
+      </div>
+      <div className="collaboration">
+        <div className="collaboration_img"></div>
+        <div className="collaboration_block">
+          <p className="collaboration_block__text">
+            Our team held a call the day before the end of the sprint. During this call, we reviewed
+            the results, identified difficulties, and tried to find solutions. Every 2-3 days
+            throughout the sprint, we also met to share our current progress.
+          </p>
+          <p className="collaboration_block__text">
+            Sometimes, to find solutions to certain tasks, we organized code jams. It was a great
+            experience because each of us participated in the coding process. We all had a positive
+            experience.
+          </p>
+          <p className="collaboration_block__text">
+            Our teamlead (Alexey) is an excellent leader. He motivated everyone and was always
+            positive. There are no obstacles for him. He's ready to code anytime he's not asleep!
+          </p>
+          <p className="collaboration_block__text">
+            Anton and Dmitry, like true soldiers, followed their leader Alexey. They approached
+            their tasks with responsibility.
+          </p>
+          <p className="collaboration_block__text">
+            The development of this application is an excellent foundation for commercial
+            development. Thank you very much to RS School for the opportunity. And special thanks to
+            our mentor Tatiana for everything!
           </p>
         </div>
       </div>
