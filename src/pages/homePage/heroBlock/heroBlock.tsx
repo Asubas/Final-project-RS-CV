@@ -16,7 +16,7 @@ function HeroBlock() {
                 ariatur sunt iure sequi, molestiae enim blanditiis rerum culpa nam!
               </p>
               <Link className="btn_black heroDisc_link" to="collection">
-                browes collection
+                browses collection
               </Link>
             </div>
           </div>
