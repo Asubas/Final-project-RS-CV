@@ -8,7 +8,7 @@ import {} from // AuthMiddlewareOptions,
 '@commercetools/sdk-client-v2';
 import { projectKey } from '../../../lib/exports/exportsContants';
 // import { LocalStorageTokenCache } from '../../../lib/flow/tokenFlow';
-import apiRoot from '../../../lib/flow/anonymFlow';
+import { checkUser } from '../../../lib/flow/anonymFlow';
 
 // const tokens = new LocalStorageTokenCache();
 // const authMiddlewareOptions: AuthMiddlewareOptions = {
@@ -56,7 +56,7 @@ const getProductList = async (
       filters = [''];
     }
   }
-  return apiRoot
+  return checkUser()
     .withProjectKey({ projectKey })
     .productProjections()
     .search()

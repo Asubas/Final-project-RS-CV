@@ -1,9 +1,9 @@
 import { projectKey } from '../exports/exportsContants';
-import apiRoot from './anonymFlow';
+import { checkUser } from './anonymFlow';
 
 export const getCart = async () => {
   if (!localStorage.getItem('userId')) {
-    return apiRoot
+    return checkUser()
       .withProjectKey({ projectKey })
       .me()
       .carts()
@@ -11,7 +11,7 @@ export const getCart = async () => {
       .get()
       .execute();
   } else {
-    return apiRoot
+    return checkUser()
       .withProjectKey({ projectKey })
       .carts()
       .withId({ ID: localStorage.getItem('anonymousCartId') as string })

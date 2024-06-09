@@ -1,11 +1,11 @@
 import { projectKey } from '../exports/exportsContants';
-import apiRoot from './anonymFlow';
+import { checkUser } from './anonymFlow';
 import { getCart } from './getCart';
 
 const addProductToCart = async (id: string = '') => {
   const result = await getCart().then((res) => {
     if (res.statusCode === 200) {
-      return apiRoot
+      return checkUser()
         .withProjectKey({ projectKey })
         .carts()
         .withId({ ID: res.body.id })

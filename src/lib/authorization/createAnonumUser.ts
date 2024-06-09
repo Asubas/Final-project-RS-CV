@@ -1,8 +1,7 @@
 import { projectKey } from '../exports/exportsContants';
-import apiRoot from '../flow/anonymFlow';
-
-function createAnonymUser() {
-  return apiRoot.withProjectKey({ projectKey }).get().execute();
+import { checkUser } from '../flow/anonymFlow';
+async function createAnonymUser() {
+  return checkUser().withProjectKey({ projectKey }).get().execute();
 }
 
 export { createAnonymUser };

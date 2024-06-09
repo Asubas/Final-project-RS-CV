@@ -12,7 +12,7 @@ import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
 // import { ApiRoot } from '@commercetools/platform-sdk';
-import apiRoot from '../../lib/flow/anonymFlow';
+import { checkUser } from '../../lib/flow/anonymFlow';
 import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
 
 type Inputs = {
@@ -33,7 +33,7 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      apiRoot
+      checkUser()
         .withProjectKey({ projectKey })
         .login()
         .post({ body: { email: login, password: password } })
@@ -67,16 +67,16 @@ function AccountPage() {
                     reqRef.current.textContent = 'profile';
                   }
                   toast.success('🎉 You have successfully logged in', successLogin);
-                  return apiRoot; // Return the ApiRoot instance
+                  return checkUser(); // Return the ApiRoot instance
                 }
-                return apiRoot; // Return the ApiRoot instance on error
+                return checkUser(); // Return the ApiRoot instance on error
               })
               .catch(() => {
                 toast.error('Invalid email or password or such user does not exist!', errorLogin);
-                return apiRoot; // Return the ApiRoot instance on error
+                return checkUser(); // Return the ApiRoot instance on error
               });
           }
-          return apiRoot; // Return the ApiRoot instance on error
+          return checkUser(); // Return the ApiRoot instance on error
         });
     }
   };
