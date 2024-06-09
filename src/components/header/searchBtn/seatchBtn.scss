@@ -2,16 +2,16 @@
 .searchProductList {
   position: absolute;
   background-color: azure;
-  padding: 5px;
-  right: 600px;
+  right: 590px;
   top: 60px;
 
   @media (max-width: 870px) {
     right: 15px;
-    top: 40px;
+    top: 55px;
   }
 
   div {
+    padding: 5px;
     &:hover {
       background-color: $secondary;
     }

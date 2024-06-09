@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
-// import { ApiRoot } from '@commercetools/platform-sdk';
 import { checkUser } from '../../lib/flow/anonymFlow';
 import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
 
@@ -19,7 +18,6 @@ type Inputs = {
   password: string;
 };
 
-// let loginUser: ApiRoot;
 function AccountPage() {
   const {
     watch,
@@ -150,4 +148,3 @@ function AccountPage() {
 }
 
 export default AccountPage;
-// export { loginUser };

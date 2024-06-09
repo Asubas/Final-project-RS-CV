@@ -1,10 +1,9 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logoCart from '../../../assets/svg/icon-local_mall.svg';
+import logoCart from '../../../assets/svg/icon-local_mall_black.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
-// import { createAnonymUser } from '../../../lib/authorization/createAnonumUser';
 import { startApp } from '../../../lib/authorization/callAnonymFlow';
 
 let loginRef: RefObject<HTMLAnchorElement>;
@@ -99,6 +98,9 @@ function NavBar() {
         Monkey Tea
       </Link>
       <SearchBtn />
+      <Link className="user-btns_btn" to="bag">
+        <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
+      </Link>
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links" ref={pageLinksRef}>
           <Link className="nav_link btn_blank" to="/collection">
@@ -109,9 +111,6 @@ function NavBar() {
           </Link>
         </div>
         <div className="user-btns" ref={userBtnRef}>
-          <Link className="user-btns_btn" to="bag">
-            <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
-          </Link>
           <Link
             className="btn_white btn_header"
             to={isUserLoggedIn ? '/' : 'login'}

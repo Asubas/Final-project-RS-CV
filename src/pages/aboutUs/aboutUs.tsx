@@ -87,9 +87,9 @@ function AboutUs() {
             cart page, search, and filters, heplers functions. He also quickly fixed bugs.
           </p>
           <p className="contribution_block__text">
-            Anton was responsible for implementing the main page, user page, "About Us" page, cart
-            page, header, and footer. He also implemented the application router and handled
-            uploading the product matrix to Commerce Tools.
+            Anton was responsible for implementing the main page, user page, &quot;About Us&quot;
+            page, cart page, header, and footer. He also implemented the application router and
+            handled uploading the product matrix to Commerce Tools.
           </p>
           <p className="contribution_block__text">
             Dmitry implemented the registration page and the detailed product page. From beginning,
@@ -112,7 +112,8 @@ function AboutUs() {
           </p>
           <p className="collaboration_block__text">
             Our teamlead (Alexey) is an excellent leader. He motivated everyone and was always
-            positive. There are no obstacles for him. He's ready to code anytime he's not asleep!
+            positive. There are no obstacles for him. He&lsquo;s ready to code anytime he&lsquo;s
+            not asleep!
           </p>
           <p className="collaboration_block__text">
             Anton and Dmitry, like true soldiers, followed their leader Alexey. They approached

@@ -57,7 +57,6 @@ function checkUser(params?: Params, isAuthorized: boolean = false) {
       },
       scopes: [`manage_project:${projectKey}`],
       fetch,
-      // tokenCache: tokens,
     };
 
     const anonymClient: Client = new ClientBuilder()

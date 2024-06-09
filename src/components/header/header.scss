@@ -41,6 +41,16 @@
     display: flex;
     align-items: center;
     margin-left: auto;
+
+    input {
+      position: relative;
+      left: 2%;
+
+      @media (max-width: 1100px) {
+        left: 0;
+        top: 7px;
+      }
+    }
     .searchBlock {
       position: relative;
 
@@ -56,6 +66,8 @@
         @media (max-width: 870px) {
           padding: 6px;
           height: 18px;
+          position: relative;
+          top: 0;
         }
       }
     }
@@ -129,6 +141,8 @@
 
   .page-links {
     display: flex;
+    position: relative;
+    top: 5px;
 
     .nav_link {
       text-wrap: nowrap;
@@ -261,4 +275,17 @@
 .hideBtn {
   opacity: 0;
   visibility: hidden;
+}
+
+.user-btns_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  top: 5px;
+
+  @media (max-width: 870px) {
+    top: 0;
+  }
 }
