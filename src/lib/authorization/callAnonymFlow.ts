@@ -41,8 +41,8 @@ function startApp() {
                     })
                     .execute()
                     .then((resAnonymCart) => {
-                      const countProduct = resAnonymCart.body.lineItems.length;
-                      if (countRef.current && countProduct > 0) {
+                      const countProduct = resAnonymCart.body.totalLineItemQuantity;
+                      if (countProduct && countRef.current && countProduct > 0) {
                         countRef.current.textContent = countProduct.toString();
                       }
                     });

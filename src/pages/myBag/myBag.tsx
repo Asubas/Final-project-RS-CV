@@ -27,8 +27,8 @@ function MyBag() {
           setTimeout(async () => {
             cartData = await getCart();
             setCart(cartData.body);
-            const countProduct = cartData.body.lineItems.length;
-            if (countRef.current && countProduct > 0) {
+            const countProduct = cartData.body.totalLineItemQuantity;
+            if (countProduct && countRef.current && countProduct > 0) {
               countRef.current.textContent = countProduct.toString();
               console.log(cartData.body);
             }
