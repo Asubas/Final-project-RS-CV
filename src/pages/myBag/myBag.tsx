@@ -5,6 +5,7 @@ import './myBag.scss';
 import ItemInBag from './itemInBag';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
 import EmptyBag from './emptyBag';
+import { ClearShoppingCart } from './clearCart/clearShoppingCart';
 
 function MyBag() {
   const [cart, setCart] = useState<Cart | null>(null);
@@ -52,6 +53,7 @@ function MyBag() {
             <span className="subtotal_value">${subtotal}</span>
           </div>
           <button className="btn_white backToShop">back to shopping</button>
+          <ClearShoppingCart />
         </div>
         <div className="summeryList">
           <h2 className="summeryH2">Order summery</h2>

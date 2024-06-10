@@ -103,9 +103,9 @@ function NavBar() {
         Monkey Tea
       </Link>
       <SearchBtn />
-      <Link className="user-btns_btn" to="bag">
+      <Link className="user-btns_btn" to="cart">
         <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
-        <span className="user-btns-btn__count empty" ref={countRef}></span>
+        <span className="user-btns-btn__count" ref={countRef}></span>
       </Link>
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links" ref={pageLinksRef}>

@@ -302,6 +302,10 @@
   width: 15px;
   height: 15px;
   text-align: center;
+  &:empty {
+    background-color: inherit;
+    border: none;
+  }
 }
 
 .user-btns-btn__count.min-width {
