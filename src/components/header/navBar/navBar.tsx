@@ -112,8 +112,11 @@ function NavBar() {
       <Link className="user-btns_btn" to="bag">
         <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
         {countProduct > 0 ? (
-          <span className="user-btns-btn__count" ref={countRef}>
-            {countProduct}
+          <span
+            className={`user-btns-btn__count ${countProduct > 99 ? 'min-width' : ''}`}
+            ref={countRef}
+          >
+            {countProduct > 99 ? '99+' : countProduct}
           </span>
         ) : (
           <span className="user-btns-btn__count empty" ref={countRef}></span>

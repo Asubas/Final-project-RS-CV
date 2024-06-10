@@ -58,6 +58,7 @@ const ProductCard = () => {
             if (res.body.lineItems.length === 0 && !countRef.current.classList.contains('empty')) {
               countRef.current.classList.add('empty');
             }
+            if (res.body.lineItems.length > 99) countRef.current.classList.add('min-width');
             countRef.current.classList.remove('empty');
             countRef.current.textContent = res.body.lineItems.length.toString();
           }

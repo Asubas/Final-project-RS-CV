@@ -304,6 +304,10 @@
   text-align: center;
 }
 
+.user-btns-btn__count.min-width {
+  min-width: 20px;
+}
+
 .user-btns-btn__count.empty {
   background-color: inherit;
   border: none;
