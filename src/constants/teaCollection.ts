@@ -9,6 +9,7 @@ import category8 from '../assets/img/category-8.jpg';
 import category9 from '../assets/img/category-9.jpg';
 
 const subcategoriesTea = [
+  'all',
   'Black tea',
   'Green tea',
   'White tea',
@@ -17,10 +18,10 @@ const subcategoriesTea = [
   'Chai',
   'Oolong',
   'ROOIBOS',
-  'All',
 ];
 
 const backgroundImagesTea = [
+  category9,
   category1,
   category2,
   category3,
@@ -29,10 +30,10 @@ const backgroundImagesTea = [
   category6,
   category7,
   category8,
-  category9,
 ];
 
 const teaUrl = {
+  'caf2b3c5-799e-4d6e-860c-363bf2d6542b': 'all',
   'e95627db-9d4a-46b3-bc71-99f4263a8520': 'blackTea',
   '0b997259-d0e4-4b44-97f1-0379fab106d2': 'greenTea',
   'c63e9ac5-f61b-4414-94a4-71aae71655ed': 'whiteTea',
@@ -41,7 +42,6 @@ const teaUrl = {
   '814d9351-c793-4ab3-8df6-136b6e590dcf': 'chaiTea',
   '483c6c62-1927-4cea-8069-777b5475ea09': 'ooloong',
   'd7ea34fe-98c1-4fc9-8483-45e4928fcb0b': 'rooibos',
-  'caf2b3c5-799e-4d6e-860c-363bf2d6542b': 'All',
 };
 
 export interface TeaUrlType {

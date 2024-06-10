@@ -7,19 +7,18 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRef, reqRef } from '../../components/header/navBar/navBar';
+import { countRef, loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
-// import { ApiRoot } from '@commercetools/platform-sdk';
 import { checkUser } from '../../lib/flow/anonymFlow';
 import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
+import { getCart } from '../../lib/flow/getCart';
 
 type Inputs = {
   login: string;
   password: string;
 };
 
-// let loginUser: ApiRoot;
 function AccountPage() {
   const {
     watch,
@@ -56,7 +55,6 @@ function AccountPage() {
               .execute()
               .then((res) => {
                 if (res.statusCode === 200) {
-                  console.log('ds');
                   localStorage.setItem('userId', `${res.body.id}`);
                   localStorage.setItem('userVersion', `${res.body.version}`);
                   localStorage.removeItem('anonymousId');
@@ -66,16 +64,26 @@ function AccountPage() {
                     reqRef.current.textContent = 'profile';
                   }
                   toast.success('🎉 You have successfully logged in', successLogin);
-                  return checkUser(); // Return the ApiRoot instance
+                  setTimeout(() => {
+                    getCart().then((resCartBody) => {
+                      if (resCartBody.statusCode === 200) {
+                        if (countRef.current) {
+                          countRef.current.textContent =
+                            resCartBody.body.lineItems.length.toString();
+                        }
+                      }
+                    });
+                  }, 300);
+                  return checkUser();
                 }
-                return checkUser(); // Return the ApiRoot instance on error
-              })
-              .catch(() => {
-                toast.error('Invalid email or password or such user does not exist!', errorLogin);
-                return checkUser(); // Return the ApiRoot instance on error
+                return checkUser();
               });
           }
-          return checkUser(); // Return the ApiRoot instance on error
+          return checkUser();
+        })
+        .catch(() => {
+          toast.error('Invalid email or password or such user does not exist!', errorLogin);
+          return checkUser();
         });
     }
   };
@@ -151,4 +159,3 @@ function AccountPage() {
 }
 
 export default AccountPage;
-// export { loginUser };

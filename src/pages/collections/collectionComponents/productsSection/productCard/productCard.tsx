@@ -6,21 +6,26 @@ import { getProductById } from '../../../../../lib/resquests/getProductInfo';
 import { addProductToCart } from '../../../../../lib/flow/createCart';
 import { Cart, ClientResponse } from '@commercetools/platform-sdk';
 import { getCart } from '../../../../../lib/flow/getCart';
+import { LoadingModal } from '../../../../../components/loadingSnippet/loadingFetchProduct/loadingModal';
+import { countRef } from '../../../../../components/header/navBar/navBar';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
   const buttonBug = useRef<HTMLButtonElement>(null);
+  const [loadingState, setLoadingState] = useState<{ [key: string]: boolean }>({});
+
   const location = useLocation();
   const navigate = useNavigate();
   const [addedProductIds, setAddedProductIds] = useState<string[]>([]);
-  // const [arrActiveCarts, setArrActiveCarts] = useState<Cart['lineItems']>([]);
   useEffect(() => {
     setTimeout(() => {
       setTimeout(async () => {
         await getCart().then((response) => {
           if (response.statusCode === 200) {
-            // setArrActiveCarts(response.body.lineItems);
             setAddedProductIds(response.body.lineItems.map((item) => item.productId));
+            if (countRef.current) {
+              countRef.current.textContent = response.body.lineItems.length.toString();
+            }
           }
         });
       }, 500);
@@ -40,12 +45,36 @@ const ProductCard = () => {
   const handleClickBug = (event: React.MouseEvent<HTMLElement>, id: string) => {
     event.preventDefault();
     event.stopPropagation();
-    addProductToCart(id).then((res: ClientResponse<Cart> | undefined) => {
-      if (res && res.statusCode === 200) {
-        // setArrActiveCarts((prevCarts) => [...prevCarts, res.body.lineItems[0]]);
-        setAddedProductIds((prevIds) => [...prevIds, id]);
-      }
-    });
+    setLoadingState((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+    addProductToCart(id)
+      .then((res: ClientResponse<Cart> | undefined) => {
+        if (res && res.statusCode === 200) {
+          setAddedProductIds((prevIds) => [...prevIds, id]);
+          if (
+            (countRef.current?.textContent &&
+              countRef.current?.textContent !== res.body.lineItems.length.toString()) ||
+            countRef.current?.textContent === ''
+          ) {
+            if (res.body.lineItems.length === 0 && !countRef.current.classList.contains('empty')) {
+              countRef.current.classList.add('empty');
+            }
+            if (res.body.lineItems.length > 99) countRef.current.classList.add('min-width');
+            countRef.current.classList.remove('empty');
+            countRef.current.textContent = res.body.lineItems.length.toString();
+          }
+        }
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setLoadingState((prevState) => ({
+            ...prevState,
+            [id]: false,
+          }));
+        }, 1500);
+      });
   };
 
   return (
@@ -55,6 +84,7 @@ const ProductCard = () => {
         const { images, prices } = masterVariant;
         return (
           <div className="productsCard" key={id} onClick={() => handleClick(id)}>
+            {loadingState[id] && <LoadingModal />}
             <button
               key={id}
               className={`productsCard_button-add ${addedProductIds.includes(id) ? 'productAdded' : ''}`}

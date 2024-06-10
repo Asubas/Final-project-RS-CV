@@ -1,15 +1,14 @@
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import logoCart from '../../../assets/svg/icon-local_mall.svg';
+import logoCart from '../../../assets/svg/icon-local_mall_black.svg';
 import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
-// import { createAnonymUser } from '../../../lib/authorization/createAnonumUser';
 import { startApp } from '../../../lib/authorization/callAnonymFlow';
 
 let loginRef: RefObject<HTMLAnchorElement>;
 let reqRef: RefObject<HTMLAnchorElement>;
-
+let countRef: RefObject<HTMLAnchorElement>;
 function NavBar() {
   const [burgerClass, setBurgerClass] = useState('burger-bar unclicked');
   const [menuClass, setMenuClass] = useState('menu hidden');
@@ -19,6 +18,7 @@ function NavBar() {
   const pageLinksRef = useRef<HTMLDivElement>(null);
   const userBtnRef = useRef<HTMLDivElement>(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  countRef = useRef<HTMLAnchorElement>(null);
   loginRef = useRef<HTMLAnchorElement>(null);
   reqRef = useRef<HTMLAnchorElement>(null);
   const checkIsUserLoggedIn = () => {
@@ -38,6 +38,10 @@ function NavBar() {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('anonymousCartId');
+      if (countRef.current) {
+        countRef.current.textContent = '';
+        countRef.current.classList.add('empty');
+      }
       toast.info('🎈 You are logged out of your account!', infoLogout);
       navigate('/');
       setTimeout(() => {
@@ -99,6 +103,10 @@ function NavBar() {
         Monkey Tea
       </Link>
       <SearchBtn />
+      <Link className="user-btns_btn" to="bag">
+        <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
+        <span className="user-btns-btn__count empty" ref={countRef}></span>
+      </Link>
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links" ref={pageLinksRef}>
           <Link className="nav_link btn_blank" to="/collection">
@@ -109,9 +117,6 @@ function NavBar() {
           </Link>
         </div>
         <div className="user-btns" ref={userBtnRef}>
-          <Link className="user-btns_btn" to="bag">
-            <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
-          </Link>
           <Link
             className="btn_white btn_header"
             to={isUserLoggedIn ? '/' : 'login'}
@@ -138,4 +143,4 @@ function NavBar() {
   );
 }
 
-export { NavBar, loginRef, reqRef };
+export { NavBar, loginRef, reqRef, countRef };

@@ -1,0 +1,13 @@
+.modal-content {
+  border-radius: 5px;
+
+  h2 {
+    text-align: center;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+}
