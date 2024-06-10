@@ -289,3 +289,17 @@
     top: 0;
   }
 }
+
+.user-btns-btn__count {
+  position: absolute;
+  top: 25px;
+  font-size: 60%;
+  border: 1px solid red;
+  border-radius: 50%;
+  padding: 1px;
+  background: red;
+  color: white;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+}
