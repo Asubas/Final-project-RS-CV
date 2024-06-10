@@ -5,9 +5,11 @@ import { startApp } from '../../../lib/authorization/callAnonymFlow';
 import { projectKey } from '../../../lib/exports/exportsContants';
 import { checkUser } from '../../../lib/flow/anonymFlow';
 import { getCart } from '../../../lib/flow/getCart';
+import { useNavigate } from 'react-router-dom';
 
 const ClearShoppingCart = () => {
   const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleConfirm = () => {
     setShowModal(false);
@@ -28,6 +30,7 @@ const ClearShoppingCart = () => {
                 countRef.current.classList.add('empty');
               }
               startApp();
+              navigate('/collection');
             }
           });
       }
@@ -40,7 +43,7 @@ const ClearShoppingCart = () => {
 
   return (
     <>
-      <button className="btn_black" onClick={() => setShowModal(true)}>
+      <button className="btn_black backToShop" onClick={() => setShowModal(true)}>
         Clear Shopping Cart
       </button>
       {showModal && (
