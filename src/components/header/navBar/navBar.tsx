@@ -5,7 +5,6 @@ import SearchBtn from '../searchBtn/SearchBtn';
 import { toast } from 'react-toastify';
 import { infoLogout } from '../../toastyOption/toastyOptions';
 import { startApp } from '../../../lib/authorization/callAnonymFlow';
-import { getCart } from '../../../lib/flow/getCart';
 
 let loginRef: RefObject<HTMLAnchorElement>;
 let reqRef: RefObject<HTMLAnchorElement>;
@@ -19,7 +18,6 @@ function NavBar() {
   const pageLinksRef = useRef<HTMLDivElement>(null);
   const userBtnRef = useRef<HTMLDivElement>(null);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  const [countProduct, setCountProduct] = useState(0);
   countRef = useRef<HTMLAnchorElement>(null);
   loginRef = useRef<HTMLAnchorElement>(null);
   reqRef = useRef<HTMLAnchorElement>(null);
@@ -98,15 +96,7 @@ function NavBar() {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
   }, [isMenuClicked]);
-  useEffect(() => {
-    const fetchCartData = async () => {
-      setTimeout(async () => {
-        const response = await getCart();
-        setCountProduct(response.body.lineItems.length);
-      }, 500);
-    };
-    fetchCartData();
-  }, []);
+
   return (
     <>
       <Link className="brand" to="/">
@@ -115,13 +105,7 @@ function NavBar() {
       <SearchBtn />
       <Link className="user-btns_btn" to="bag">
         <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
-        {countProduct > 0 ? (
-          <span className="user-btns-btn__count" ref={countRef}>
-            {countProduct}
-          </span>
-        ) : (
-          <span className="user-btns-btn__count empty" ref={countRef}></span>
-        )}
+        <span className="user-btns-btn__count empty" ref={countRef}></span>
       </Link>
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links" ref={pageLinksRef}>
