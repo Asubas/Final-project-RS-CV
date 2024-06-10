@@ -40,6 +40,10 @@ function NavBar() {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('anonymousCartId');
+      if (countRef.current) {
+        countRef.current.textContent = '';
+        countRef.current.classList.add('empty');
+      }
       toast.info('🎈 You are logged out of your account!', infoLogout);
       navigate('/');
       setTimeout(() => {

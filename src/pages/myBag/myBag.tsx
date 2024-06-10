@@ -1,5 +1,11 @@
+import { ClearShoppingCart } from './clearCart/clearShoppingCart';
+
 function myBag() {
-  return <h1>My bag</h1>;
+  return (
+    <div>
+      <ClearShoppingCart />
+    </div>
+  );
 }
 
 export default myBag;
