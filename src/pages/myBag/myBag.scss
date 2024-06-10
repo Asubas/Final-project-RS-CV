@@ -58,14 +58,18 @@
   .itemImg {
     width: 71px;
     height: 71px;
-    object-fit: contain;
+    object-fit: cover;
   }
 
   .itemData {
     display: flex;
-    align-items: center;
+    align-items: baseline;
 
     .itemDisc {
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+      gap: 10px;
       width: 259px;
 
       @media (max-width: 500px) {
@@ -81,12 +85,20 @@
       }
 
       &_name {
-        font-size: 14px;
+        font-size: 20px;
         height: 34px;
+
+        @media (max-width: 425px) {
+          font-size: 14px;
+        }
       }
 
       &_btn {
         padding: 0;
+
+        @media (max-width: 425px) {
+          font-size: 12px;
+        }
       }
     }
   }
@@ -136,6 +148,18 @@
   }
 }
 
+.itemDigits_price__discount {
+  font-weight: 500;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  text-align: end;
+  & + .itemDigits_price {
+    color: $outline;
+    font-size: 90%;
+    text-decoration: line-through;
+  }
+}
+
 // --- summery ---
 
 .summeryList {
@@ -146,6 +170,12 @@
   display: flex;
   flex-direction: column;
   gap: 21px;
+  position: fixed;
+  right: 5%;
+
+  @media (max-width: 1120px) {
+    position: static;
+  }
 
   @media (max-width: 550px) {
     width: 100%;

@@ -62,9 +62,17 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
               }}
             ></button>
           </div>
-          <span className="itemDigits_price">
-            ${(item.price.value.centAmount / 100).toFixed(2)}
-          </span>
+          {item.price?.discounted?.value?.centAmount ? (
+            <span className="itemDigits_price__discount">
+              {item.price.discounted.value.centAmount / 100}{' '}
+              {item.price.discounted.value.currencyCode}
+            </span>
+          ) : null}
+          {item.price?.value?.centAmount ? (
+            <span className="itemDigits_price">
+              {item.price.value.centAmount / 100} {item.price.value.currencyCode}
+            </span>
+          ) : null}
         </div>
       </div>
     </div>
