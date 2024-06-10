@@ -105,7 +105,13 @@ function NavBar() {
       <SearchBtn />
       <Link className="user-btns_btn" to="cart">
         <img className="user-btns_btn__icon" src={logoCart} alt="Cart" />
-        <span className="user-btns-btn__count" ref={countRef}></span>
+        <span
+          className="user-btns-btn__count"
+          ref={countRef}
+          style={{ minWidth: countRef.current?.textContent === '0' ? '0' : '0' }}
+        >
+          {countRef.current?.textContent === '0' ? '' : countRef.current?.textContent}
+        </span>
       </Link>
       <nav className={menuClass} ref={menuRef}>
         <div className="page-links" ref={pageLinksRef}>

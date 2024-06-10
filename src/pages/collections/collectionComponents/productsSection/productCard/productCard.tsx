@@ -23,8 +23,9 @@ const ProductCard = () => {
         await getCart().then((response) => {
           if (response.statusCode === 200) {
             setAddedProductIds(response.body.lineItems.map((item) => item.productId));
-            if (countRef.current) {
-              countRef.current.textContent = response.body.lineItems.length.toString();
+            const countProduct = response.body.lineItems.length;
+            if (countRef.current && countProduct > 0) {
+              countRef.current.textContent = countProduct.toString();
             }
           }
         });

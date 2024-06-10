@@ -6,8 +6,11 @@ import ItemInBag from './itemInBag';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
 import EmptyBag from './emptyBag';
 import { ClearShoppingCart } from './clearCart/clearShoppingCart';
+import { useNavigate } from 'react-router-dom';
+import { countRef } from '../../components/header/navBar/navBar';
 
 function MyBag() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState<Cart | null>(null);
   const deliveryPrice = 6.55;
 
@@ -16,6 +19,10 @@ function MyBag() {
       try {
         const cartData = await getCart();
         setCart(cartData.body);
+        const countProduct = cartData.body.lineItems.length;
+        if (countRef.current && countProduct > 0) {
+          countRef.current.textContent = countProduct.toString();
+        }
         console.log(cartData.body);
       } catch (error) {
         console.error(error);
@@ -52,7 +59,14 @@ function MyBag() {
             <span className="subtotal_name">Subtotal</span>
             <span className="subtotal_value">${subtotal}</span>
           </div>
-          <button className="btn_white backToShop">back to shopping</button>
+          <button
+            className="btn_white backToShop"
+            onClick={() => {
+              navigate('/collection');
+            }}
+          >
+            back to shopping
+          </button>
           <ClearShoppingCart />
         </div>
         <div className="summeryList">

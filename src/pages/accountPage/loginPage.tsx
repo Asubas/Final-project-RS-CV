@@ -67,9 +67,9 @@ function AccountPage() {
                   setTimeout(() => {
                     getCart().then((resCartBody) => {
                       if (resCartBody.statusCode === 200) {
-                        if (countRef.current) {
-                          countRef.current.textContent =
-                            resCartBody.body.lineItems.length.toString();
+                        const countProduct = resCartBody.body.lineItems.length;
+                        if (countRef.current && countProduct > 0) {
+                          countRef.current.textContent = countProduct.toString();
                         }
                       }
                     });

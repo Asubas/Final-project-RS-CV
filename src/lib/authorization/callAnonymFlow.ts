@@ -1,5 +1,7 @@
+import { countRef } from '../../components/header/navBar/navBar';
 import { projectKey } from '../exports/exportsContants';
 import { checkUser } from '../flow/anonymFlow';
+import { getCart } from '../flow/getCart';
 import { createAnonymUser } from './createAnonumUser';
 function startApp() {
   if (!localStorage.getItem('userId')) {
@@ -71,6 +73,14 @@ function startApp() {
   } else {
     //иначе восстанавливаем через рефрешь сессию
     createAnonymUser();
+    setTimeout(() => {
+      getCart().then((res) => {
+        const countProduct = res.body.lineItems.length;
+        if (countRef.current && countProduct > 0) {
+          countRef.current.textContent = countProduct.toString();
+        }
+      });
+    }, 0);
   }
 }
 startApp();
