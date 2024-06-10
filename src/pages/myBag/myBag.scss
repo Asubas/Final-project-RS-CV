@@ -1,0 +1,136 @@
+@import '../../App.scss';
+
+.cartWrap {
+  max-width: 1280px;
+  padding: 72px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+// --- items ---
+
+.itemsWrap {
+  width: 453px;
+}
+
+.itemBlock {
+  display: flex;
+  justify-content: space-between;
+
+  .itemImg {
+    width: 71px;
+    height: 71px;
+    object-fit: contain;
+  }
+
+  .itemData {
+    display: flex;
+
+    .itemDisc {
+      width: 259px;
+
+      &_name {
+        font-size: 14px;
+        height: 34px;
+      }
+
+      &_btn {
+        padding: 0;
+      }
+    }
+  }
+
+  .itemDigits {
+    display: flex;
+    flex-direction: column;
+
+    .itemDigits_quantity {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 22px;
+      line-height: 127%;
+
+      &__btn,
+      &__count {
+        width: 24px;
+        height: 24px;
+      }
+
+      &__count {
+        text-align: center;
+      }
+
+      .increase {
+        background: url('../../assets//svg/icon-add.svg') no-repeat center / contain;
+      }
+
+      .decrease {
+        background: url('../../assets//svg/icon-minus.svg') no-repeat center / contain;
+      }
+    }
+  }
+}
+
+// --- summery ---
+
+.summeryList {
+  width: 500px;
+  padding: 44px 25px 56px;
+  background: $backgroundVariant;
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+
+  .summeryH2 {
+    font-size: 22px;
+    font-weight: 400;
+    font-family: $fontPrimary;
+    line-height: 127%;
+    color: $primary;
+    margin-bottom: 14px;
+  }
+
+  .pricesBlock {
+    display: flex;
+    justify-content: space-between;
+
+    &_name {
+      line-height: 150%;
+      letter-spacing: 0.03em;
+      color: $primary;
+    }
+
+    &_value {
+      font-weight: 500;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+    }
+
+    .name_total {
+      letter-spacing: 0.01em;
+      font-weight: 500;
+    }
+
+    .value_total {
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 127%;
+    }
+  }
+
+  .summeryLine {
+    border: 1px solid $outline;
+    width: 416px;
+    margin: 0 auto;
+  }
+
+  .summeryShipping {
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: 0.03em;
+    color: rgba(40, 40, 40, 0.7);
+  }
+}
