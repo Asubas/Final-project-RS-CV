@@ -75,8 +75,8 @@ function startApp() {
     createAnonymUser();
     setTimeout(() => {
       getCart().then((res) => {
-        const countProduct = res.body.lineItems.length;
-        if (countRef.current && countProduct > 0) {
+        const countProduct = res.body.totalLineItemQuantity;
+        if (countProduct && countRef.current && countProduct > 0) {
           countRef.current.textContent = countProduct.toString();
         }
       });

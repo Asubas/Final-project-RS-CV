@@ -38,6 +38,10 @@
     display: flex;
     flex-direction: column;
     gap: 38px;
+
+    .itemCart:has(.itemBlock.hidden) {
+      display: none;
+    }
   }
 
   .backToShop {
@@ -125,6 +129,10 @@
       letter-spacing: 0.01em;
       text-align: end;
     }
+  }
+
+  &.hidden {
+    display: none;
   }
 }
 
