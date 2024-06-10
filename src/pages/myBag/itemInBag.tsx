@@ -4,6 +4,7 @@ import { addProduct } from './quanitiCart/addProduct';
 import { decProduct } from './quanitiCart/decProduct';
 import { useState } from 'react';
 import { countRef } from '../../components/header/navBar/navBar';
+import { subTotal, subTotalM, subTotalS } from './myBag';
 
 type ItemInBagProps = {
   item: LineItem;
@@ -11,14 +12,26 @@ type ItemInBagProps = {
 
 const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
   const [quantity, setQuantity] = useState(item.quantity);
+  const [priced, setPrice] = useState(item.price.value.centAmount);
+  const [discPrice, setDiscPrice] = useState(item.price.discounted?.value.centAmount);
   const imageUrl = item.variant.images?.[0]?.url;
 
   const handleDecreaseQuantity = (countProduct: number, id: string) => {
     decProduct(countProduct, id).then((response) => {
       if (response && response.statusCode === 200) {
         setQuantity(quantity - 1);
+        setPrice(priced);
+        setDiscPrice(discPrice);
         if (countRef.current && response.body.totalLineItemQuantity) {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
+        }
+        if (subTotalM.current && subTotalS.current && subTotal.current) {
+          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
+          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
+          subTotal.current.textContent = (
+            6.55 +
+            response.body.totalPrice.centAmount / 100
+          ).toString();
         }
       }
     });
@@ -28,8 +41,18 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
     addProduct(countProduct, id).then((response) => {
       if (response && response.statusCode === 200) {
         setQuantity(quantity + 1);
+        setPrice(priced);
+        setDiscPrice(discPrice);
         if (countRef.current && response.body.totalLineItemQuantity) {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
+        }
+        if (subTotalM.current && subTotalS.current && subTotal.current) {
+          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
+          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
+          subTotal.current.textContent = (
+            6.55 +
+            response.body.totalPrice.centAmount / 100
+          ).toString();
         }
       }
     });
@@ -62,15 +85,14 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
               }}
             ></button>
           </div>
-          {item.price?.discounted?.value?.centAmount ? (
+          {item.price?.discounted?.value?.centAmount && discPrice ? (
             <span className="itemDigits_price__discount">
-              {item.price.discounted.value.centAmount / 100}{' '}
-              {item.price.discounted.value.currencyCode}
+              {(discPrice * quantity) / 100} {item.price.discounted.value.currencyCode}
             </span>
           ) : null}
           {item.price?.value?.centAmount ? (
             <span className="itemDigits_price">
-              {item.price.value.centAmount / 100} {item.price.value.currencyCode}
+              {(priced * quantity) / 100} {item.price.value.currencyCode}
             </span>
           ) : null}
         </div>
