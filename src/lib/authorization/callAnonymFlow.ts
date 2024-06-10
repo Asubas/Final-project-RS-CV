@@ -56,6 +56,18 @@ function startApp() {
         }
       }
     });
+  } else if (localStorage.getItem('userId') && !localStorage.getItem('anonymousCartId')) {
+    checkUser()
+      .withProjectKey({ projectKey })
+      .me()
+      .carts()
+      .post({
+        body: {
+          currency: 'USD',
+        },
+      })
+      .execute()
+      .then((res) => localStorage.setItem('anonymousCartId', `${res.body.id}`));
   } else {
     //иначе восстанавливаем через рефрешь сессию
     createAnonymUser();

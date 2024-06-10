@@ -7,6 +7,7 @@ import { addProductToCart } from '../../../../../lib/flow/createCart';
 import { Cart, ClientResponse } from '@commercetools/platform-sdk';
 import { getCart } from '../../../../../lib/flow/getCart';
 import { LoadingModal } from '../../../../../components/loadingSnippet/loadingFetchProduct/loadingModal';
+import { countRef } from '../../../../../components/header/navBar/navBar';
 
 const ProductCard = () => {
   const { state } = useContext(ProductsPageContext);
@@ -49,6 +50,17 @@ const ProductCard = () => {
       .then((res: ClientResponse<Cart> | undefined) => {
         if (res && res.statusCode === 200) {
           setAddedProductIds((prevIds) => [...prevIds, id]);
+          if (
+            (countRef.current?.textContent &&
+              countRef.current?.textContent !== res.body.lineItems.length.toString()) ||
+            countRef.current?.textContent === ''
+          ) {
+            if (res.body.lineItems.length === 0 && !countRef.current.classList.contains('empty')) {
+              countRef.current.classList.add('empty');
+            }
+            countRef.current.classList.remove('empty');
+            countRef.current.textContent = res.body.lineItems.length.toString();
+          }
         }
       })
       .finally(() => {
