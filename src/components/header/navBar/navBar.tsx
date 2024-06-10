@@ -96,8 +96,10 @@ function NavBar() {
   }, [isMenuClicked]);
   useEffect(() => {
     const fetchCartData = async () => {
-      const response = await getCart();
-      setCountProduct(response.body.lineItems.length);
+      setTimeout(async () => {
+        const response = await getCart();
+        setCountProduct(response.body.lineItems.length);
+      }, 500);
     };
     fetchCartData();
   }, []);
@@ -114,7 +116,7 @@ function NavBar() {
             {countProduct}
           </span>
         ) : (
-          ''
+          <span className="user-btns-btn__count empty" ref={countRef}></span>
         )}
       </Link>
       <nav className={menuClass} ref={menuRef}>

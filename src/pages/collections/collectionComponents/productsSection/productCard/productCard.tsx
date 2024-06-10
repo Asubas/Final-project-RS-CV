@@ -51,9 +51,14 @@ const ProductCard = () => {
         if (res && res.statusCode === 200) {
           setAddedProductIds((prevIds) => [...prevIds, id]);
           if (
-            countRef.current?.textContent &&
-            countRef.current?.textContent !== res.body.lineItems.length.toString()
+            (countRef.current?.textContent &&
+              countRef.current?.textContent !== res.body.lineItems.length.toString()) ||
+            countRef.current?.textContent === ''
           ) {
+            if (res.body.lineItems.length === 0 && !countRef.current.classList.contains('empty')) {
+              countRef.current.classList.add('empty');
+            }
+            countRef.current.classList.remove('empty');
             countRef.current.textContent = res.body.lineItems.length.toString();
           }
         }
