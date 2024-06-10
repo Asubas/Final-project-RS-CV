@@ -7,11 +7,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRef, reqRef } from '../../components/header/navBar/navBar';
+import { countRef, loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
 import { checkUser } from '../../lib/flow/anonymFlow';
 import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
+import { getCart } from '../../lib/flow/getCart';
 
 type Inputs = {
   login: string;
@@ -63,15 +64,25 @@ function AccountPage() {
                     reqRef.current.textContent = 'profile';
                   }
                   toast.success('🎉 You have successfully logged in', successLogin);
+                  setTimeout(() => {
+                    getCart().then((resCartBody) => {
+                      if (resCartBody.statusCode === 200) {
+                        if (countRef.current) {
+                          countRef.current.textContent =
+                            resCartBody.body.lineItems.length.toString();
+                        }
+                      }
+                    });
+                  }, 300);
                   return checkUser();
                 }
                 return checkUser();
-              })
-              .catch(() => {
-                toast.error('Invalid email or password or such user does not exist!', errorLogin);
-                return checkUser();
               });
           }
+          return checkUser();
+        })
+        .catch(() => {
+          toast.error('Invalid email or password or such user does not exist!', errorLogin);
           return checkUser();
         });
     }
