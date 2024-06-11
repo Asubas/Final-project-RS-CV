@@ -140,4 +140,5 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
     </div>
   );
 };
+
 export default ItemInBag;

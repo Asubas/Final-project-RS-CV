@@ -14,6 +14,7 @@ let subTotalS: RefObject<HTMLAnchorElement>;
 let subTotalM: RefObject<HTMLAnchorElement>;
 let subTotal: RefObject<HTMLAnchorElement>;
 let promoRef: RefObject<HTMLInputElement>;
+
 function MyBag() {
   const navigate = useNavigate();
   const [cart, setCart] = useState<Cart | null>(null);
@@ -22,6 +23,7 @@ function MyBag() {
   subTotalM = useRef<HTMLAnchorElement>(null);
   subTotal = useRef<HTMLAnchorElement>(null);
   promoRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -70,9 +72,10 @@ function MyBag() {
           <div className="summeryLine"></div>
           <div className="subtotal">
             <span className="subtotal_name">Subtotal</span>
-            <span className="subtotal_value" ref={subTotalM}>
-              ${subtotal}
+            <span className="subtotal_value valueChange" ref={subTotalM}>
+              {subtotal}
             </span>
+            <span className="subtotal_value currency">&nbsp;USD</span>
           </div>
           <div className="promo-container">
             <input
@@ -103,20 +106,22 @@ function MyBag() {
           <h2 className="summeryH2">Order summery</h2>
           <div className="pricesBlock">
             <span className="pricesBlock_name">Subtotal</span>
-            <span className="pricesBlock_value" ref={subTotalS}>
-              ${subtotal}
+            <span className="pricesBlock_value valueChange" ref={subTotalS}>
+              {subtotal}
             </span>
+            <span className="pricesBlock_value currency">&nbsp;USD</span>
           </div>
           <div className="pricesBlock">
             <span className="pricesBlock_name">Delivery</span>
-            <span className="pricesBlock_value">${deliveryPrice.toFixed(2)}</span>
+            <span className="pricesBlock_value">{deliveryPrice.toFixed(2)} USD</span>
           </div>
           <div className="summeryLine"></div>
           <div className="pricesBlock">
             <span className="pricesBlock_name name_total">Total</span>
-            <span className="pricesBlock_value value_total" ref={subTotal}>
-              ${total.toFixed(2)}
+            <span className="pricesBlock_value value_total valueChange" ref={subTotal}>
+              {total.toFixed(2)}
             </span>
+            <span className="pricesBlock_currency value_total currency">&nbsp;USD</span>
           </div>
           <span className="summeryShipping">Estimated shipping time: 2 days</span>
         </div>

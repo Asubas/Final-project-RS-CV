@@ -85,7 +85,7 @@
       }
 
       &_name {
-        font-size: 20px;
+        font-size: 14px;
         height: 34px;
 
         @media (max-width: 425px) {
@@ -292,9 +292,22 @@
 .promo-container {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+
   .promo-container_input,
   .promo-container_button {
-    border-radius: 5px;
     height: 40px;
+
+    @media (max-width: 441px) {
+      width: 318px;
+    }
   }
+
+  @media (max-width: 441px) {
+    gap: 12px;
+  }
+}
+
+.valueChange {
+  margin-left: auto;
 }
