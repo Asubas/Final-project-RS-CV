@@ -42,6 +42,9 @@
     .itemCart:has(.itemBlock.hidden) {
       display: none;
     }
+    .itemCart:has(.itemBlock.gift) {
+      order: 1;
+    }
   }
 
   .backToShop {
@@ -266,7 +269,11 @@
     letter-spacing: 0.01em;
   }
 }
-
+.subtotal_value-discount {
+  font-size: 80%;
+  margin-right: 10px;
+  text-decoration: line-through;
+}
 // --- empty cart ---
 
 .emptyBagWrap {

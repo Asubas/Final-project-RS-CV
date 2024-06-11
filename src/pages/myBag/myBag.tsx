@@ -54,6 +54,12 @@ function MyBag() {
     }
   };
 
+  const handleKeyDown = (event: { key: string }) => {
+    if (event.key === 'Enter') {
+      applyPromoCode();
+    }
+  };
+
   if (!cart) {
     return <LoadingSnippet />;
   }
@@ -63,8 +69,14 @@ function MyBag() {
   }
 
   const subtotal = (cart.totalPrice.centAmount / 100).toFixed(2);
+  let subTotalDiscount = '';
+  if (cart.discountOnTotalPrice) {
+    subTotalDiscount = (
+      cart.totalPrice.centAmount / 100 +
+      cart.discountOnTotalPrice.discountedAmount.centAmount / 100
+    ).toFixed(2);
+  }
   const total = cart.totalPrice.centAmount / 100 + deliveryPrice;
-
   return (
     <section className="cartSection">
       <div className="cartWrap">
@@ -79,16 +91,22 @@ function MyBag() {
           <div className="summeryLine"></div>
           <div className="subtotal">
             <span className="subtotal_name">Subtotal</span>
-            <span className="subtotal_value valueChange" ref={subTotalM}>
-              {subtotal}
-            </span>
-            <span className="subtotal_value currency">&nbsp;USD</span>
+            <div className="subtotal_container">
+              {subTotalDiscount ? (
+                <span className="subtotal_value-discount">{subTotalDiscount}</span>
+              ) : null}
+              <span className="subtotal_value valueChange" ref={subTotalM}>
+                {subtotal}
+              </span>
+              <span className="subtotal_value currency">&nbsp;USD</span>
+            </div>
           </div>
           <div className="promo-container">
             <input
               className="promo-container_input"
               type="text"
               ref={promoRef}
+              onKeyDown={handleKeyDown}
               placeholder="Enter promocode.."
             ></input>
             <button
@@ -113,10 +131,15 @@ function MyBag() {
           <h2 className="summeryH2">Order summery</h2>
           <div className="pricesBlock">
             <span className="pricesBlock_name">Subtotal</span>
-            <span className="pricesBlock_value valueChange" ref={subTotalS}>
-              {subtotal}
-            </span>
-            <span className="pricesBlock_value currency">&nbsp;USD</span>
+            <div className="subtotal_container">
+              {subTotalDiscount ? (
+                <span className="subtotal_value-discount">{subTotalDiscount}</span>
+              ) : null}
+              <span className="subtotal_value valueChange" ref={subTotalM}>
+                {subtotal}
+              </span>
+              <span className="subtotal_value currency">&nbsp;USD</span>
+            </div>
           </div>
           <div className="pricesBlock">
             <span className="pricesBlock_name">Delivery</span>
