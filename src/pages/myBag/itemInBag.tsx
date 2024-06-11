@@ -5,6 +5,7 @@ import { decProduct } from './quanitiCart/decProduct';
 import { useState } from 'react';
 import { countRef } from '../../components/header/navBar/navBar';
 import { subTotal, subTotalM, subTotalS } from './myBag';
+import { removeProduct } from './quanitiCart/removeProduct';
 
 type ItemInBagProps = {
   item: LineItem;
@@ -15,6 +16,7 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
   const [priced, setPrice] = useState(item.price.value.centAmount);
   const [discPrice, setDiscPrice] = useState(item.price.discounted?.value.centAmount);
   const imageUrl = item.variant.images?.[0]?.url;
+  const [isRemoved, setIsRemoved] = useState(false);
 
   const handleDecreaseQuantity = (countProduct: number, id: string) => {
     decProduct(countProduct, id).then((response) => {
@@ -26,12 +28,15 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
         }
         if (subTotalM.current && subTotalS.current && subTotal.current) {
-          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
-          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
-          subTotal.current.textContent = (
-            6.55 +
-            response.body.totalPrice.centAmount / 100
-          ).toString();
+          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotal.current.textContent = (6.55 + response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
         }
       }
     });
@@ -47,24 +52,57 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
         }
         if (subTotalM.current && subTotalS.current && subTotal.current) {
-          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
-          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100).toString();
-          subTotal.current.textContent = (
-            6.55 +
-            response.body.totalPrice.centAmount / 100
-          ).toString();
+          subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotalS.current.textContent = (response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotal.current.textContent = (6.55 + response.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
         }
       }
     });
   };
 
+  const handleRemoveProduct = (quantityLine: number, idLine: string) => {
+    removeProduct(quantityLine, idLine).then((resRemove) => {
+      if (resRemove && resRemove.statusCode === 200) {
+        if (countRef.current && resRemove.body.totalLineItemQuantity) {
+          countRef.current.textContent = resRemove.body.totalLineItemQuantity.toString();
+        } else if (countRef.current && !resRemove.body.totalLineItemQuantity) {
+          countRef.current.textContent = '';
+        }
+        if (subTotalM.current && subTotalS.current && subTotal.current) {
+          subTotalM.current.textContent = (resRemove.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotalS.current.textContent = (resRemove.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+          subTotal.current.textContent = (6.55 + resRemove.body.totalPrice.centAmount / 100)
+            .toFixed(2)
+            .toString();
+        }
+        setIsRemoved(true);
+      }
+    });
+  };
+
   return (
-    <div className={`itemBlock ${quantity === 0 ? 'hidden' : ''}`} key={item.id}>
+    <div className={`itemBlock ${quantity === 0 || isRemoved ? 'hidden' : ''}`} key={item.id}>
       <img src={imageUrl} alt={item.name['en-GB']} className="itemImg" />
       <div className="itemData">
         <div className="itemDisc">
           <p className="itemDisc_name">{item.name['en-GB']}</p>
-          <button className="btn_blank itemDisc_btn" type="button">
+          <button
+            className="btn_blank itemDisc_btn"
+            type="button"
+            onClick={() => {
+              handleRemoveProduct(quantity, item.id);
+            }}
+          >
             remove
           </button>
         </div>
