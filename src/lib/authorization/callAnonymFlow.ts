@@ -39,7 +39,13 @@ function startApp() {
                         ],
                       },
                     })
-                    .execute();
+                    .execute()
+                    .then((resAnonymCart) => {
+                      const countProduct = resAnonymCart.body.lineItems.length;
+                      if (countRef.current && countProduct > 0) {
+                        countRef.current.textContent = countProduct.toString();
+                      }
+                    });
                 }
               }
             });
@@ -80,7 +86,7 @@ function startApp() {
           countRef.current.textContent = countProduct.toString();
         }
       });
-    }, 0);
+    }, 100);
   }
 }
 startApp();
