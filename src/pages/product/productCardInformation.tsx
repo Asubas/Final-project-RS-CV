@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 import getSimilarProducts from './getSimilarProducts';
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { LineItem, ProductProjection } from '@commercetools/platform-sdk';
 import CreateSimilarProducts from './createSimilarProducts';
 import { BreadcrumbsComponent } from '../collections/collectionComponents/breadcrumbLinks/breadBackForwComp';
 import iconEco from '../../assets/svg/icon-eco.svg';
@@ -17,7 +17,38 @@ import iconWaterVoc from '../../assets/svg/icon-water_voc.svg';
 import iconAlarm from '../../assets/svg/icon-alarm.svg';
 import iconLanguage from '../../assets/svg/icon-language.svg';
 import getProductBySlug from '../../lib/resquests/getProductBySlug';
+import { getCart } from '../../lib/flow/getCart';
 
+// interface CartProduct {
+//   id: string; // Unique identifier for the cart item
+//   productId: string; // ID of the product
+//   name: string; // Name of the product
+//   quantity: number; // Quantity of the product in the cart
+//   price: {
+//     value: number; // Price of the product
+//     currency: string; // Currency of the price
+//   };
+//   discountedPrice?: {
+//     value: number; // Discounted price if applicable
+//     currency: string; // Currency of the discounted price
+//   };
+//   // Add more fields as needed based on the cart item structure
+// }
+// interface Price {
+//   centAmount: number;
+//   currencyCode: string;
+// }
+// interface LineItem {
+//   id: string;
+//   productId: string;
+//   name: string;
+//   quantity: number;
+//   price: {
+//     value: Price;
+//     discounted?: Price;
+//   };
+//   // Add any other properties you need
+// }
 function DisplayProductInformation() {
   const responsive = {
     superLargeDesktop: {
@@ -40,8 +71,9 @@ function DisplayProductInformation() {
 
   const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cartProducts, setCartsProducts] = useState<LineItem[]>([]);
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickQuantity = (e: React.MouseEvent<HTMLButtonElement>) => {
     const buttonType = e.currentTarget.textContent?.trim();
     if (buttonType === '-') {
       setProductQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
@@ -49,6 +81,7 @@ function DisplayProductInformation() {
       setProductQuantity((prevQuantity) => prevQuantity + 1);
     }
   };
+
   const location = useLocation();
   const product = location.state;
   const currentURL = window.location.href;
@@ -77,6 +110,13 @@ function DisplayProductInformation() {
               setSimilarProducts(res.body.results);
               setIsLoading(false);
             })
+            .then(() => {
+              getCart().then((res) => {
+                const lineI = res?.body?.lineItems;
+                setCartsProducts(lineI);
+                console.log(cartProducts);
+              });
+            })
             .catch((error) => {
               console.error('Error fetching similar products:', error);
               setIsLoading(false);
@@ -95,13 +135,23 @@ function DisplayProductInformation() {
           setSimilarProducts(res.body.results);
           setIsLoading(false);
         })
+        .then(() => {
+          getCart().then((res) => {
+            const lineI = res?.body?.lineItems;
+            console.log(lineI)
+            setCartsProducts(lineI);
+           
+            return
+          });
+        })
         .catch((error) => {
           console.error('Error fetching similar products:', error);
           setIsLoading(false);
         });
     }
+   
   }, [IDsimilarProducts1, IDsimilarProducts2, product, slug]);
-
+  console.log(cartProducts);
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
   const productName = product?.masterData?.current?.name?.['en-GB'] || productInfo?.name['en-GB'];
@@ -173,23 +223,48 @@ function DisplayProductInformation() {
     productDiscontPrice100,
     productDiscontPrice170,
   ];
+  
 
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
+
+    const n = 0;
+    setProductQuantity(n);
+    console.log(productQuantity)
     const prodPack = e.currentTarget;
-    const prodPackParent = prodPack.parentNode?.childNodes;
+    console.log(prodPack)
 
-    const activeProdPack = document.querySelector('.variant-active');
-    activeProdPack?.classList.remove('variant-active');
+    const prodPackParent = prodPack.parentNode?.children;
+  
+    // Remove the 'variant-active' class from the currently active variant
+    // let activeProdPack = document.querySelector('.variant-active');
+    // activeProdPack?.classList.remove('variant-active');
+    if (prodPackParent) {
+      for (let i = 0; i < prodPackParent.length; i++) {
+        console.log(prodPackParent[i] as  HTMLElement);
+        (prodPackParent[i] as  HTMLElement).classList.remove('variant-active');
+      }
+    }
+    
+    // Add the 'variant-active' class to the clicked variant
     prodPack.classList.add('variant-active');
-
+  
+    // Reset product quantity to 0
+    
     let selectedPrice = 0;
     let selectedDiscontPrice = 0;
-    prodPackParent?.forEach((el, i) => {
+    Array.from(prodPackParent || []).forEach((el, i) => {
       if ((el as HTMLElement).classList.contains('variant-active')) {
         selectedPrice = productPriceArr[i];
         selectedDiscontPrice = productDiscontPrice[i];
       }
     });
+   
+
+
+    console.log('Clicked variant:', prodPack);
+console.log('Selected price:', selectedPrice);
+console.log('Selected discounted price:', selectedDiscontPrice);
+console.log('Product quantity:', productQuantity);
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
@@ -283,17 +358,17 @@ function DisplayProductInformation() {
           </div>
           <div className="product-quntity-and-add-to-bag__block">
             <div className="product-quantity">
-              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
+              <MyButton className="btn_transparent " type="button" onClick={handleClickQuantity}>
                 {' '}
                 -
               </MyButton>
               <p className="product-quantity__count">{`${productQuantity}`}</p>
-              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
+              <MyButton className="btn_transparent " type="button" onClick={handleClickQuantity}>
                 {' '}
                 +
               </MyButton>
             </div>
-            <MyButton className="btn_black btn_product-card" type="button">
+            <MyButton className="btn_black btn_product-card" type="button" onClick={() => productAddToBag(product.id, productQuantity)}>
               {' '}
               ADD TO BAG
             </MyButton>
