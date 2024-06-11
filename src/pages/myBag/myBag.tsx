@@ -27,18 +27,12 @@ function MyBag() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        let cartData;
-        setTimeout(async () => {
-          setTimeout(async () => {
-            cartData = await getCart();
-            setCart(cartData.body);
-            const countProduct = cartData.body.totalLineItemQuantity;
-            if (countProduct && countRef.current && countProduct > 0) {
-              countRef.current.textContent = countProduct.toString();
-              console.log(cartData.body);
-            }
-          }, 300);
-        }, 300);
+        const cartData = await getCart();
+        setCart(cartData.body);
+        const countProduct = cartData.body.totalLineItemQuantity;
+        if (countProduct && countRef.current && countProduct > 0) {
+          countRef.current.textContent = countProduct.toString();
+        }
       } catch (error) {
         console.error(error);
       }
@@ -46,6 +40,13 @@ function MyBag() {
 
     fetchCart();
   }, []);
+
+  const applyPromoCode = async () => {
+    const updatedCart = await handleDiscount();
+    if (updatedCart) {
+      setCart(updatedCart);
+    }
+  };
 
   if (!cart) {
     return <LoadingSnippet />;
@@ -87,7 +88,7 @@ function MyBag() {
             <button
               type="button"
               className="promo-container_button btn_black"
-              onClick={handleDiscount}
+              onClick={applyPromoCode}
             >
               Apply promo code
             </button>
