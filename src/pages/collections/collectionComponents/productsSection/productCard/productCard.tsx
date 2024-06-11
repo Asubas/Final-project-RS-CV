@@ -23,8 +23,8 @@ const ProductCard = () => {
         await getCart().then((response) => {
           if (response.statusCode === 200) {
             setAddedProductIds(response.body.lineItems.map((item) => item.productId));
-            const countProduct = response.body.lineItems.length;
-            if (countRef.current && countProduct > 0) {
+            const countProduct = response.body.totalLineItemQuantity;
+            if (countProduct && countRef.current && countProduct > 0) {
               countRef.current.textContent = countProduct.toString();
             }
           }
@@ -54,17 +54,25 @@ const ProductCard = () => {
       .then((res: ClientResponse<Cart> | undefined) => {
         if (res && res.statusCode === 200) {
           setAddedProductIds((prevIds) => [...prevIds, id]);
+          const countAllProducts = res.body.totalLineItemQuantity;
           if (
             (countRef.current?.textContent &&
-              countRef.current?.textContent !== res.body.lineItems.length.toString()) ||
+              countAllProducts &&
+              countRef.current?.textContent !== countAllProducts.toString()) ||
             countRef.current?.textContent === ''
           ) {
-            if (res.body.lineItems.length === 0 && !countRef.current.classList.contains('empty')) {
+            if (
+              countAllProducts &&
+              countAllProducts === 0 &&
+              !countRef.current.classList.contains('empty')
+            ) {
               countRef.current.classList.add('empty');
             }
-            if (res.body.lineItems.length > 99) countRef.current.classList.add('min-width');
+            if (countAllProducts && countAllProducts > 99) {
+              countRef.current.classList.add('min-width');
+            }
             countRef.current.classList.remove('empty');
-            countRef.current.textContent = res.body.lineItems.length.toString();
+            if (countAllProducts) countRef.current.textContent = countAllProducts.toString();
           }
         }
       })
