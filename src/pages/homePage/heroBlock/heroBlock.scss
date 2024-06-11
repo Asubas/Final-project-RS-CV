@@ -15,6 +15,8 @@
       max-width: 628px;
       height: 628px;
       background: url('../../../assets/img/hero.jpg') no-repeat center / cover;
+      display: flex;
+      flex-direction: column;
 
       @media (max-width: 870px) {
         width: 100%;
@@ -30,8 +32,23 @@
         font-weight: 500;
 
         .promo_span {
-          color: red;
+          color: $secondary;
           font-weight: 600;
+        }
+
+        &.first_promo {
+          margin-top: 10px;
+          text-align: center;
+          margin-left: 10px;
+          border-radius: 5px;
+          opacity: 0.85;
+        }
+
+        &.second_promo {
+          align-self: flex-end;
+          margin: auto 10px 10px 0;
+          border-radius: 5px;
+          opacity: 0.85;
         }
       }
     }

@@ -91,13 +91,20 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
       }
     });
   };
-
   return (
-    <div className={`itemBlock ${quantity === 0 || isRemoved ? 'hidden' : ''}`} key={item.id}>
+    <div
+      className={`itemBlock ${
+        quantity === 0 || isRemoved ? 'hidden' : item.lineItemMode === 'GiftLineItem' ? 'gift' : ''
+      }`}
+      key={item.id}
+    >
       <img src={imageUrl} alt={item.name['en-GB']} className="itemImg" />
       <div className="itemData">
         <div className="itemDisc">
           <p className="itemDisc_name">{item.name['en-GB']}</p>
+          {item.lineItemMode === 'GiftLineItem' ? (
+            <p className="gifProduct_description">{item.variant.attributes?.[0].value}</p>
+          ) : null}
           <button
             className="btn_blank itemDisc_btn"
             type="button"
@@ -108,34 +115,36 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
             remove
           </button>
         </div>
-        <div className="itemDigits">
-          <div className="itemDigits_quantity">
-            <button
-              className="itemDigits_quantity__btn decrease"
-              type="button"
-              onClick={() => {
-                handleDecreaseQuantity(quantity, item.id);
-              }}
-            ></button>
-            <span className="itemDigits_quantity__count">{quantity}</span>
-            <button
-              className="itemDigits_quantity__btn increase"
-              onClick={() => {
-                handleIncreaseQuantity(quantity, item.id);
-              }}
-            ></button>
+        {item.lineItemMode === 'GiftLineItem' ? null : (
+          <div className="itemDigits">
+            <div className="itemDigits_quantity">
+              <button
+                className="itemDigits_quantity__btn decrease"
+                type="button"
+                onClick={() => {
+                  handleDecreaseQuantity(quantity, item.id);
+                }}
+              ></button>
+              <span className="itemDigits_quantity__count">{quantity}</span>
+              <button
+                className="itemDigits_quantity__btn increase"
+                onClick={() => {
+                  handleIncreaseQuantity(quantity, item.id);
+                }}
+              ></button>
+            </div>
+            {item.price?.discounted?.value?.centAmount && discPrice ? (
+              <span className="itemDigits_price__discount">
+                {(discPrice * quantity) / 100} {item.price.discounted.value.currencyCode}
+              </span>
+            ) : null}
+            {item.price?.value?.centAmount ? (
+              <span className="itemDigits_price">
+                {(priced * quantity) / 100} {item.price.value.currencyCode}
+              </span>
+            ) : null}
           </div>
-          {item.price?.discounted?.value?.centAmount && discPrice ? (
-            <span className="itemDigits_price__discount">
-              {(discPrice * quantity) / 100} {item.price.discounted.value.currencyCode}
-            </span>
-          ) : null}
-          {item.price?.value?.centAmount ? (
-            <span className="itemDigits_price">
-              {(priced * quantity) / 100} {item.price.value.currencyCode}
-            </span>
-          ) : null}
-        </div>
+        )}
       </div>
     </div>
   );

@@ -56,8 +56,8 @@
   justify-content: space-between;
 
   .itemImg {
-    width: 71px;
-    height: 71px;
+    width: 90px;
+    height: 90px;
     object-fit: cover;
   }
 
@@ -145,6 +145,24 @@
 
   &.hidden {
     display: none;
+  }
+
+  &.gift {
+    img {
+      align-self: center;
+      border-radius: 5px;
+    }
+    .itemDisc_name {
+      font-weight: 700;
+    }
+
+    .gifProduct_description {
+      position: relative;
+      left: -35%;
+      width: 135%;
+      text-align: justify;
+      top: -15px;
+    }
   }
 }
 
@@ -297,6 +315,7 @@
   .promo-container_input,
   .promo-container_button {
     height: 40px;
+    border-radius: 5px;
 
     @media (max-width: 441px) {
       width: 318px;
