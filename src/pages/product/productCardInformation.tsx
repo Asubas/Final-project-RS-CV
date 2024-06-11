@@ -138,10 +138,10 @@ function DisplayProductInformation() {
         .then(() => {
           getCart().then((res) => {
             const lineI = res?.body?.lineItems;
-            console.log(lineI)
+            console.log(lineI);
             setCartsProducts(lineI);
-           
-            return
+
+            return;
           });
         })
         .catch((error) => {
@@ -149,7 +149,6 @@ function DisplayProductInformation() {
           setIsLoading(false);
         });
     }
-   
   }, [IDsimilarProducts1, IDsimilarProducts2, product, slug]);
   console.log(cartProducts);
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
@@ -223,33 +222,31 @@ function DisplayProductInformation() {
     productDiscontPrice100,
     productDiscontPrice170,
   ];
-  
 
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
-
     const n = 0;
     setProductQuantity(n);
-    console.log(productQuantity)
+    console.log(productQuantity);
     const prodPack = e.currentTarget;
-    console.log(prodPack)
+    console.log(prodPack);
 
     const prodPackParent = prodPack.parentNode?.children;
-  
+
     // Remove the 'variant-active' class from the currently active variant
     // let activeProdPack = document.querySelector('.variant-active');
     // activeProdPack?.classList.remove('variant-active');
     if (prodPackParent) {
       for (let i = 0; i < prodPackParent.length; i++) {
-        console.log(prodPackParent[i] as  HTMLElement);
-        (prodPackParent[i] as  HTMLElement).classList.remove('variant-active');
+        console.log(prodPackParent[i] as HTMLElement);
+        (prodPackParent[i] as HTMLElement).classList.remove('variant-active');
       }
     }
-    
+
     // Add the 'variant-active' class to the clicked variant
     prodPack.classList.add('variant-active');
-  
+
     // Reset product quantity to 0
-    
+
     let selectedPrice = 0;
     let selectedDiscontPrice = 0;
     Array.from(prodPackParent || []).forEach((el, i) => {
@@ -258,13 +255,11 @@ function DisplayProductInformation() {
         selectedDiscontPrice = productDiscontPrice[i];
       }
     });
-   
-
 
     console.log('Clicked variant:', prodPack);
-console.log('Selected price:', selectedPrice);
-console.log('Selected discounted price:', selectedDiscontPrice);
-console.log('Product quantity:', productQuantity);
+    console.log('Selected price:', selectedPrice);
+    console.log('Selected discounted price:', selectedDiscontPrice);
+    console.log('Product quantity:', productQuantity);
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
@@ -368,7 +363,11 @@ console.log('Product quantity:', productQuantity);
                 +
               </MyButton>
             </div>
-            <MyButton className="btn_black btn_product-card" type="button" onClick={() => productAddToBag(product.id, productQuantity)}>
+            <MyButton
+              className="btn_black btn_product-card"
+              type="button"
+              onClick={() => productAddToBag(product.id, productQuantity)}
+            >
               {' '}
               ADD TO BAG
             </MyButton>
