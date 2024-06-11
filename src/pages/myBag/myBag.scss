@@ -288,3 +288,13 @@
     }
   }
 }
+
+.promo-container {
+  display: flex;
+  justify-content: space-around;
+  .promo-container_input,
+  .promo-container_button {
+    border-radius: 5px;
+    height: 40px;
+  }
+}

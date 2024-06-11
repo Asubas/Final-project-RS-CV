@@ -8,10 +8,12 @@ import EmptyBag from './emptyBag';
 import { ClearShoppingCart } from './clearCart/clearShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import { countRef } from '../../components/header/navBar/navBar';
+import { handleDiscount } from './quanitiCart/handleDiscount';
 
 let subTotalS: RefObject<HTMLAnchorElement>;
 let subTotalM: RefObject<HTMLAnchorElement>;
 let subTotal: RefObject<HTMLAnchorElement>;
+let promoRef: RefObject<HTMLInputElement>;
 function MyBag() {
   const navigate = useNavigate();
   const [cart, setCart] = useState<Cart | null>(null);
@@ -19,6 +21,7 @@ function MyBag() {
   subTotalS = useRef<HTMLAnchorElement>(null);
   subTotalM = useRef<HTMLAnchorElement>(null);
   subTotal = useRef<HTMLAnchorElement>(null);
+  promoRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const fetchCart = async () => {
       try {
@@ -71,6 +74,21 @@ function MyBag() {
               ${subtotal}
             </span>
           </div>
+          <div className="promo-container">
+            <input
+              className="promo-container_input"
+              type="text"
+              ref={promoRef}
+              placeholder="Enter promocode.."
+            ></input>
+            <button
+              type="button"
+              className="promo-container_button btn_black"
+              onClick={handleDiscount}
+            >
+              Apply promo code
+            </button>
+          </div>
           <button
             className="btn_white backToShop"
             onClick={() => {
@@ -108,4 +126,4 @@ function MyBag() {
 }
 
 export default MyBag;
-export { subTotalM, subTotalS, subTotal };
+export { subTotalM, subTotalS, subTotal, promoRef };

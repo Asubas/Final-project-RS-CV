@@ -26,6 +26,8 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
         setDiscPrice(discPrice);
         if (countRef.current && response.body.totalLineItemQuantity) {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
+        } else if (countRef.current && !response.body.totalLineItemQuantity) {
+          countRef.current.textContent = '';
         }
         if (subTotalM.current && subTotalS.current && subTotal.current) {
           subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100)
