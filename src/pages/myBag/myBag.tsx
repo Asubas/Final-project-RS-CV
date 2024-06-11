@@ -27,12 +27,18 @@ function MyBag() {
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const cartData = await getCart();
-        setCart(cartData.body);
-        const countProduct = cartData.body.totalLineItemQuantity;
-        if (countProduct && countRef.current && countProduct > 0) {
-          countRef.current.textContent = countProduct.toString();
-        }
+        let cartData;
+        setTimeout(async () => {
+          setTimeout(async () => {
+            cartData = await getCart();
+            setCart(cartData.body);
+            const countProduct = cartData.body.totalLineItemQuantity;
+            if (countProduct && countRef.current && countProduct > 0) {
+              countRef.current.textContent = countProduct.toString();
+              console.log(cartData.body);
+            }
+          }, 300);
+        }, 300);
       } catch (error) {
         console.error(error);
       }
