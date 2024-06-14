@@ -1,7 +1,7 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 import getSimilarProducts from './getSimilarProducts';
@@ -19,37 +19,9 @@ import iconLanguage from '../../assets/svg/icon-language.svg';
 import getProductBySlug from '../../lib/resquests/getProductBySlug';
 import { getCart } from '../../lib/flow/getCart';
 import { addProductToCart } from '../../lib/flow/createCart';
+import { removeProduct } from '../myBag/quanitiCart/removeProduct';
+import { countRef } from '../../components/header/navBar/navBar';
 
-// interface CartProduct {
-//   id: string; // Unique identifier for the cart item
-//   productId: string; // ID of the product
-//   name: string; // Name of the product
-//   quantity: number; // Quantity of the product in the cart
-//   price: {
-//     value: number; // Price of the product
-//     currency: string; // Currency of the price
-//   };
-//   discountedPrice?: {
-//     value: number; // Discounted price if applicable
-//     currency: string; // Currency of the discounted price
-//   };
-//   // Add more fields as needed based on the cart item structure
-// }
-// interface Price {
-//   centAmount: number;
-//   currencyCode: string;
-// }
-// interface LineItem {
-//   id: string;
-//   productId: string;
-//   name: string;
-//   quantity: number;
-//   price: {
-//     value: Price;
-//     discounted?: Price;
-//   };
-//   // Add any other properties you need
-// }
 function DisplayProductInformation() {
   const responsive = {
     superLargeDesktop: {
@@ -70,22 +42,10 @@ function DisplayProductInformation() {
     },
   };
 
-  const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [cartProducts, setCartsProducts] = useState<LineItem[]>([]);
-
-  const handleClickQuantity = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonType = e.currentTarget.textContent?.trim();
-    if (buttonType === '-') {
-      setProductQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
-    } else if (buttonType === '+') {
-      setProductQuantity((prevQuantity) => prevQuantity + 1);
-    }
-  };
-
+  const [, setCartsProducts] = useState<LineItem[]>([]);
   const location = useLocation();
   const product = location.state;
-  console.log(product)
   const currentURL = window.location.href;
   const indexLastSep = currentURL.lastIndexOf('/');
   const slug = currentURL.slice(indexLastSep + 1);
@@ -98,15 +58,8 @@ function DisplayProductInformation() {
   const IDsimilarProducts1 = product?.masterData?.current.categories[0].id;
   const IDsimilarProducts2 = product?.masterData?.current.categories[1].id;
 
-  // const countRef = useRef<HTMLSpanElement>(null);
-  // const [count, setCount] = useState<string>('0');
-
-  // console.log(countRef)
-
-
   useEffect(() => {
     if (!product && slug) {
-      console.log('!product')
       getProductBySlug(slug)
         .then((p) => {
           const productResult = p.body.results?.[0];
@@ -148,7 +101,6 @@ function DisplayProductInformation() {
         .then(() => {
           getCart().then((res) => {
             const lineI = res?.body?.lineItems;
-            console.log(lineI);
             setCartsProducts(lineI);
             const isInCart = lineI.some((item) => item.productId === product.id);
             setButtonMoveProduct(isInCart ? 'Remove' : 'Add to Cart');
@@ -160,22 +112,7 @@ function DisplayProductInformation() {
           setIsLoading(false);
         });
     }
-
-   
   }, [IDsimilarProducts1, IDsimilarProducts2, product, slug]);
-
-  // useEffect(() => {
-  //   getCart().then((res) => {
-  //     const lineItems = res?.body?.lineItems;
-  //     console.log('here')
-  //     setCartsProducts(lineItems);
-  //     if (product) {
-  //       const isInCart = lineItems.some((item) => item.productId === product.id);
-  //       console.log(isInCart)
-  //       setButtonMoveProduct(isInCart ? 'Remove' : 'Add to Cart');
-  //     }
-  //   });
-  // }, [product]);
 
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
@@ -249,22 +186,58 @@ function DisplayProductInformation() {
     productDiscontPrice170,
   ];
 
+  const productId50 = product?.id;
+  const productId100 = product?.masterData?.current.variants[0].prices[0].id;
+  const productId170 = product?.masterData?.current.variants[1].prices[0].id;
+
+  const productsId = [productId50, productId100, productId170];
+
+  const [, setCartProductId] = useState(productsId[0]);
+
+  const handleClickMoveProduct = () => {
+    getCart().then((cartRes) => {
+      const lineItems = cartRes.body.lineItems;
+      const cartProduct = lineItems.find((item) => item.productId === product.id);
+      if (buttonMoveProduct !== 'Remove') {
+        addProductToCart(product.id).then((res) => {
+          const quantity = res?.body?.lineItems.length;
+          if (countRef.current && quantity) {
+            if (quantity === 1) {
+              countRef.current.textContent = String(1);
+            } else if (quantity >= 2) {
+              countRef.current.textContent = String(quantity);
+            }
+          }
+        });
+
+        setButtonMoveProduct('Remove');
+      } else if (cartProduct) {
+        removeProduct(cartProduct.quantity, cartProduct.id).then((res) => {
+          const quantity = res?.body.lineItems.length;
+
+          if (countRef.current) {
+            if (quantity && quantity > 0) {
+              countRef.current.textContent = String(quantity);
+            } else if (quantity === 0) {
+              countRef.current.textContent = '';
+            }
+          }
+        });
+        setButtonMoveProduct('Add to Cart');
+      }
+    });
+  };
+
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
-    const n = 0;
-    setProductQuantity(n);
     const prodPack = e.currentTarget;
     const prodPackParent = prodPack.parentNode?.children;
-
+    setCartProductId(productsId[Number(prodPack.id) - 1]);
     if (prodPackParent) {
       for (let i = 0; i < prodPackParent.length; i++) {
         (prodPackParent[i] as HTMLElement).classList.remove('variant-active');
       }
     }
-
-    // Add the 'variant-active' class to the clicked variant
     prodPack.classList.add('variant-active');
-
-    // Reset product quantity to 0
 
     let selectedPrice = 0;
     let selectedDiscontPrice = 0;
@@ -275,10 +248,6 @@ function DisplayProductInformation() {
       }
     });
 
-    console.log('Clicked variant:', prodPack);
-    console.log('Selected price:', selectedPrice);
-    console.log('Selected discounted price:', selectedDiscontPrice);
-    console.log('Product quantity:', productQuantity);
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
@@ -356,22 +325,26 @@ function DisplayProductInformation() {
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
-              <div className="variant variant-1 variant-active" onClick={handleClickProdPack}>
+              <div
+                className="variant variant-1 variant-active"
+                id="1"
+                onClick={handleClickProdPack}
+              >
                 <img src={size50} alt="size-50" />
                 <p></p>
               </div>
-              <div className="variant variant-2" onClick={handleClickProdPack}>
+              <div className="variant variant-2" id="2" onClick={handleClickProdPack}>
                 <img src={size100} alt="size-100" />
                 <p></p>
               </div>
-              <div className="variant variant-3" onClick={handleClickProdPack}>
+              <div className="variant variant-3" id="3" onClick={handleClickProdPack}>
                 <img src={size170} alt="size-170" />
                 <p></p>
               </div>
             </div>
           </div>
           <div className="product-quntity-and-add-to-bag__block">
-            <div className="product-quantity">
+            {/* <div className="product-quantity">
               <MyButton className="btn_transparent " type="button" onClick={handleClickQuantity}>
                 {' '}
                 -
@@ -381,14 +354,11 @@ function DisplayProductInformation() {
                 {' '}
                 +
               </MyButton>
-            </div>
+            </div> */}
             <MyButton
               className="btn_black btn_product-card"
               type="button"
-              onClick={() => {
-                addProductToCart(product.id)
-                setButtonMoveProduct('remove')
-              }}
+              onClick={() => handleClickMoveProduct()}
             >
               {' '}
               {buttonMoveProduct}
