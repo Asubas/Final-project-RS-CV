@@ -1,7 +1,7 @@
 import './productCardInformation.scss';
 import MyButton from '../../components/button/button';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 import getSimilarProducts from './getSimilarProducts';
@@ -18,6 +18,7 @@ import iconAlarm from '../../assets/svg/icon-alarm.svg';
 import iconLanguage from '../../assets/svg/icon-language.svg';
 import getProductBySlug from '../../lib/resquests/getProductBySlug';
 import { getCart } from '../../lib/flow/getCart';
+import { addProductToCart } from '../../lib/flow/createCart';
 
 // interface CartProduct {
 //   id: string; // Unique identifier for the cart item
@@ -84,18 +85,28 @@ function DisplayProductInformation() {
 
   const location = useLocation();
   const product = location.state;
+  console.log(product)
   const currentURL = window.location.href;
   const indexLastSep = currentURL.lastIndexOf('/');
   const slug = currentURL.slice(indexLastSep + 1);
   const [productInfo, setProductInfo] = useState<ProductProjection | null>(null);
+  const [buttonMoveProduct, setButtonMoveProduct] = useState('Add to Cart');
   const imagesSlider: SliderItemDataP[] = product?.masterData?.current.masterVariant.images;
   const [currentImg, setCurrentImg] = useState<string>(imagesSlider?.[0].url);
   const [, setIsLoading] = useState(true);
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
   const IDsimilarProducts1 = product?.masterData?.current.categories[0].id;
   const IDsimilarProducts2 = product?.masterData?.current.categories[1].id;
+
+  // const countRef = useRef<HTMLSpanElement>(null);
+  // const [count, setCount] = useState<string>('0');
+
+  // console.log(countRef)
+
+
   useEffect(() => {
     if (!product && slug) {
+      console.log('!product')
       getProductBySlug(slug)
         .then((p) => {
           const productResult = p.body.results?.[0];
@@ -114,7 +125,6 @@ function DisplayProductInformation() {
               getCart().then((res) => {
                 const lineI = res?.body?.lineItems;
                 setCartsProducts(lineI);
-                console.log(cartProducts);
               });
             })
             .catch((error) => {
@@ -140,7 +150,8 @@ function DisplayProductInformation() {
             const lineI = res?.body?.lineItems;
             console.log(lineI);
             setCartsProducts(lineI);
-
+            const isInCart = lineI.some((item) => item.productId === product.id);
+            setButtonMoveProduct(isInCart ? 'Remove' : 'Add to Cart');
             return;
           });
         })
@@ -149,8 +160,23 @@ function DisplayProductInformation() {
           setIsLoading(false);
         });
     }
+
+   
   }, [IDsimilarProducts1, IDsimilarProducts2, product, slug]);
-  console.log(cartProducts);
+
+  // useEffect(() => {
+  //   getCart().then((res) => {
+  //     const lineItems = res?.body?.lineItems;
+  //     console.log('here')
+  //     setCartsProducts(lineItems);
+  //     if (product) {
+  //       const isInCart = lineItems.some((item) => item.productId === product.id);
+  //       console.log(isInCart)
+  //       setButtonMoveProduct(isInCart ? 'Remove' : 'Add to Cart');
+  //     }
+  //   });
+  // }, [product]);
+
   const priceField = document.querySelector('.price') as HTMLParagraphElement;
   const priceDiscontField = document.querySelector('.price-discount') as HTMLParagraphElement;
   const productName = product?.masterData?.current?.name?.['en-GB'] || productInfo?.name['en-GB'];
@@ -226,18 +252,11 @@ function DisplayProductInformation() {
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const n = 0;
     setProductQuantity(n);
-    console.log(productQuantity);
     const prodPack = e.currentTarget;
-    console.log(prodPack);
-
     const prodPackParent = prodPack.parentNode?.children;
 
-    // Remove the 'variant-active' class from the currently active variant
-    // let activeProdPack = document.querySelector('.variant-active');
-    // activeProdPack?.classList.remove('variant-active');
     if (prodPackParent) {
       for (let i = 0; i < prodPackParent.length; i++) {
-        console.log(prodPackParent[i] as HTMLElement);
         (prodPackParent[i] as HTMLElement).classList.remove('variant-active');
       }
     }
@@ -366,10 +385,13 @@ function DisplayProductInformation() {
             <MyButton
               className="btn_black btn_product-card"
               type="button"
-              onClick={() => productAddToBag(product.id, productQuantity)}
+              onClick={() => {
+                addProductToCart(product.id)
+                setButtonMoveProduct('remove')
+              }}
             >
               {' '}
-              ADD TO BAG
+              {buttonMoveProduct}
             </MyButton>
           </div>
         </div>
