@@ -1,7 +1,8 @@
+import './myBag.scss';
+import './curtain.scss';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { Cart } from '@commercetools/platform-sdk';
 import { getCart } from '../../lib/flow/getCart';
-import './myBag.scss';
 import ItemInBag from './itemInBag';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
 import EmptyBag from './emptyBag';
@@ -23,6 +24,45 @@ function MyBag() {
   subTotalM = useRef<HTMLAnchorElement>(null);
   subTotal = useRef<HTMLAnchorElement>(null);
   promoRef = useRef<HTMLInputElement>(null);
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const summeryRef = useRef<HTMLDivElement>(null);
+  const [isCurtainClicked, setIsCurtainClicked] = useState(false);
+  const [summaryClass, setSummeryClass] = useState('summeryList hidden');
+  //Логика шторки стырил из бургера
+
+  const updateCurtain = () => {
+    if (!isCurtainClicked) {
+      setSummeryClass('summeryList visible');
+    } else {
+      setSummeryClass('summeryList hidden');
+    }
+    setIsCurtainClicked(!isCurtainClicked);
+  };
+
+  const handleOutsideClick = (event: MouseEvent) => {
+    if (
+      summeryRef.current &&
+      !summeryRef.current.contains(event.target as Node) &&
+      !(event.target as Node).contains(curtainRef.current)
+    ) {
+      setSummeryClass('summeryList hidden');
+      setIsCurtainClicked(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isCurtainClicked) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    } else {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isCurtainClicked]);
+
+  //конец логики шторки
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -76,6 +116,7 @@ function MyBag() {
     ).toFixed(2);
   }
   const total = cart.totalPrice.centAmount / 100 + deliveryPrice;
+
   return (
     <section className="cartSection">
       <div className="cartWrap">
@@ -94,7 +135,7 @@ function MyBag() {
               {subTotalDiscount ? (
                 <span className="subtotal_value-discount">{subTotalDiscount}</span>
               ) : null}
-              <span className="subtotal_value valueChange" ref={subTotalM}>
+              <span className="subtotal_value valueChange" ref={subTotalS}>
                 {subtotal}
               </span>
               <span className="subtotal_value currency">&nbsp;USD</span>
@@ -126,7 +167,7 @@ function MyBag() {
           </button>
           <ClearShoppingCart />
         </div>
-        <div className="summeryList">
+        <div className={summaryClass} ref={summeryRef}>
           <h2 className="summeryH2">Order summery</h2>
           <div className="pricesBlock">
             <span className="pricesBlock_name">Subtotal</span>
@@ -153,6 +194,9 @@ function MyBag() {
             <span className="pricesBlock_currency value_total currency">&nbsp;USD</span>
           </div>
           <span className="summeryShipping">Estimated shipping time: 2 days</span>
+        </div>
+        <div className="summeryList_Curtain" ref={curtainRef} onClick={updateCurtain}>
+          $
         </div>
       </div>
     </section>

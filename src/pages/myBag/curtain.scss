@@ -1,0 +1,37 @@
+@import '../../App.scss';
+
+@media (max-width: 1120px) {
+  .summeryList_Curtain {
+    width: 55px;
+    height: 55px;
+    background-color: $outline;
+    position: fixed;
+    right: -35px;
+    top: 40%;
+    border-radius: 5px;
+    transition: 0.5s;
+    cursor: pointer;
+    text-align: center;
+    padding-right: 30px;
+    padding-top: 19.5px;
+
+    &:hover {
+      right: -25px;
+      transition: 0.5s;
+    }
+  }
+
+  .summeryList {
+    position: fixed;
+    transition: 1s;
+    &.hidden {
+      transform: translateX(150%);
+    }
+    &.visible {
+      transform: translateX(0%);
+    }
+    @media (max-width: 560px) {
+      width: 90%;
+    }
+  }
+}

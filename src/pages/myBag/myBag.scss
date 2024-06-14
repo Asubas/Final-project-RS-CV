@@ -169,11 +169,24 @@
   }
 }
 
+.itemDigits_price {
+  @media (max-width: 550px) {
+    position: relative;
+    left: -5px;
+  }
+}
+
 .itemDigits_price__discount {
   font-weight: 500;
   line-height: 150%;
   letter-spacing: 0.01em;
   text-align: end;
+
+  @media (max-width: 550px) {
+    position: relative;
+    left: -5px;
+  }
+
   & + .itemDigits_price {
     color: $outline;
     font-size: 90%;
@@ -324,12 +337,12 @@
     height: 40px;
     border-radius: 5px;
 
-    @media (max-width: 441px) {
+    @media (max-width: 455px) {
       width: 318px;
     }
   }
 
-  @media (max-width: 441px) {
+  @media (max-width: 455px) {
     gap: 12px;
   }
 }

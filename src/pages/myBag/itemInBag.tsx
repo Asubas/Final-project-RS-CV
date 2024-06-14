@@ -53,6 +53,7 @@ const ItemInBag: React.FC<ItemInBagProps> = ({ item }: ItemInBagProps) => {
         if (countRef.current && response.body.totalLineItemQuantity) {
           countRef.current.textContent = response.body.totalLineItemQuantity.toString();
         }
+
         if (subTotalM.current && subTotalS.current && subTotal.current) {
           subTotalM.current.textContent = (response.body.totalPrice.centAmount / 100)
             .toFixed(2)
