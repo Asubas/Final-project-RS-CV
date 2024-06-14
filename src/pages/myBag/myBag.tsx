@@ -35,7 +35,6 @@ function MyBag() {
             const countProduct = cartData.body.totalLineItemQuantity;
             if (countProduct && countRef.current && countProduct > 0) {
               countRef.current.textContent = countProduct.toString();
-              console.log(cartData.body);
             }
           }, 300);
         }, 300);
