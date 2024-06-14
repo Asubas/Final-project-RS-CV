@@ -1,3 +1,5 @@
+@import '../../App.scss';
+
 h3 {
   font-weight: 500;
   font-size: 24px;
@@ -88,7 +90,7 @@ h3 {
           }
           .variant:hover,
           .variant-active {
-            border: 1px solid #c3b212;
+            border: 1px solid $secondary;
             cursor: pointer;
           }
         }

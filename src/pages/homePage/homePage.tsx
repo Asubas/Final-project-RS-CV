@@ -1,3 +1,4 @@
+import DiscountBlock from './discountBlock/discountBlock';
 import HeroBlock from './heroBlock/heroBlock';
 import Profits from './profits/profits';
 import Slider from './slider/slider';
@@ -9,6 +10,7 @@ export default function MainPage() {
       <HeroBlock />
       <Profits />
       <Slider />
+      <DiscountBlock />
       <Wholesalers />
     </>
   );

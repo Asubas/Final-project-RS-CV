@@ -24,7 +24,7 @@ const developerData: Developer[] = [
     name: 'lipan48',
     location: 'Russia, Voronezh',
     about:
-      'My name is Anton, and I’m that guy who always seeks new challenges and is ready to learning something new. I’m 35 years old and have experience in sales and logistics, but I realized that I`m in search of myself. I see myself in front-end development. I’m self-motivated and always willing to learn new technologies and development procedures.',
+      'My name is Anton, and I`m that guy who always seeks new challenges and is ready to learning something new. I`m 35 years old and have experience in sales and logistics, but I realized that I`m in search of myself. I see myself in front-end development. I`m self-motivated and always willing to learn new technologies and development procedures.',
     img: 'https://avatars.githubusercontent.com/u/120409900?s=400&u=bcd265e18b819ee7aa8f65a4a1aaa7428fd34b68&v=4',
     gitUrl: 'https://github.com/lipan4836',
     role: 'jira-technic, developer, soldier',
@@ -33,7 +33,7 @@ const developerData: Developer[] = [
     name: 'DzmitryAlekseev',
     location: 'Poland, Wrocław',
     about:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas aperiam ea quasi repellendus, inventore numquam ex laboriosam perferendis rerum facilis eaque tenetur expedita. Voluptatem illum, consequuntur laboriosam possimus ipsa officia!',
+      'My name is Dzmitry Aliakseyeu and I`m currently living in Wroclaw, where I relocated from Belarus in 2022. I`m 29 years old.I graduated from Law Faculty and was working in the legal area. But right now I`m looking forward to becoming a Front-End Engineer. In March 2022 I joined the Basics of HTML and CSS course in It-Academy, Minsk. My next steps are self-education and RS school, and of course start a career in Front-End development within next year.',
     img: photoDima,
     gitUrl: 'https://github.com/DzmitryAlekseev',
     role: 'developer, soldier',

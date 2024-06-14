@@ -1,0 +1,33 @@
+@import '../../../App.scss';
+
+.discountWrap {
+  max-width: 1280px;
+  margin: 36px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: $backgroundVariant;
+  padding: 72px;
+
+  .discountH2 {
+    text-align: center;
+  }
+
+  .discount_promo {
+    font-size: 18px;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
+
+    &_code {
+      font-weight: 500;
+      color: $secondary;
+      font-size: 20px;
+
+      @media (max-width: 600px) {
+        font-size: 17px;
+      }
+    }
+  }
+}
