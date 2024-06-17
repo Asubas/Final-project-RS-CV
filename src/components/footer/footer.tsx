@@ -40,7 +40,9 @@ export default function Footer() {
             </div>
           </div>
           <div className="footer_block">
-            <p className="footer_block__head btn_blank only-head">our team</p>
+            <Link className="footer_block__head btn_blank" to="about">
+              our team
+            </Link>
             <div className="footer_block__tab">
               <div className="footer_block__item member-list">
                 <div className="git-logo"></div>
@@ -78,9 +80,7 @@ export default function Footer() {
             </div>
           </div>
           <div className="footer_block contact">
-            <Link className="footer_block__head btn_blank" to="about">
-              contact us
-            </Link>
+            <p className="footer_block__head btn_blank only-head">contact us</p>
             <div className="footer_block__tab">
               <div className="footer_block__item member-list">
                 <div className="location"></div>

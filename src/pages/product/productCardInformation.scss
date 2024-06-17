@@ -11,12 +11,11 @@ h3 {
   margin: 0 auto;
   .product-card__block {
     width: 90%;
-    margin: 0 auto;
+    margin: 30px auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 15px;
-    margin-top: 30px;
     .product-image {
       max-width: 456px;
       height: fit-content;

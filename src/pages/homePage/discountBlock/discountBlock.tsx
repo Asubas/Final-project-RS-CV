@@ -12,7 +12,8 @@ function DiscountBlock() {
         </p>
         <p className="discount_promo">
           If this is your first time in our store, then we have prepared a promo code for you that
-          will make your first purchase 20% more profitable! Don't miss your chance and enter the{' '}
+          will make your first purchase 20% more profitable! Don&lsquo;t miss your chance and enter
+          the
           <span className="discount_promo_code">shopsmart</span> promo code.
         </p>
       </div>
