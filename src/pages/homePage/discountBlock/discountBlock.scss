@@ -1,12 +1,17 @@
 @import '../../../App.scss';
 
+.discountSect {
+  background: $backgroundVariant;
+  margin: 36px 0;
+}
+
 .discountWrap {
   max-width: 1280px;
-  margin: 36px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 30px;
-  background: $backgroundVariant;
+
   padding: 72px;
 
   .discountH2 {
