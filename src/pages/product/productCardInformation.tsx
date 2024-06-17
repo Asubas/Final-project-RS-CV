@@ -21,6 +21,7 @@ import { getCart } from '../../lib/flow/getCart';
 import { addProductToCart } from '../../lib/flow/createCart';
 import { removeProduct } from '../myBag/quanitiCart/removeProduct';
 import { countRef } from '../../components/header/navBar/navBar';
+import { changePriceProduct } from '../myBag/quanitiCart/changePriceProduct';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -192,14 +193,16 @@ function DisplayProductInformation() {
 
   const productsId = [productId50, productId100, productId170];
 
-  const [, setCartProductId] = useState(productsId[0]);
+  // const [, setCartProductId] = useState(productsId[0]);
+  // const [selectedVariant, setSelectedVariant] = useState({ weight: '50', productId: '' });
+   const [selectedVariantId, setSelectedVariantId] = useState(1);
 
   const handleClickMoveProduct = () => {
     getCart().then((cartRes) => {
       const lineItems = cartRes.body.lineItems;
       const cartProduct = lineItems.find((item) => item.productId === product.id);
       if (buttonMoveProduct !== 'Remove') {
-        addProductToCart(product.id).then((res) => {
+        addProductToCart(product.id, selectedVariantId).then((res) => {
           const quantity = res?.body?.lineItems.length;
           if (countRef.current && quantity) {
             if (quantity === 1) {
@@ -228,26 +231,41 @@ function DisplayProductInformation() {
     });
   };
 
+  // const [selectedPrice, setSelectedPrice] = useState<number>(0);
+  // const [selectedDiscontPrice, setSelectedDiscontPrice] = useState<number | null>(null);
+
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
     const prodPackParent = prodPack.parentNode?.children;
-    setCartProductId(productsId[Number(prodPack.id) - 1]);
     if (prodPackParent) {
-      for (let i = 0; i < prodPackParent.length; i++) {
-        (prodPackParent[i] as HTMLElement).classList.remove('variant-active');
-      }
-    }
-    prodPack.classList.add('variant-active');
+      Array.from(prodPackParent).forEach((el) => {
+          el.classList.remove('variant-active');
+          if(el === prodPack){
+            el.classList.add('variant-active');
+            setSelectedVariantId(Number(el.id));
+          }
+      })
+     
 
-    let selectedPrice = 0;
-    let selectedDiscontPrice = 0;
+      // prodPackParent[selectedVariantId].classList.add('variant-active')
+      // Array.from(prodPackParent).forEach((el) => {
+      //   if (el.id === prodPack.id) {
+      //     // console.log(el)
+      //    el.classList.add('variant-active');
+      //   } 
+      // });
+    }
+
+    let selectedPrice: number = productPrice50;
+    let selectedDiscontPrice: number | null = productDiscontPrice50 || null;
+
     Array.from(prodPackParent || []).forEach((el, i) => {
       if ((el as HTMLElement).classList.contains('variant-active')) {
         selectedPrice = productPriceArr[i];
-        selectedDiscontPrice = productDiscontPrice[i];
+        selectedDiscontPrice = productDiscontPrice[i];        
       }
     });
-
+   
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
