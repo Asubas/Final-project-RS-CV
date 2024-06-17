@@ -371,3 +371,18 @@ h3 {
     }
   }
 }
+
+.no-active {
+  user-select: none;
+  cursor: auto;
+  pointer-events: none;
+  position: relative;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -90%);
+    font-weight: 700;
+    text-align: center;
+  }
+}

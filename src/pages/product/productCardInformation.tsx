@@ -333,13 +333,13 @@ function DisplayProductInformation() {
                 <img src={size50} alt="size-50" />
                 <p></p>
               </div>
-              <div className="variant variant-2" id="2" onClick={handleClickProdPack}>
+              <div className="variant variant-2 no-active" id="2" onClick={handleClickProdPack}>
                 <img src={size100} alt="size-100" />
-                <p></p>
+                <p>not available</p>
               </div>
-              <div className="variant variant-3" id="3" onClick={handleClickProdPack}>
+              <div className="variant variant-3 no-active" id="3" onClick={handleClickProdPack}>
                 <img src={size170} alt="size-170" />
-                <p></p>
+                <p>not available</p>
               </div>
             </div>
           </div>
