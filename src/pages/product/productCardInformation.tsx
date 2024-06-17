@@ -195,7 +195,7 @@ function DisplayProductInformation() {
 
   // const [, setCartProductId] = useState(productsId[0]);
   // const [selectedVariant, setSelectedVariant] = useState({ weight: '50', productId: '' });
-   const [selectedVariantId, setSelectedVariantId] = useState(1);
+  const [selectedVariantId, setSelectedVariantId] = useState(1);
 
   const handleClickMoveProduct = () => {
     getCart().then((cartRes) => {
@@ -239,20 +239,19 @@ function DisplayProductInformation() {
     const prodPackParent = prodPack.parentNode?.children;
     if (prodPackParent) {
       Array.from(prodPackParent).forEach((el) => {
-          el.classList.remove('variant-active');
-          if(el === prodPack){
-            el.classList.add('variant-active');
-            setSelectedVariantId(Number(el.id));
-          }
-      })
-     
+        el.classList.remove('variant-active');
+        if (el === prodPack) {
+          el.classList.add('variant-active');
+          setSelectedVariantId(Number(el.id));
+        }
+      });
 
       // prodPackParent[selectedVariantId].classList.add('variant-active')
       // Array.from(prodPackParent).forEach((el) => {
       //   if (el.id === prodPack.id) {
       //     // console.log(el)
       //    el.classList.add('variant-active');
-      //   } 
+      //   }
       // });
     }
 
@@ -262,10 +261,10 @@ function DisplayProductInformation() {
     Array.from(prodPackParent || []).forEach((el, i) => {
       if ((el as HTMLElement).classList.contains('variant-active')) {
         selectedPrice = productPriceArr[i];
-        selectedDiscontPrice = productDiscontPrice[i];        
+        selectedDiscontPrice = productDiscontPrice[i];
       }
     });
-   
+
     const productPriceFinal =
       Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
         ? `${Number(selectedPrice) / 100}.00`
