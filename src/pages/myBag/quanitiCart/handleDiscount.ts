@@ -19,7 +19,7 @@ const handleDiscount = async () => {
             actions: [
               {
                 action: 'addDiscountCode',
-                code: promoRef.current?.value as string,
+                code: promoRef.current?.value.trim() as string,
               },
             ],
           },

@@ -5,7 +5,6 @@ export const getCart = async () => {
   if (!localStorage.getItem('userId')) {
     return checkUser()
       .withProjectKey({ projectKey })
-      .me()
       .carts()
       .withId({ ID: localStorage.getItem('anonymousCartId') as string })
       .get()
