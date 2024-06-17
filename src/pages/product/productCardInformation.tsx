@@ -224,55 +224,55 @@ function DisplayProductInformation() {
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
     const selectedId = Number(prodPack.id);
-    
+
     setSelectedVariantId(selectedId);
 
     setTimeout(() => {
-    const prodPackParent = prodPack.parentNode?.children;
-    if (prodPackParent) {
-      Array.from(prodPackParent).forEach((el) => {
-        el.classList.remove('variant-active');
+      const prodPackParent = prodPack.parentNode?.children;
+      if (prodPackParent) {
+        Array.from(prodPackParent).forEach((el) => {
+          el.classList.remove('variant-active');
+        });
+        prodPack.classList.add('variant-active');
+      }
+
+      let selectedPrice: number = productPrice50;
+      let selectedDiscontPrice: number | null = productDiscontPrice50 || null;
+
+      Array.from(prodPackParent || []).forEach((el, i) => {
+        if ((el as HTMLElement).classList.contains('variant-active')) {
+          selectedPrice = productPriceArr[i];
+          selectedDiscontPrice = productDiscontPrice[i];
+        }
       });
-      prodPack.classList.add('variant-active');
-    }
 
-    let selectedPrice: number = productPrice50;
-    let selectedDiscontPrice: number | null = productDiscontPrice50 || null;
+      const productPriceFinal =
+        Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
+          ? `${Number(selectedPrice) / 100}.00`
+          : `${(Number(selectedPrice) / 100).toFixed(2)}`;
 
-    Array.from(prodPackParent || []).forEach((el, i) => {
-      if ((el as HTMLElement).classList.contains('variant-active')) {
-        selectedPrice = productPriceArr[i];
-        selectedDiscontPrice = productDiscontPrice[i];
+      if (priceField) {
+        priceField.innerText = `$ ${productPriceFinal}`;
       }
-    });
 
-    const productPriceFinal =
-      Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
-        ? `${Number(selectedPrice) / 100}.00`
-        : `${(Number(selectedPrice) / 100).toFixed(2)}`;
+      const productDiscontPriceFinal = selectedDiscontPrice
+        ? Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
+          ? `$ ${Number(selectedDiscontPrice) / 100}.00`
+          : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`
+        : '';
 
-    if (priceField) {
-      priceField.innerText = `$ ${productPriceFinal}`;
-    }
-
-    const productDiscontPriceFinal = selectedDiscontPrice
-      ? Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
-        ? `$ ${Number(selectedDiscontPrice) / 100}.00`
-        : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`
-      : '';
-
-    if (productDiscontPriceFinal !== '') {
-      priceField.classList.add('price-cross-out');
-    } else {
-      if (priceField.classList.contains('price-cross-out')) {
-        priceField.classList.remove('price-cross-out');
+      if (productDiscontPriceFinal !== '') {
+        priceField.classList.add('price-cross-out');
+      } else {
+        if (priceField.classList.contains('price-cross-out')) {
+          priceField.classList.remove('price-cross-out');
+        }
       }
-    }
 
-    if (priceDiscontField) {
-      priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
-    }
-  }, 0);
+      if (priceDiscontField) {
+        priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
+      }
+    }, 0);
   };
 
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
