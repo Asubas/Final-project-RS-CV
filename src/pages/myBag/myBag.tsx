@@ -191,7 +191,7 @@ function MyBag() {
           <span className="summeryShipping">Estimated shipping time: 2 days</span>
         </div>
         <div className="summeryList_Curtain" ref={curtainRef} onClick={updateCurtain}>
-          $
+          $&nbsp;
         </div>
       </div>
     </section>
