@@ -21,7 +21,6 @@ import { getCart } from '../../lib/flow/getCart';
 import { addProductToCart } from '../../lib/flow/createCart';
 import { removeProduct } from '../myBag/quanitiCart/removeProduct';
 import { countRef } from '../../components/header/navBar/navBar';
-import { changePriceProduct } from '../myBag/quanitiCart/changePriceProduct';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -58,6 +57,7 @@ function DisplayProductInformation() {
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
   const IDsimilarProducts1 = product?.masterData?.current.categories[0].id;
   const IDsimilarProducts2 = product?.masterData?.current.categories[1].id;
+  const [selectedVariantId, setSelectedVariantId] = useState<number | null>(1);
 
   useEffect(() => {
     if (!product && slug) {
@@ -187,21 +187,11 @@ function DisplayProductInformation() {
     productDiscontPrice170,
   ];
 
-  const productId50 = product?.id;
-  const productId100 = product?.masterData?.current.variants[0].prices[0].id;
-  const productId170 = product?.masterData?.current.variants[1].prices[0].id;
-
-  const productsId = [productId50, productId100, productId170];
-
-  // const [, setCartProductId] = useState(productsId[0]);
-  // const [selectedVariant, setSelectedVariant] = useState({ weight: '50', productId: '' });
-  const [selectedVariantId, setSelectedVariantId] = useState(1);
-
   const handleClickMoveProduct = () => {
     getCart().then((cartRes) => {
       const lineItems = cartRes.body.lineItems;
       const cartProduct = lineItems.find((item) => item.productId === product.id);
-      if (buttonMoveProduct !== 'Remove') {
+      if (buttonMoveProduct !== 'Remove' && selectedVariantId !== null) {
         addProductToCart(product.id, selectedVariantId).then((res) => {
           const quantity = res?.body?.lineItems.length;
           if (countRef.current && quantity) {
@@ -231,28 +221,19 @@ function DisplayProductInformation() {
     });
   };
 
-  // const [selectedPrice, setSelectedPrice] = useState<number>(0);
-  // const [selectedDiscontPrice, setSelectedDiscontPrice] = useState<number | null>(null);
-
   const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
     const prodPack = e.currentTarget;
+    const selectedId = Number(prodPack.id);
+    
+    setSelectedVariantId(selectedId);
+
+    setTimeout(() => {
     const prodPackParent = prodPack.parentNode?.children;
     if (prodPackParent) {
       Array.from(prodPackParent).forEach((el) => {
         el.classList.remove('variant-active');
-        if (el === prodPack) {
-          el.classList.add('variant-active');
-          setSelectedVariantId(Number(el.id));
-        }
       });
-
-      // prodPackParent[selectedVariantId].classList.add('variant-active')
-      // Array.from(prodPackParent).forEach((el) => {
-      //   if (el.id === prodPack.id) {
-      //     // console.log(el)
-      //    el.classList.add('variant-active');
-      //   }
-      // });
+      prodPack.classList.add('variant-active');
     }
 
     let selectedPrice: number = productPrice50;
@@ -291,7 +272,9 @@ function DisplayProductInformation() {
     if (priceDiscontField) {
       priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
     }
+  }, 0);
   };
+
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
     const selectImage = e.currentTarget.children[0] as HTMLImageElement;
     const tempImgCurUrl = currentImg;
