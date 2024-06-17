@@ -2,7 +2,7 @@ import { projectKey } from '../exports/exportsContants';
 import { checkUser } from './anonymFlow';
 import { getCart } from './getCart';
 
-const addProductToCart = async (id: string = '') => {
+const addProductToCart = async (id: string = '', variantId?: number | 1) => {
   const result = await getCart().then((res) => {
     if (res.statusCode === 200) {
       return checkUser()
@@ -16,6 +16,7 @@ const addProductToCart = async (id: string = '') => {
               {
                 action: 'addLineItem',
                 productId: id,
+                variantId: variantId, // ID варианта товара
                 quantity: 1,
               },
             ],
