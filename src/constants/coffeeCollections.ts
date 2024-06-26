@@ -26,12 +26,12 @@ const backgroundImagesCoffee = [
 ];
 
 const coffeeUrl = {
-  '86625d6c-fcb0-4f8d-a58f-9f67cc8b13a4': 'all',
-  '7baa2a11-d416-49cb-9645-4d0b50772c86': 'brazilia',
-  'a84a4b2f-fd84-4c53-8da3-6e58be5551b5': 'colombia',
-  '23c756e3-6674-4817-a3f5-568a6fc470d9': 'kenya',
-  '9a2f447e-2a6b-498f-bb80-49816c810c6b': 'ethiopia',
-  'c6333a6d-0dfe-431e-a178-ee2b52f6e8a1': 'costaRica',
-  '133c8f18-e588-4524-b875-21a164bd0fbe': 'guatemala',
+  'be6c90ed-1f5d-4796-93a8-49d90beb830f': 'all',
+  '408d07b0-dbc3-4e07-b185-00dff9117293': 'brazilia',
+  'a463945d-1a13-473a-ad9d-bb0bd07b93fd': 'colombia',
+  '763d256b-fb94-4fe3-8d7e-2e5197c7ea23': 'kenya',
+  '04d04198-65aa-49a6-ba33-a688aaf4d0c7': 'ethiopia',
+  'e568231f-cb3f-4c12-b5e1-7babc0969113': 'costaRica',
+  'dbad76ee-8820-4718-a469-815c4d083e8e': 'guatemala',
 };
 export { subcategoriesCoffee, backgroundImagesCoffee, coffeeUrl };

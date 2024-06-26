@@ -1,4 +1,7 @@
-import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+import {
+  CategoryPagedQueryResponse,
+  ProductProjectionPagedQueryResponse,
+} from '@commercetools/platform-sdk';
 
 import { projectKey } from '../../../lib/exports/exportsContants';
 import { checkUser } from '../../../lib/flow/anonymFlow';
@@ -43,3 +46,38 @@ const getProductList = async (
 };
 
 export { getProductList };
+
+const getCategories = async (
+  limit: number = 20,
+  offset: number = 0,
+): Promise<CategoryPagedQueryResponse> => {
+  return checkUser()
+    .withProjectKey({ projectKey })
+    .categories()
+    .get({
+      queryArgs: {
+        limit,
+        offset,
+      },
+    })
+    .execute()
+    .then((res) => res.body as CategoryPagedQueryResponse);
+};
+
+const fetchAllCategories = async () => {
+  let offset = 0;
+  const limit = 100;
+  let hasMoreCategories = true;
+
+  while (hasMoreCategories) {
+    const categoryResponse = await getCategories(limit, offset);
+    categoryResponse.results.forEach((category) => {
+      console.log(`Category ID: ${category.id}, Category Key: ${category.key}`);
+    });
+
+    offset += limit;
+    hasMoreCategories = categoryResponse.count > offset;
+  }
+};
+
+export { fetchAllCategories };
