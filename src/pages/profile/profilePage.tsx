@@ -3,7 +3,6 @@ import './profilePage.scss';
 import { client } from '../../lib/resquests/getUserById';
 import { useNavigate } from 'react-router-dom';
 import LoadingSnippet from '../../components/loadingSnippet/loadingSnippet';
-// import ChangePasswordForm from './changePasswordForm';
 import {
   Customer,
   createApiBuilderFromCtpClient,
@@ -37,8 +36,6 @@ function Profile() {
   if (!userId) {
     throw new Error('User ID is not available');
   }
-
-  // получение customer для рендера
   useEffect(() => {
     const fetchUser = async () => {
       try {

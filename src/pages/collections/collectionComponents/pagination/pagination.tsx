@@ -37,7 +37,7 @@ const PaginationContainer = () => {
   );
   return (
     <>
-      {pathParts[3] === 'All' && pathParts[2] !== 'cocoa' && (
+      {pathParts[3] === 'all' && pathParts[2] !== 'cocoa' && (
         <div className="collection-page_pagination">
           {state.results ? (
             <ul className="collection-page_pagination-list">

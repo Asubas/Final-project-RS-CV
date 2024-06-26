@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import categoryP, { SliderItemDataP } from './productCardCategorySlider';
 import getSimilarProducts from './getSimilarProducts';
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { LineItem, ProductProjection } from '@commercetools/platform-sdk';
 import CreateSimilarProducts from './createSimilarProducts';
 import { BreadcrumbsComponent } from '../collections/collectionComponents/breadcrumbLinks/breadBackForwComp';
 import iconEco from '../../assets/svg/icon-eco.svg';
@@ -17,6 +17,10 @@ import iconWaterVoc from '../../assets/svg/icon-water_voc.svg';
 import iconAlarm from '../../assets/svg/icon-alarm.svg';
 import iconLanguage from '../../assets/svg/icon-language.svg';
 import getProductBySlug from '../../lib/resquests/getProductBySlug';
+import { getCart } from '../../lib/flow/getCart';
+import { addProductToCart } from '../../lib/flow/createCart';
+import { removeProduct } from '../myBag/quanitiCart/removeProduct';
+import { countRef } from '../../components/header/navBar/navBar';
 
 function DisplayProductInformation() {
   const responsive = {
@@ -38,29 +42,23 @@ function DisplayProductInformation() {
     },
   };
 
-  const [productQuantity, setProductQuantity] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const buttonType = e.currentTarget.textContent?.trim();
-    if (buttonType === '-') {
-      setProductQuantity((prevQuantity) => Math.max(prevQuantity - 1, 0));
-    } else if (buttonType === '+') {
-      setProductQuantity((prevQuantity) => prevQuantity + 1);
-    }
-  };
+  const [, setCartsProducts] = useState<LineItem[]>([]);
   const location = useLocation();
   const product = location.state;
   const currentURL = window.location.href;
   const indexLastSep = currentURL.lastIndexOf('/');
   const slug = currentURL.slice(indexLastSep + 1);
   const [productInfo, setProductInfo] = useState<ProductProjection | null>(null);
+  const [buttonMoveProduct, setButtonMoveProduct] = useState('Add to Cart');
   const imagesSlider: SliderItemDataP[] = product?.masterData?.current.masterVariant.images;
   const [currentImg, setCurrentImg] = useState<string>(imagesSlider?.[0].url);
   const [, setIsLoading] = useState(true);
   const [similarProducts, setSimilarProducts] = useState<ProductProjection[]>([]);
   const IDsimilarProducts1 = product?.masterData?.current.categories[0].id;
   const IDsimilarProducts2 = product?.masterData?.current.categories[1].id;
+  const [selectedVariantId, setSelectedVariantId] = useState<number | null>(1);
+
   useEffect(() => {
     if (!product && slug) {
       getProductBySlug(slug)
@@ -76,6 +74,12 @@ function DisplayProductInformation() {
             .then((res) => {
               setSimilarProducts(res.body.results);
               setIsLoading(false);
+            })
+            .then(() => {
+              getCart().then((res) => {
+                const lineI = res?.body?.lineItems;
+                setCartsProducts(lineI);
+              });
             })
             .catch((error) => {
               console.error('Error fetching similar products:', error);
@@ -94,6 +98,15 @@ function DisplayProductInformation() {
         .then((res) => {
           setSimilarProducts(res.body.results);
           setIsLoading(false);
+        })
+        .then(() => {
+          getCart().then((res) => {
+            const lineI = res?.body?.lineItems;
+            setCartsProducts(lineI);
+            const isInCart = lineI.some((item) => item.productId === product.id);
+            setButtonMoveProduct(isInCart ? 'Remove' : 'Add to Cart');
+            return;
+          });
         })
         .catch((error) => {
           console.error('Error fetching similar products:', error);
@@ -174,49 +187,94 @@ function DisplayProductInformation() {
     productDiscontPrice170,
   ];
 
-  const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
-    const prodPack = e.currentTarget;
-    const prodPackParent = prodPack.parentNode?.childNodes;
+  const handleClickMoveProduct = () => {
+    getCart().then((cartRes) => {
+      const lineItems = cartRes.body.lineItems;
+      const cartProduct = lineItems.find((item) => item.productId === product.id);
+      if (buttonMoveProduct !== 'Remove' && selectedVariantId !== null) {
+        addProductToCart(product.id, selectedVariantId).then((res) => {
+          const quantity = res?.body?.lineItems.length;
+          if (countRef.current && quantity) {
+            if (quantity === 1) {
+              countRef.current.textContent = String(1);
+            } else if (quantity >= 2) {
+              countRef.current.textContent = String(quantity);
+            }
+          }
+        });
 
-    const activeProdPack = document.querySelector('.variant-active');
-    activeProdPack?.classList.remove('variant-active');
-    prodPack.classList.add('variant-active');
+        setButtonMoveProduct('Remove');
+      } else if (cartProduct) {
+        removeProduct(cartProduct.quantity, cartProduct.id).then((res) => {
+          const quantity = res?.body.lineItems.length;
 
-    let selectedPrice = 0;
-    let selectedDiscontPrice = 0;
-    prodPackParent?.forEach((el, i) => {
-      if ((el as HTMLElement).classList.contains('variant-active')) {
-        selectedPrice = productPriceArr[i];
-        selectedDiscontPrice = productDiscontPrice[i];
+          if (countRef.current) {
+            if (quantity && quantity > 0) {
+              countRef.current.textContent = String(quantity);
+            } else if (quantity === 0) {
+              countRef.current.textContent = '';
+            }
+          }
+        });
+        setButtonMoveProduct('Add to Cart');
       }
     });
-    const productPriceFinal =
-      Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
-        ? `${Number(selectedPrice) / 100}.00`
-        : `${(Number(selectedPrice) / 100).toFixed(2)}`;
-
-    if (priceField) {
-      priceField.innerText = `$ ${productPriceFinal}`;
-    }
-
-    const productDiscontPriceFinal = selectedDiscontPrice
-      ? Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
-        ? `$ ${Number(selectedDiscontPrice) / 100}.00`
-        : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`
-      : '';
-
-    if (productDiscontPriceFinal !== '') {
-      priceField.classList.add('price-cross-out');
-    } else {
-      if (priceField.classList.contains('price-cross-out')) {
-        priceField.classList.remove('price-cross-out');
-      }
-    }
-
-    if (priceDiscontField) {
-      priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
-    }
   };
+
+  const handleClickProdPack = (e: React.MouseEvent<HTMLDivElement>) => {
+    const prodPack = e.currentTarget;
+    const selectedId = Number(prodPack.id);
+
+    setSelectedVariantId(selectedId);
+
+    setTimeout(() => {
+      const prodPackParent = prodPack.parentNode?.children;
+      if (prodPackParent) {
+        Array.from(prodPackParent).forEach((el) => {
+          el.classList.remove('variant-active');
+        });
+        prodPack.classList.add('variant-active');
+      }
+
+      let selectedPrice: number = productPrice50;
+      let selectedDiscontPrice: number | null = productDiscontPrice50 || null;
+
+      Array.from(prodPackParent || []).forEach((el, i) => {
+        if ((el as HTMLElement).classList.contains('variant-active')) {
+          selectedPrice = productPriceArr[i];
+          selectedDiscontPrice = productDiscontPrice[i];
+        }
+      });
+
+      const productPriceFinal =
+        Number(selectedPrice) / 100 === Math.trunc(Number(selectedPrice) / 100)
+          ? `${Number(selectedPrice) / 100}.00`
+          : `${(Number(selectedPrice) / 100).toFixed(2)}`;
+
+      if (priceField) {
+        priceField.innerText = `$ ${productPriceFinal}`;
+      }
+
+      const productDiscontPriceFinal = selectedDiscontPrice
+        ? Number(selectedDiscontPrice) / 100 === Math.trunc(Number(selectedDiscontPrice) / 100)
+          ? `$ ${Number(selectedDiscontPrice) / 100}.00`
+          : `$ ${(Number(selectedDiscontPrice) / 100).toFixed(2)}`
+        : '';
+
+      if (productDiscontPriceFinal !== '') {
+        priceField.classList.add('price-cross-out');
+      } else {
+        if (priceField.classList.contains('price-cross-out')) {
+          priceField.classList.remove('price-cross-out');
+        }
+      }
+
+      if (priceDiscontField) {
+        priceDiscontField.innerText = ` ${productDiscontPriceFinal}`;
+      }
+    }, 0);
+  };
+
   const handleClickChangeImage = (e: React.MouseEvent<HTMLDivElement>) => {
     const selectImage = e.currentTarget.children[0] as HTMLImageElement;
     const tempImgCurUrl = currentImg;
@@ -267,35 +325,43 @@ function DisplayProductInformation() {
           <div className="product-variants__block">
             <p>Variants</p>
             <div className="variants">
-              <div className="variant variant-1 variant-active" onClick={handleClickProdPack}>
+              <div
+                className="variant variant-1 variant-active"
+                id="1"
+                onClick={handleClickProdPack}
+              >
                 <img src={size50} alt="size-50" />
                 <p></p>
               </div>
-              <div className="variant variant-2" onClick={handleClickProdPack}>
+              <div className="variant variant-2 no-active" id="2" onClick={handleClickProdPack}>
                 <img src={size100} alt="size-100" />
-                <p></p>
+                <p>not available</p>
               </div>
-              <div className="variant variant-3" onClick={handleClickProdPack}>
+              <div className="variant variant-3 no-active" id="3" onClick={handleClickProdPack}>
                 <img src={size170} alt="size-170" />
-                <p></p>
+                <p>not available</p>
               </div>
             </div>
           </div>
           <div className="product-quntity-and-add-to-bag__block">
-            <div className="product-quantity">
-              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
+            {/* <div className="product-quantity">
+              <MyButton className="btn_transparent " type="button" onClick={handleClickQuantity}>
                 {' '}
                 -
               </MyButton>
               <p className="product-quantity__count">{`${productQuantity}`}</p>
-              <MyButton className="btn_transparent " type="button" onClick={handleClick}>
+              <MyButton className="btn_transparent " type="button" onClick={handleClickQuantity}>
                 {' '}
                 +
               </MyButton>
-            </div>
-            <MyButton className="btn_black btn_product-card" type="button">
+            </div> */}
+            <MyButton
+              className="btn_black btn_product-card"
+              type="button"
+              onClick={() => handleClickMoveProduct()}
+            >
               {' '}
-              ADD TO BAG
+              {buttonMoveProduct}
             </MyButton>
           </div>
         </div>

@@ -7,7 +7,6 @@ import slide5 from '../../../assets/img/category-5.jpg';
 import slide6 from '../../../assets/img/category-6.jpg';
 import slide7 from '../../../assets/img/category-7.jpg';
 import slide8 from '../../../assets/img/category-8.jpg';
-import slide9 from '../../../assets/img/category-9.jpg';
 import './slider.scss';
 
 export interface SliderItemData {
@@ -56,11 +55,6 @@ const data: SliderItemData[] = [
     id: 8,
     imgUrl: slide8,
     text: 'rooibos',
-  },
-  {
-    id: 9,
-    imgUrl: slide9,
-    text: 'teaware',
   },
 ];
 

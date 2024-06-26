@@ -1,36 +1,7 @@
-import {
-  ProductProjectionPagedQueryResponse,
-  createApiBuilderFromCtpClient,
-} from '@commercetools/platform-sdk';
-import {
-  AuthMiddlewareOptions,
-  ClientBuilder,
-  HttpMiddlewareOptions,
-} from '@commercetools/sdk-client-v2';
+import { ProductProjectionPagedQueryResponse } from '@commercetools/platform-sdk';
+
 import { projectKey } from '../../../lib/exports/exportsContants';
-
-const authMiddlewareOptions: AuthMiddlewareOptions = {
-  host: 'https://auth.europe-west1.gcp.commercetools.com',
-  projectKey: projectKey,
-  credentials: {
-    clientId: process.env.VITE_CTP_CLIENT_ID || '',
-    clientSecret: process.env.VITE_CTP_CLIENT_SECRET || '',
-  },
-  scopes: [`manage_project:${projectKey}`],
-  fetch,
-};
-
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
-  host: 'https://api.europe-west1.gcp.commercetools.com',
-  fetch,
-};
-const ctpClient = new ClientBuilder()
-  .withProjectKey(projectKey)
-  .withClientCredentialsFlow(authMiddlewareOptions)
-  .withHttpMiddleware(httpMiddlewareOptions)
-  .build();
-
-const request = createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey });
+import { checkUser } from '../../../lib/flow/anonymFlow';
 const getProductList = async (
   limitAtr: number,
   offsetAtr: number,
@@ -53,7 +24,8 @@ const getProductList = async (
       filters = [''];
     }
   }
-  return request
+  return checkUser()
+    .withProjectKey({ projectKey })
     .productProjections()
     .search()
     .get({

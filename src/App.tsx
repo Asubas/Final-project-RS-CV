@@ -45,7 +45,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="bag" element={<MyBag />} />
+          <Route path="cart" element={<MyBag />} />
           <Route
             path="registration"
             element={

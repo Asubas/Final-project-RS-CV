@@ -58,3 +58,27 @@ export const errorRegister: ToastOptions = {
   theme: 'light',
   transition: Bounce,
 };
+
+export const successPromo: ToastOptions = {
+  position: 'bottom-center',
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+  transition: Bounce,
+};
+
+export const unSuccessPromo: ToastOptions = {
+  position: 'bottom-center',
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: false,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: 'light',
+  transition: Bounce,
+};

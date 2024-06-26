@@ -5,12 +5,14 @@ import MyInput from '../../components/input/input';
 import validatePassword from './validatePassword';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import createAuthorizedClient from '../../lib/flow/userLoginFlow';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { loginRef, reqRef } from '../../components/header/navBar/navBar';
+import { countRef, loginRef, reqRef } from '../../components/header/navBar/navBar';
 import { errorLogin, successLogin } from '../../components/toastyOption/toastyOptions';
 import { projectKey } from '../../lib/exports/exportsContants';
+import { checkUser } from '../../lib/flow/anonymFlow';
+import { ExtendedMyCustomerSignin } from '../../interfaces/interfaces';
+import { getCart } from '../../lib/flow/getCart';
 
 type Inputs = {
   login: string;
@@ -29,26 +31,59 @@ function AccountPage() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { login, password } = data;
     if (isValid) {
-      createAuthorizedClient(login, password)
+      checkUser()
         .withProjectKey({ projectKey })
         .me()
-        .get()
+        .login()
+        .post({
+          body: {
+            email: login,
+            password: password,
+            anonymousCartId: localStorage.getItem('anonymousCartId'),
+            anonymousId: localStorage.getItem('anonymousId'),
+            activeCartSignInMode: 'MergeWithExistingCustomerCart',
+            updateProductData: true,
+          } as ExtendedMyCustomerSignin,
+        })
         .execute()
-        .then((res) => {
-          if (res.statusCode === 200) {
-            localStorage.setItem('userId', `${res.body.id}`);
-            localStorage.setItem('userVersion', `${res.body.version}`);
-            navigate('/');
-            if (loginRef.current && reqRef.current) {
-              loginRef.current.textContent = 'log out';
-              reqRef.current.textContent = 'profile';
-            }
-            toast.success('🎉 You have successfully logged in', successLogin);
-            return;
+        .then((response) => {
+          if (response.statusCode === 200) {
+            checkUser({ email: login, password }, true)
+              .withProjectKey({ projectKey })
+              .me()
+              .get()
+              .execute()
+              .then((res) => {
+                if (res.statusCode === 200) {
+                  localStorage.setItem('userId', `${res.body.id}`);
+                  localStorage.setItem('userVersion', `${res.body.version}`);
+                  localStorage.removeItem('anonymousId');
+                  navigate('/');
+                  if (loginRef.current && reqRef.current) {
+                    loginRef.current.textContent = 'log out';
+                    reqRef.current.textContent = 'profile';
+                  }
+                  toast.success('🎉 You have successfully logged in', successLogin);
+                  setTimeout(() => {
+                    getCart().then((resCartBody) => {
+                      if (resCartBody.statusCode === 200) {
+                        const countProduct = resCartBody.body.totalLineItemQuantity;
+                        if (countProduct && countRef.current && countProduct > 0) {
+                          countRef.current.textContent = countProduct.toString();
+                        }
+                      }
+                    });
+                  }, 300);
+                  return checkUser();
+                }
+                return checkUser();
+              });
           }
+          return checkUser();
         })
         .catch(() => {
           toast.error('Invalid email or password or such user does not exist!', errorLogin);
+          return checkUser();
         });
     }
   };

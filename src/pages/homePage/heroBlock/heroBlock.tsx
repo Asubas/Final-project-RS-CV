@@ -7,7 +7,14 @@ function HeroBlock() {
       <section className="heroSection">
         <div className="heroCont">
           <div className="heroWrap">
-            <div className="heroImgDiv"></div>
+            <div className="heroImgDiv">
+              <div className="hero_promo first_promo">
+                Use promo code <span className="promo_span">HappyStudent</span> for some special set
+              </div>
+              <div className="hero_promo second_promo">
+                Use promo code <span className="promo_span">shopsmart</span> for first order
+              </div>
+            </div>
             <div className="heroDisc">
               <h1 className="heroDisc_h1">Every day is unique, just like our tea</h1>
               <p className="heroDisc_text">
@@ -16,7 +23,7 @@ function HeroBlock() {
                 ariatur sunt iure sequi, molestiae enim blanditiis rerum culpa nam!
               </p>
               <Link className="btn_black heroDisc_link" to="collection">
-                browes collection
+                browses collection
               </Link>
             </div>
           </div>
